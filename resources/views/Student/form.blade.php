@@ -1,176 +1,158 @@
 @extends('layouts.app')
 
 @section('content')
-    {!! Form::open(array('url'=>'student/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ','id'=> 'customerFormAjax')) !!}
-    <div class="md-card" style="padding-left: 5%; padding-right: 10%;">
-        <div class="md-card-content">
-            <h3 class="heading_a text-orange">
-                {{ Lang::get('customer.new_customer') }}</h3>
-            <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-right'}">
-                <i class="md-icon material-icons">cancel</i>
-                <div class="uk-dropdown uk-dropdown-small">
-                    <ul class="uk-nav">
-                        <li><a href="javascript:void(0)" onclick="ajaxViewClose('#{{ $pageModule }}')">{{ Lang::get('customer.close') }}</a></li>
-                    </ul>
-                </div>
+
+
+        <div class="">
+          <div class="page-title">
+            <div class="title_left">
+              <h3>
+                    New Admission
+                </h3>
             </div>
-            <div class="uk-grid">
-                <div class="uk-width-medium">
-                    <div class="md-card-head">
-                        <div class="uk-text-center">
-                            {!! SiteHelpers::showUploadedProfileIamge($row['image'],'/uploads/users/', 'md-card-head-avatar') !!}
-                            <div class="clearfix"></div>
-                            <br />
-                            <p class="uk-text-muted uk-text-small uk-margin-small-bottom"></p>
-                            @if(!empty($info->image))
-                                {{ Lang::get('customer.change_picture') }}
-                            @else
-                                {{ Lang::get('customer.upload_picture') }}
-                            @endif
-                            <p class="center"><input class="uk-form-file" style="padding-left: 12%;" type="file" name="image" value="{{  $row['image'] }}" ></p>
-                        </div>
-                    </div>
 
-                    <div class="uk-form-row" style="display:none;">
-                        <div class="uk-grid">
-                            <div class="uk-width-medium-1-2">
-                                <label for="Id">
-                                    {!! SiteHelpers::activeLang('Id', (isset($fields['id']['language'])? $fields['id']['language'] : array())) !!}
-                                </label>
-                                {!! Form::text('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'',   )) !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-form-row">
-                        <div class="uk-grid">
-                            <div class="uk-width-medium-1">
-                                <?php
-                                $category_opt = array( 1 => 'Private' ,  2 => 'Business'); ?>
-                                <select name='type' rows='5'   class="dropdown-width" id='select1'  data-md-selectize-inline>
-                                    <?php
-                                    foreach($category_opt as $key=>$val)
-                                    {
-                                        echo "<option  value ='$key' ".($row['type'] == $key ? " selected='selected' " : '' ).">$val</option>";
-                                    }
-                                    ?></select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-form-row business">
-                        <div class="uk-grid">
-                            <div class="uk-width-medium-1-2">
-                                <label for="First Name">
-                                    {!! SiteHelpers::activeLang(Lang::get('customer.company_name'), (isset($fields['company_name']['language'])? $fields['company_name']['language'] : array())) !!}
-                                </label>
-                                {!! Form::text('company_name', $row['company_name'],array('class'=>'md-input', 'placeholder'=>'')) !!}
-                            </div>
-                            <div class="uk-width-medium-1-2">
-                                <label for="Last Name">
-                                    {!! SiteHelpers::activeLang(Lang::get('customer.contact_person'), (isset($fields['contact_person']['language'])? $fields['contact_person']['language'] : array())) !!}
-                                </label>
-                                {!! Form::text('contact_person', $row['contact_person'],array('class'=>'md-input', 'placeholder'=>'' )) !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-form-row private">
-                        <div class="uk-grid">
-                            <div class="uk-width-medium-1-2">
-                                <label for="First Name">
-                                    {{ Lang::get('customer.first_name') }}
-                                </label>
-                                {!! Form::text('first_name', $row['first_name'],array('class'=>'md-input', 'placeholder'=>'')) !!}
-                            </div>
-                            <div class="uk-width-medium-1-2">
-                                <label for="Last Name">
-                                    {{ Lang::get('customer.last_name') }}
-                                </label>
-                                {!! Form::text('last_name', $row['last_name'],array('class'=>'md-input', 'placeholder'=>'')) !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-form-row" >
-                        <div class="uk-grid">
-                            <div class="uk-width-medium-1-2">
-                                <label for="Address">
-                                    {{ Lang::get('customer.address') }}
-                                </label>
-                                {!! Form::text('address', $row['address'],array('class'=>'md-input', 'placeholder'=>'',  'required'=>'true' )) !!}
-                            </div>
-                            <div class="uk-width-medium-1-2">
-                                <label for="Zip Code">
-                                    {{ Lang::get('customer.zip_code') }}
-                                </label>
-                                {!! Form::text('zip_code', $row['zip_code'],array('class'=>'md-input', 'placeholder'=>'', 'required'=>'true'  )) !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-form-row">
-                        <div class="uk-grid">
-                            <div class="uk-width-medium-1-2">
-                                <label for="Address">
-                                    {{ Lang::get('customer.city') }}
-                                </label>
-                                {!! Form::text('city', $row['city'],array('class'=>'md-input', 'placeholder'=>'',  'required'=>'true' )) !!}
-                            </div>
-                            <div class="uk-width-medium-1-2">
-                                <label for="Telephone">
-                                    {{ Lang::get('customer.telephone') }}
-                                </label>
-                                {!! Form::text('telephone', $row['telephone'],array('class'=>'md-input', 'placeholder'=>'', 'required'=>'true'  )) !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-form-row">
-                        <div class="uk-grid">
-                            <div class="uk-width-medium-1-2">
-                                <label for="Email">
-                                    {{ Lang::get('customer.email') }}
-                                </label>
-                                {!! Form::email('email', $row['email'],array('class'=>'md-input', 'placeholder'=>'',  'required'=>'true')) !!}
-                            </div>
-                            <div class="uk-width-medium-1-2">
-                                <label for="password">
-                                    {{ Lang::get('customer.password') }}
-                                </label>
-                                @if($row['id'] == '')
-                                    {!! Form::text('password', $row['password'],array('class'=>'md-input', 'placeholder'=>'',  'required'=>'true' )) !!}
-                                @else
-                                    {!! Form::text('password', '',array('class'=>'md-input', 'placeholder'=>'')) !!}
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-form-row">
-                        <div class="uk-grid">
-                            <div class="uk-width-medium-1-2 business">
-                                <label for="CVR">
-                                    {!! SiteHelpers::activeLang(Lang::get('customer.cvr'), (isset($fields['cvr']['language'])? $fields['cvr']['language'] : array())) !!}
-                                </label>
-                                {!! Form::text('cvr', $row['cvr'],array('class'=>'md-input', 'placeholder'=>'')) !!}
-                            </div>
-                            <div class="uk-width-medium-1-2 private">
-                                <label for="Notes">
-                                    {{ Lang::get('customer.notes') }}
-                                </label>
-                                {!! Form::text('notes', $row['notes'],array('class'=>'md-input', 'placeholder'=>'')) !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-modal-footer uk-text-right">
-                        <button type="button" onclick="ajaxViewClose('#{{ $pageModule }}')" class="md-btn md-btn-primary uk-modal-close">
-                            {{ Lang::get('customer.close') }}
-                        </button>
-                        <button type="submit" class="md-btn md-btn-flat md-btn-primary"
-                                id="snippet_new_save">{{ Lang::get('customer.add_customer') }}
-                        </button>
-                    </div>
+            <div class="title_right">
+              <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="row">
+
+            <div class="col-md-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Personal Details</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Settings 1</a>
+                        </li>
+                        <li><a href="#">Settings 2</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <br />
+                  {{-- <form class="form-horizontal form-label-left input_mask"> --}}
+
+                {!! Form::open(array('url'=>'student/save/', 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ','id'=> 'customerFormAjax')) !!}
+
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                    <label>Last name *:</label>
+                      <input type="text" class="form-control" id="inputSuccess3" placeholder="Last Name">
+                      
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                    <label>Middle name *:</label>
+                      <input type="text" class="form-control" id="inputSuccess2" placeholder="Middle Name">
+                      
+                    </div>
 
 
 
-    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>First name *:</label>
+                      <input type="text" class="form-control" id="inputSuccess4" placeholder="Email">
+                      
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                      <label>Gender *:</label>
+                    <p>
+                      M:
+                      <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
+                      <input type="radio" class="flat" name="gender" id="genderF" value="F" />
+                    </p>
+
+                    </div>
+
+                   
+                    
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-primary">Cancel</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                      </div>
+                    </div>
+
+                  {{-- </form> --}}
+                </div>
+              </div>
+              </div>
+
+            </div>
+          </div>
+        
+      
+
+
+   {{--  {!! Form::open(array('url'=>'student/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ','id'=> 'customerFormAjax')) !!} --}}
+
+  
+
     {!! Form::close() !!}
-@endsection
+ 
 
+@stop
+
+      @section('js_section');
+ <script>
+    // initialize the validator function
+    validator.message['date'] = 'not a real date';
+
+    // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+    $('form')
+      .on('blur', 'input[required], input.optional, select.required', validator.checkField)
+      .on('change', 'select.required', validator.checkField)
+      .on('keypress', 'input[required][pattern]', validator.keypress);
+
+    $('.multi.required')
+      .on('keyup blur', 'input', function() {
+        validator.checkField.apply($(this).siblings().last()[0]);
+      });
+
+    // bind the validation to the form submit event
+    //$('#send').click('submit');//.prop('disabled', true);
+
+    $('form').submit(function(e) {
+      e.preventDefault();
+      var submit = true;
+      // evaluate the form using generic validaing
+      if (!validator.checkAll($(this))) {
+        submit = false;
+      }
+
+      if (submit)
+        this.submit();
+      return false;
+    });
+
+    /* FOR DEMO ONLY */
+    $('#vfields').change(function() {
+      $('form').toggleClass('mode2');
+    }).prop('checked', false);
+
+    $('#alerts').change(function() {
+      validator.defaults.alerts = (this.checked) ? false : true;
+      if (this.checked)
+        $('form .alert').remove();
+    }).prop('checked', false);
+  </script>
+@stop

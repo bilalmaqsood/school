@@ -44,7 +44,6 @@
         @include('layouts/footer')
     </div>
 </div>
-
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 <!-- gauge js -->
@@ -61,6 +60,7 @@
 <script src="{{ asset('js/chartjs/chart.min.js') }}"></script>
 
 <script src="{{ asset('js/custom.js') }}"></script>
+<script src="{{ asset('js/validator/validator.js')}}"></script>
 
 <!-- flot js -->
 <!--[if lte IE 8]><script type="text/javascript" src="{{ asset('js/excanvas.min.js') }}"></script><![endif]-->
@@ -82,6 +82,9 @@
 <script src="{{ asset('js/pace/pace.min.js') }}"></script>
 <!-- skycons -->
 <script src="{{ asset('js/skycons/skycons.min.js') }}"></script>
+
+@yield('js_section');
+
 </body>
 
 </html>
