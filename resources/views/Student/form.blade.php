@@ -48,31 +48,38 @@
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <br />
-                  {{-- <form class="form-horizontal form-label-left input_mask"> --}}
+                  
 
-                {!! Form::open(array('url'=>'student/save/', 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ','id'=> 'customerFormAjax')) !!}
+                {!! Form::open(
+                    array(
+                    'url'=>'student/save/',
+                    'method' => 'post',
+                     'class'=>'form-horizontal form-label-left input_mask',
+                     'files' => true ,
+                     'parsley-validate'=>true,
+                     'novalidate'=>' ',
+                     'id'=> 'customerFormAjax')
+                     ) !!}
 
-                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                     <label>Last name *:</label>
-                      <input type="text" class="form-control" id="inputSuccess3" placeholder="Last Name">
-                      
+                    {!! Form::text('last_name', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Last Name','required'=>'required' )) !!}
+   
                     </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                     <label>Middle name *:</label>
-                      <input type="text" class="form-control" id="inputSuccess2" placeholder="Middle Name">
-                      
+                     {!! Form::text('middle_name', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Middle Name','required'=>'required' )) !!}
+            
                     </div>
 
 
 
-                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                             <label>First name *:</label>
-                      <input type="text" class="form-control" id="inputSuccess4" placeholder="Email">
-                      
-                    </div>
+                    {!! Form::text('first_name', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'First Name','required'=>'required' )) !!}
+              </div>
 
-                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                       <label>Gender *:</label>
                     <p>
                       M:
@@ -81,9 +88,39 @@
                     </p>
 
                     </div>
+                     <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>Date of Birth *:</label>
+                    {!! Form::text('date_of_birth', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Date of Birth','required'=>'required' )) !!}
+                </div>
+                     <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>Country of Origin *:</label>
+                    {!! Form::text('county_of_origin', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Country of Origin','required'=>'required' )) !!}
+               </div>
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>Nationality *:</label>
+                    {!! Form::text('nationality', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Nationality','required'=>'required' )) !!}
+                    
+                    </div>
+                     <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>Religion *:</label>
+                    {!! Form::text('religion', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Religion ','required'=>'required' )) !!}
+                 </div>
+                     <div class=" item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="control-group">
+                          <div class="controls">
+
+                <label>Admission Date *:</label>
+                <div class=" xdisplay_inputx form-group has-feedback">
+            
+                 {!! Form::text('admission_date', "", /* $row['id'],*/ array('id'=>'admission_date','class'=>'form-control has-feedback-left','aria-describedby' => 'inputSuccess2Status' ,'placeholder'=>'Admission Date','required'=>'required' )) !!}<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
 
                    
-                    
+                      
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+ 
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
@@ -99,13 +136,6 @@
 
             </div>
           </div>
-        
-      
-
-
-   {{--  {!! Form::open(array('url'=>'student/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ','id'=> 'customerFormAjax')) !!} --}}
-
-  
 
     {!! Form::close() !!}
  
@@ -155,4 +185,180 @@
         $('form .alert').remove();
     }).prop('checked', false);
   </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      var cb = function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+        $('#reportrange_right span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
+      }
+
+      var optionSet1 = {
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment(),
+        minDate: '01/01/2012',
+        maxDate: '12/31/2015',
+        dateLimit: {
+          days: 60
+        },
+        showDropdowns: true,
+        showWeekNumbers: true,
+        timePicker: false,
+        timePickerIncrement: 1,
+        timePicker12Hour: true,
+        ranges: {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        opens: 'right',
+        buttonClasses: ['btn btn-default'],
+        applyClass: 'btn-small btn-primary',
+        cancelClass: 'btn-small',
+        format: 'MM/DD/YYYY',
+        separator: ' to ',
+        locale: {
+          applyLabel: 'Submit',
+          cancelLabel: 'Clear',
+          fromLabel: 'From',
+          toLabel: 'To',
+          customRangeLabel: 'Custom',
+          daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+          monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          firstDay: 1
+        }
+      };
+
+      $('#reportrange_right span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+
+      $('#reportrange_right').daterangepicker(optionSet1, cb);
+
+      $('#reportrange_right').on('show.daterangepicker', function() {
+        console.log("show event fired");
+      });
+      $('#reportrange_right').on('hide.daterangepicker', function() {
+        console.log("hide event fired");
+      });
+      $('#reportrange_right').on('apply.daterangepicker', function(ev, picker) {
+        console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+      });
+      $('#reportrange_right').on('cancel.daterangepicker', function(ev, picker) {
+        console.log("cancel event fired");
+      });
+
+      $('#options1').click(function() {
+        $('#reportrange_right').data('daterangepicker').setOptions(optionSet1, cb);
+      });
+
+      $('#options2').click(function() {
+        $('#reportrange_right').data('daterangepicker').setOptions(optionSet2, cb);
+      });
+
+      $('#destroy').click(function() {
+        $('#reportrange_right').data('daterangepicker').remove();
+      });
+
+    });
+  </script>
+  <!-- datepicker -->
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      var cb = function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
+      }
+
+      var optionSet1 = {
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment(),
+        minDate: '01/01/2012',
+        maxDate: '12/31/2015',
+        dateLimit: {
+          days: 60
+        },
+        showDropdowns: true,
+        showWeekNumbers: true,
+        timePicker: false,
+        timePickerIncrement: 1,
+        timePicker12Hour: true,
+        ranges: {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        opens: 'left',
+        buttonClasses: ['btn btn-default'],
+        applyClass: 'btn-small btn-primary',
+        cancelClass: 'btn-small',
+        format: 'MM/DD/YYYY',
+        separator: ' to ',
+        locale: {
+          applyLabel: 'Submit',
+          cancelLabel: 'Clear',
+          fromLabel: 'From',
+          toLabel: 'To',
+          customRangeLabel: 'Custom',
+          daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+          monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          firstDay: 1
+        }
+      };
+      $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+      $('#reportrange').daterangepicker(optionSet1, cb);
+      $('#reportrange').on('show.daterangepicker', function() {
+        console.log("show event fired");
+      });
+      $('#reportrange').on('hide.daterangepicker', function() {
+        console.log("hide event fired");
+      });
+      $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+        console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+      });
+      $('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
+        console.log("cancel event fired");
+      });
+      $('#options1').click(function() {
+        $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+      });
+      $('#options2').click(function() {
+        $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+      });
+      $('#destroy').click(function() {
+        $('#reportrange').data('daterangepicker').remove();
+      });
+    });
+  </script>
+  <!-- /datepicker -->
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#admission_date').daterangepicker({
+        singleDatePicker: true,
+        calender_style: "picker_1"
+      }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+      });
+
+    });
+  </script>
+
+  <!-- /datepicker -->
+  <!-- input_mask -->
+ {{--  <script>
+    $(document).ready(function() {
+      $(":input").inputmask();
+    });
+  </script> --}}
+  <!-- /input mask -->
+
+ 
 @stop
