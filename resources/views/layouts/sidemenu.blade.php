@@ -25,8 +25,12 @@
 
             <div class="menu_section">
                 <h3>General</h3>
+
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                    <li>
+                        <a href="{{ URL::to('dashboard')}}"><i class="fa fa-laptop"></i>Dashboard</a>
+                    </li>
+                    <li><a><i class="fa fa-home"></i> Home </a>
                         <ul class="nav child_menu" style="display: none">
                             <li><a href="index.html">Dashboard</a>
                             </li>
@@ -146,8 +150,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a>
-                    </li>
+
                 </ul>
             </div>
 
