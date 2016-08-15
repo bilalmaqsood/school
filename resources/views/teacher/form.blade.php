@@ -9,20 +9,75 @@
         <div class="x_content">
             <br />
             {!! Form::open(array('url'=>'teacher/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
-
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input name="first_name" value="{{ $row['first_name'] }}" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
-                    </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Last Name * :</label>
+                {!! Form::text('last_name', $row['last_name'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Middle Name * :</label>
+                {!! Form::text('middle_name', $row['middle_name'],array('class'=>'form-control', 'placeholder'=>'Middle Name', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">First Name * :</label>
+                {!! Form::text('first_name', $row['first_name'],array('class'=>'form-control', 'placeholder'=>'First Name', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Email * :</label>
+                {!! Form::email('email', $row['email'],array('class'=>'form-control', 'placeholder'=>'Email', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Password * :</label>
+                {!! Form::text('password', $row['password'],array('class'=>'form-control', 'placeholder'=>'Password')) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Nationality * :</label>
+                {!! Form::text('nationality', $row['nationality'],array('class'=>'form-control', 'placeholder'=>'Nationality', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Community * :</label>
+                {!! Form::text('community', $row['community'],array('class'=>'form-control', 'placeholder'=>'Community', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">City * :</label>
+                {!! Form::text('city', $row['city'],array('class'=>'form-control', 'placeholder'=>'city', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">'
+                <label for="fullname">County * :</label>
+                {!! Form::text('country', $row['country'],array('class'=>'form-control', 'placeholder'=>'County', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Phone Number * :</label>
+                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control', 'placeholder'=>'Phone Number', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Mobile Number * :</label>
+                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control', 'placeholder'=>'Mobile Number', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Date of Birth * :</label>
+                {!! Form::text('date_of_birth', $row['date_of_birth'],array('class'=>'form-control', 'placeholder'=>'Date of Birth', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label>Gender *:</label>
+                <p>
+                    M:
+                    <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
+                    <input type="radio" class="flat" name="gender" id="genderF" value="F" />
+                </p>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Hire Date * :</label>
+                {!! Form::text('register_date', $row['register_date'],array('class'=>'form-control', 'placeholder'=>'Hire Date', 'required' => true)) !!}
+            </div>
+            <div class="clearfix"></div>
+            <div class="ln_solid"></div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                    <a href="javascript:void(0)" class="btn btn-primary" onclick="ajaxViewClose('#{{ $pageModule }}')">Cancel</a>
+                    <button type="submit" class="btn btn-success">Create</button>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <button class="btn btn-primary" onclick="ajaxViewClose('#{{ $pageModule }}')">Cancel</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </div>
+            </div>
 
             {!! Form::close() !!}
         </div>
