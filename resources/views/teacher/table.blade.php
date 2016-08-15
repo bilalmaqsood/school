@@ -6,7 +6,7 @@
                 <li>
                     @if($access['is_add'] ==1)
                         <?php $onclick = " onclick=\"ajaxViewDetail('#".$pageModule."',this.href); return false; \"" ; ?>
-                        <a href="{{URL::to($pageModule.'/update') }}" class="btn btn-primary" <?php echo $onclick; ?> >Create</a>
+                        <a href="{{URL::to($pageModule.'/update') }}" class="btn btn-default btn-teacher " <?php echo $onclick; ?> >Create</a>
                     @endif
                 </li>
 

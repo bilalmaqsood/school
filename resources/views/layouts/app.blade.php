@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/maps/jquery-jvectormap-2.0.3.css') }}" />
     <link href="{{ asset('css/icheck/flat/green.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/floatexamples.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" />
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/nprogress.js') }}"></script>
