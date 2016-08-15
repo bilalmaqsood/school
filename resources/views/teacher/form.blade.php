@@ -53,22 +53,43 @@
                 <label for="fullname">Mobile Number * :</label>
                 {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control', 'placeholder'=>'Mobile Number', 'required' => true)) !!}
             </div>
+
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+            <div class="control-group">
+            <div class="controls">
                 <label for="fullname">Date of Birth * :</label>
-                {!! Form::text('date_of_birth', $row['date_of_birth'],array('class'=>'form-control', 'placeholder'=>'Date of Birth', 'required' => true)) !!}
+                <div class=" xdisplay_inputx form-group has-feedback">
+                {!! Form::text('date_of_birth', $row['date_of_birth'],array('id'=>'date_of_birth','class'=>'form-control has-feedback-left', 'aria-describedby' => 'inputSuccess2Status','placeholder'=>'Date of Birth', 'required' => true)) !!}
+                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                <label>Gender *:</label>
-                <p>
-                    M:
-                    <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
-                    <input type="radio" class="flat" name="gender" id="genderF" value="F" />
-                </p>
             </div>
+                    </div>
+                    </div>
+
+            <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                      <label>Gender *:</label>
+                    <p>
+                      M:
+                      <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
+                      <input type="radio" class="flat" name="gender" id="genderF" value="F" />
+                    </p>
+
+                    </div>
+
+                  
+
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+            <div class="control-group">
+            <div class="controls">
                 <label for="fullname">Hire Date * :</label>
-                {!! Form::text('register_date', $row['register_date'],array('class'=>'form-control', 'placeholder'=>'Hire Date', 'required' => true)) !!}
+                <div class=" xdisplay_inputx form-group has-feedback">
+                {!! Form::text('register_date', $row['register_date'],array('id' =>'register_date', 'class'=>'form-control has-feedback-left', 'aria-describedby' => 'inputSuccess2Status', 'placeholder'=>'Hire Date', 'required' => true)) !!}
+            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
             </div>
+            </div>
+                    </div>
+                    </div>
+
             <div class="clearfix"></div>
             <div class="ln_solid"></div>
             <div class="clearfix"></div>
@@ -133,6 +154,24 @@
                 return false;
             }
         }
+          $(document).ready(function() {
+
+      $('#date_of_birth').daterangepicker({
+        singleDatePicker: true,
+        calender_style: "picker_1"
+      }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+      });
+            $('#register_date').daterangepicker({
+        singleDatePicker: true,
+        calender_style: "picker_1"
+      }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+      });
+
+
+    });
 
     </script>
 </div>
+
