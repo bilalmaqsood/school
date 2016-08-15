@@ -59,18 +59,7 @@ class TeacherController extends Controller
         // Get Query
         $results = $this->model->getRows( $params );
 
-        // Build pagination setting
-        $page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;
-        $pagination = new Paginator($results['rows'], $results['total'], $params['limit']);
-        $pagination->setPath('teacher/data');
-        $this->data['param']		= $params;
         $this->data['rowData']		= $results['rows'];
-        // Build Pagination
-        $this->data['pagination']	= $pagination;
-        // Build pager number and append current param GET
-        $this->data['pager'] 		= $this->injectPaginate();
-        // Row grid Number
-        $this->data['i']			= ($page * $params['limit'])- $params['limit'];
         // Group users permission
         $this->data['access']		= $this->access;
         // Render into template
@@ -138,4 +127,54 @@ class TeacherController extends Controller
         }
 
     }
+
+    public function postDelete( Request $request)
+    {
+        if($this->access['is_remove'] ==0) {
+            return response()->json(array(
+                'status'=>'error',
+                'message'=> \Lang::get('core.note_restric')
+            ));
+            die;
+
+        }
+        // delete multipe rows
+        if(count($request->input('id')) >=1)
+        {
+            $this->model->destroy($request->input('id'));
+
+            return response()->json(array(
+                'status'=>'success',
+                'message'=> 'delete successfully'
+            ));
+        } else {
+            return response()->json(array(
+                'status'=>'error',
+                'message'=> 'error in delete'
+            ));
+
+        }
+
+    }
+
+    public function getShow( $id = null)
+    {
+
+        if($this->access['is_detail'] ==0)
+            return Redirect::to('dashboard')
+                ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
+
+        $row = $this->model->getRow($id);
+        if($row)
+        {
+            $this->data['row'] =  $row;
+        } else {
+            $this->data['row'] = $this->model->getColumnTable('sb_invoiceproducts');
+        }
+
+        $this->data['id'] = $id;
+        $this->data['access']		= $this->access;
+        return view('teacher.view',$this->data);
+    }
+
 }

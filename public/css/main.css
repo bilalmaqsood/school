@@ -3,5 +3,7 @@
 	background: #2A3F54;
 	font-weight: bolder;
 }
-
+.table_td{
+	vertical-align: middle !important;
+}
 

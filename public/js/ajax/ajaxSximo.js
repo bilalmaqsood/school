@@ -128,17 +128,15 @@ function ajaxRemove( id, url )
 
 function ajaxRemoveRecord( id, url, rowId)
 {
-	var datas = {'ids':[rowId]};
+	var datas = {'id':rowId};
 	if(confirm('Are u sure remove selected row?')) {
 		$.post( url+'/delete' ,datas,function( data ) {
-
-			//data = JSON.parse(data);
 			if(data.status == 'success' )
 			{
-				notyMessage(data.message);
+				//notyMessage(data.message);
 				ajaxFilter( id ,url+'/data' );
 			} else {
-				notyMessageError(data.message);
+				//notyMessageError(data.message);
 			}
 		});
 
