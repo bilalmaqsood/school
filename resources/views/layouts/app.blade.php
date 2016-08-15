@@ -46,9 +46,6 @@
 </div>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
-<!-- gauge js -->
-<script type="text/javascript" src="{{ asset('js/gauge/gauge.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/gauge/gauge_demo.js') }}"></script>
 <!-- bootstrap progress js -->
 <script src="{{ asset('js/progressbar/bootstrap-progressbar.min.js') }}"></script>
 <!-- icheck -->
@@ -59,9 +56,11 @@
 <!-- chart js -->
 <script src="{{ asset('js/chartjs/chart.min.js') }}"></script>
 
+<script src="{{ asset('js/jquery.form.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>
 <script src="{{ asset('js/validator/validator.js')}}"></script>
-
+<!-- form validation -->
+<script type="text/javascript" src="{{ asset('js/parsley/parsley.min.js') }}"></script>
 <!-- flot js -->
 <!--[if lte IE 8]><script type="text/javascript" src="{{ asset('js/excanvas.min.js') }}"></script><![endif]-->
 <script type="text/javascript" src="{{ asset('js/flot/jquery.flot.js') }}"></script>
@@ -82,6 +81,10 @@
 <script src="{{ asset('js/pace/pace.min.js') }}"></script>
 <!-- skycons -->
 <script src="{{ asset('js/skycons/skycons.min.js') }}"></script>
+
+<!-- AJax -->
+<link href="{{ asset('js/ajax/ajaxSximo.css')}}" rel="stylesheet">
+<script type="text/javascript" src="{{ asset('js/ajax/ajaxSximo.js') }}"></script>
 
 @yield('js_section');
 

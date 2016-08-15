@@ -74,16 +74,14 @@ class Schooledge extends Model {
         {
 			
             // Insert Here 
-			if(isset($data['createdOn'])) $data['createdOn'] = date("Y-m-d H:i:s");	
-			if(isset($data['updatedOn'])) $data['updatedOn'] = date("Y-m-d H:i:s");	
-			 $id = \DB::table( $table)->insertGetId($data);				
+			if(isset($data['_token'])) unset($data['_token']);
+			 $id = \DB::table( $table)->insertGetId($data);
             
         } else {
             // Update here 
 			// update created field if any
-			if(isset($data['createdOn'])) unset($data['createdOn']);
+			if(isset($data['_token'])) unset($data['_token']);
 			if(isset($data['created_at'])) unset($data['created_at']);
-			if(isset($data['updatedOn'])) $data['updatedOn'] = date("Y-m-d H:i:s");
 			if(isset($data['updated_at'])) $data['updated_at'] = date("Y-m-d H:i:s");
 			\DB::table($table)->where($key,$id)->update($data);
         }    
@@ -92,7 +90,12 @@ class Schooledge extends Model {
 
 	static function makeInfo( $id )
 	{	
-		$row =  \DB::table('tb_module')->where('module_name', $id)->get();
+		$row =  \DB::table('tb_module')->where('name', $id)->get();
+		$data = array(
+			'id' => $row[0]->id
+		);
+		return $data;
+		/*
 		$data = array();
 		foreach($row as $r)
 		{
@@ -125,7 +128,7 @@ class Schooledge extends Model {
 					
 		}
 		return $data;
-			
+		*/
 	
 	} 
 
@@ -178,16 +181,16 @@ class Schooledge extends Model {
 	function validAccess( $id)
 	{
 
-		$row = \DB::table('tb_groups_access')->where('module_id','=', $id)
+		$row = \DB::table('tb_group_access')->where('module_id','=', $id)
 				->where('group_id','=', \Session::get('gid'))
 				->get();
 		
 		if(count($row) >= 1)
 		{
 			$row = $row[0];
-			if($row->access_data !='')
+			if($row->data_access !='')
 			{
-				$data = json_decode($row->access_data,true);
+				$data = json_decode($row->data_access,true);
 			} else {
 				$data = array();
 			}	
