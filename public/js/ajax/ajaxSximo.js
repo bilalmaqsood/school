@@ -152,7 +152,7 @@ function ajaxViewDetail( id , url )
 		var w = $(window); 
 		var duration = 300;
 		$('html, body').animate({scrollTop: 0}, duration);
-		$('.ajaxLoading').hide();
+		//$('.ajaxLoading').hide();
 	});
 		
 }

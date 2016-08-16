@@ -9,6 +9,7 @@
         <div class="x_content">
             <br />
             {!! Form::open(array('url'=>'teacher/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
+            {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Last Name * :</label>
                 {!! Form::text('last_name', $row['last_name'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
