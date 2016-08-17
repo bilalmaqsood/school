@@ -37,28 +37,64 @@
                         <a href="{ URL::to('dashboard') }}"><i class="fa fa-graduation-cap"></i>Teachers</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-file-code-o"></i>Classes</a>
+                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-users"></i>Parents</a>
+                    </li>
+                    <li>
+                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-table"></i>Classes</a>
                     </li>
                     <li>
                         <a href="{ URL::to('dashboard') }}"><i class="fa fa-book"></i>Subjects</a>
                     </li>
                     <li>
+                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-table"></i>Classes Schedule</a>
+                    </li>
+                    <li>
+                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-table"></i>School Calender</a>
+                    </li>
+                    <li>
                         <a href="{ URL::to('dashboard') }}"><i class="fa fa-newspaper-o"></i>News</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-bars"></i>Events</a>
+                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-bullhorn"></i>Events</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-bank"></i>Finance</a>
-                    </li>
-                    <li>
-                        <a><i class="fa fa-cog"></i> Others <span class="fa fa-chevron-down"></span></a>
+                        <a><i class="fa fa-book"></i> Grading System <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
                             <li><a href="page_404.html">General Settings</a>
                             </li>
                             <li><a href="page_500.html">Permission Settings</a>
                             </li>
                         </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-university"></i> Finance <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            <li><a href="page_404.html">Fees Payment</a>
+                            </li>
+                            <li><a href="page_500.html">Receipt</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-asterisk"></i>Administrator Task <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            <li><a href="page_404.html">General Setting</a>
+                            </li>
+                            <li><a href="page_500.html">Backup & Restore</a>
+                            </li>
+                            <li><a href="page_500.html">Manage School Year</a>
+                            </li>
+                            <li><a href="page_500.html">Manage School Year</a>
+                            </li>
+                            <li><a href="page_500.html">Module</a>
+                            </li>
+                            <li><a href="page_500.html">User Role</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-file-image-o"></i>Media Center</a>
                     </li>
                 </ul>
             </div>
