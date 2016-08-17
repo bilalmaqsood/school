@@ -1578,4 +1578,21 @@ class SiteHelpers
         \DB::table('tb_notification')->insert($args);
     }
 
+    static function getGender($gender)
+    {
+        if($gender == 1)
+            return 'Male';
+        elseif($gender == 2)
+            return 'Female';
+        return '';
+    }
+
+    static function getAge($date_of_birth)
+    {
+        $from = new DateTime($date_of_birth);
+        $to   = new DateTime('today');
+        if($from->diff($to)->y != date('Y'))
+            return $from->diff($to)->y;
+        return '';
+    }
 }
