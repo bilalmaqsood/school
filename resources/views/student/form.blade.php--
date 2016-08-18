@@ -26,10 +26,10 @@
 
           <div class="row">
 
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Student Profile</h2>
+                  <h2>Personal Details</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -47,140 +47,92 @@
                   </ul>
                   <div class="clearfix"></div>
                 </div>
-                  
-               <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-
-                    <div class="profile_img">
-
-                      <!-- end of image cropping -->
-                      <div id="crop-avatar">
-                        <!-- Current avatar -->
-                        <img class="img-responsive avatar-view" src="{{asset('images/picture.jpg')}}" alt="Avatar" title="" data-original-title="Change the avatar">
-
-                        <!-- Cropping modal -->
-                        <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
-                          <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                              <form class="avatar-form" action="crop.php" enctype="multipart/form-data" method="post">
-                                <div class="modal-header">
-                                  <button class="close" data-dismiss="modal" type="button">×</button>
-                                  <h4 class="modal-title" id="avatar-modal-label">Change Avatar</h4>
-                                </div>
-                                <div class="modal-body">
-                                  <div class="avatar-body">
-
-                                    <!-- Upload image and data -->
-                                    <div class="avatar-upload">
-                                      <input class="avatar-src" name="avatar_src" type="hidden">
-                                      <input class="avatar-data" name="avatar_data" type="hidden">
-                                      <label for="avatarInput">Local upload</label>
-                                      <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
-                                    </div>
-
-                                    <!-- Crop and preview -->
-                                    <div class="row">
-                                      <div class="col-md-9">
-                                        <div class="avatar-wrapper"></div>
-                                      </div>
-                                      <div class="col-md-3">
-                                        <div class="avatar-preview preview-lg"></div>
-                                        <div class="avatar-preview preview-md"></div>
-                                        <div class="avatar-preview preview-sm"></div>
-                                      </div>
-                                    </div>
-
-                                    <div class="row avatar-btns">
-                                      <div class="col-md-9">
-                                        <div class="btn-group">
-                                          <button class="btn btn-primary" data-method="rotate" data-option="-90" type="button" title="Rotate -90 degrees">Rotate Left</button>
-                                          <button class="btn btn-primary" data-method="rotate" data-option="-15" type="button">-15deg</button>
-                                          <button class="btn btn-primary" data-method="rotate" data-option="-30" type="button">-30deg</button>
-                                          <button class="btn btn-primary" data-method="rotate" data-option="-45" type="button">-45deg</button>
-                                        </div>
-                                        <div class="btn-group">
-                                          <button class="btn btn-primary" data-method="rotate" data-option="90" type="button" title="Rotate 90 degrees">Rotate Right</button>
-                                          <button class="btn btn-primary" data-method="rotate" data-option="15" type="button">15deg</button>
-                                          <button class="btn btn-primary" data-method="rotate" data-option="30" type="button">30deg</button>
-                                          <button class="btn btn-primary" data-method="rotate" data-option="45" type="button">45deg</button>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                        <button class="btn btn-primary btn-block avatar-save" type="submit">Done</button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!-- <div class="modal-footer">
-                                                  <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                                                </div> -->
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- /.modal -->
-
-                        <!-- Loading state -->
-                        <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
-                      </div>
-                      <!-- end of image cropping -->
-
-                    </div>
-                    <h3>Samuel Doe</h3>
-
-                    <ul class="list-unstyled user_data">
-                      <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
-                      </li>
-
-                      <li>
-                        <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
-                      </li>
-
-                      <li class="m-top-xs">
-                        <i class="fa fa-external-link user-profile-icon"></i>
-                        <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
-                      </li>
-                    </ul>
-
-                    <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
-                    <br>
-
-                    
-
-                  </div>
-
-
-                <div class="col-md-9 col-sm-9 col-xs-12">    
                 <div class="x_content">
+                  
 
+                {!! Form::open(
+                    array(
+                    'url'=>'student/save/',
+                    'method' => 'post',
+                     'class'=>'form-horizontal form-label-left input_mask',
+                     'files' => true ,
+                     'parsley-validate'=>true,
+                     'novalidate'=>' ',
+                     'id'=> 'customerFormAjax')
+                     ) !!}
 
-                  <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                      <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Personal Details</a>
-                      </li>
-                      <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Parent Details</a>
-                      </li>
-                    {{--   <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profile</a>
-                      </li> --}}
-                    </ul>
-                    <div id="myTabContent" class="tab-content">
-                      <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-
-                      <label for="">Last Name</label> <span> maqsood</span>
-
-                      </div>
-                      <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
-                          booth letterpress, commodo enim craft beer mlkshk aliquip</p>
-                      </div>
-                      
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                    <label>Last name *:</label>
+                    {!! Form::text('last_name', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Last Name','required'=>'required' )) !!}
+   
                     </div>
-                  </div>
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                    <label>Middle name *:</label>
+                     {!! Form::text('middle_name', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Middle Name','required'=>'required' )) !!}
+            
+                    </div>
 
+
+
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>First name *:</label>
+                    {!! Form::text('first_name', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'First Name','required'=>'required' )) !!}
+              </div>
+
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                      <label>Gender *:</label>
+                    <p>
+                      M:
+                      <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
+                      <input type="radio" class="flat" name="gender" id="genderF" value="F" />
+                    </p>
+
+                    </div>
+                     <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>Date of Birth *:</label>
+                    {!! Form::text('date_of_birth', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Date of Birth','required'=>'required' )) !!}
+                </div>
+                     <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>Country of Origin *:</label>
+                    {!! Form::text('county_of_origin', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Country of Origin','required'=>'required' )) !!}
+               </div>
+                    <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>Nationality *:</label>
+                    {!! Form::text('nationality', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Nationality','required'=>'required' )) !!}
+                    
+                    </div>
+                     <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>Religion *:</label>
+                    {!! Form::text('religion', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Religion ','required'=>'required' )) !!}
+                 </div>
+                     <div class=" item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="control-group">
+                          <div class="controls">
+
+                <label>Admission Date *:</label>
+                <div class=" xdisplay_inputx form-group has-feedback">
+            
+                 {!! Form::text('admission_date', "", /* $row['id'],*/ array('id'=>'admission_date','class'=>'form-control has-feedback-left','aria-describedby' => 'inputSuccess2Status' ,'placeholder'=>'Admission Date','required'=>'required' )) !!}<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
+
+                   
+                      
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+ 
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-primary">Cancel</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                      </div>
+                    </div>
+
+                  {{-- </form> --}}
                 </div>
               </div>
-
               </div>
-            </div>
 
             </div>
           </div>

@@ -1,15 +1,27 @@
 @extends('layouts.app')
-
 @section('content')
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>{{ $pageTitle }} <small>{{ $pageNote }}</small></h3>
+            </div>
+            <div class="title_right">
 
-    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
-        {{-- <h1>{{ Lang::get('customer.title') }}</h1> --}}
-
-<a href="{{route('')}}" class="btn btn-sm"> Add Student</a>
-
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    <!-- Begin Content -->
+    <div class="row">
+        <div class="resultData"></div>
+        <div class="ajaxLoading"></div>
+        <div id="{{ $pageModule }}View"></div>
+        <div id="{{ $pageModule }}Grid"></div>
     </div>
- 
-
-
+    <!-- End Content -->
+    </div>
+    <script>
+        $(document).ready(function(){
+            reloadData('#{{ $pageModule }}','{{ $pageModule }}/data');
+        });
+    </script>
 @endsection
-
