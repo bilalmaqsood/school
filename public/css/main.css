@@ -9,4 +9,12 @@
 .form-control-feedback.left {
     left: 0px;
 }
-
+table.personal_details{
+	margin-top: 15px;
+	width: 100%
+}
+table.personal_details td{
+	width: 30%;
+	text-align: left;
+	padding: 8px 15px;
+}

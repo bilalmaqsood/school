@@ -7,7 +7,7 @@
           <div class="page-title">
             <div class="title_left">
               <h3>
-                    New Admission
+                    Student Profile
                 </h3>
             </div>
 
@@ -165,12 +165,94 @@
                     <div id="myTabContent" class="tab-content">
                       <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
 
-                      <label for="">Last Name</label> <span> maqsood</span>
+                       
+
+                      <table class="personal_details" >
+                        
+                        <tr>
+                          <td><label>Last Name</label></td>
+                          <td>{{$row['last_name']}}</td>
+                          <td><label>City</label></td>
+                          <td>{{$row['city']}}</td>
+                        </tr>
+
+                        <tr>
+                          <td><label >Middle Name </label>  </td>
+                          <td>{{$row['middle_name']}}</td>
+                          <td><label>Country </label> </td>
+                          <td>{{$row['country']}}</td>
+                        </tr> 
+                        <tr>
+                          <td><label>First Name</label></td>
+                          <td>{{$row['first_name']}}</td>
+                          <td><label>Phone No</label></td>
+                          <td>{{$row['phone_number']}}</td>
+                        </tr>
+                        <tr>
+                          <td><label>Relationship to Student</label></td>
+                          <td>Undefine</td>
+                          <td><label>Mobile No</label></td>
+                          <td>{{$row['phone_number']}}</td>
+                        </tr>
+                        <tr>
+                          <td><label>Occupation</label></td>
+                          <td>{{$row['occupcation']}}</td>
+                          <td><label>Email Address</label></td>
+                          <td>{{$row['email']}}</td>
+                        </tr>
+                        <tr>
+                          <td><label>Community</label></td>
+                          <td>Undefine</td>
+                        </tr>
+
+                      </table>
+                      
+
+
+
+
 
                       </div>
                       <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
-                          booth letterpress, commodo enim craft beer mlkshk aliquip</p>
+                        <table class="personal_details" >
+                        
+                        <tr>
+                          <td><label>Last Name</label></td>
+                          <td>{{$row['last_name']}}</td>
+                          <td><label>City</label></td>
+                          <td>{{$row['city']}}</td>
+                        </tr>
+
+                        <tr>
+                          <td><label >Middle Name </label>  </td>
+                          <td>{{$row['middle_name']}}</td>
+                          <td><label>Country </label> </td>
+                          <td>{{$row['country']}}</td>
+                        </tr> 
+                        <tr>
+                          <td><label>First Name</label></td>
+                          <td>{{$row['first_name']}}</td>
+                          <td><label>Phone No</label></td>
+                          <td>{{$row['phone_number']}}</td>
+                        </tr>
+                        <tr>
+                          <td><label>Relationship to Student</label></td>
+                          <td>Undefine</td>
+                          <td><label>Mobile No</label></td>
+                          <td>{{$row['phone_number']}}</td>
+                        </tr>
+                        <tr>
+                          <td><label>Occupation</label></td>
+                          <td>{{$row['occupcation']}}</td>
+                          <td><label>Email Address</label></td>
+                          <td>{{$row['email']}}</td>
+                        </tr>
+                        <tr>
+                          <td><label>Community</label></td>
+                          <td>Undefine</td>
+                        </tr>
+
+                      </table>
                       </div>
                       
                     </div>

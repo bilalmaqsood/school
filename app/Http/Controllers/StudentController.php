@@ -68,7 +68,7 @@ class StudentController extends Controller
 
     }
 
-    function getUpdate(Request $request, $id = null)
+    function getUpdate(Request $request, $id = 2)
     {
 
         if($id =='')
