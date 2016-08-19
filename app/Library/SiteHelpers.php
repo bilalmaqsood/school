@@ -1595,4 +1595,20 @@ class SiteHelpers
             return $from->diff($to)->y;
         return '';
     }
+
+    static function breakString($string)
+    {
+        if (strlen($string) > 100) {
+            $string = substr($string, 0, 40).' ...';
+        }
+        return $string;
+    }
+
+    static function getUserName($id)
+    {
+        $result = DB::select("Select first_name, last_name from tb_users where id = $id");
+        if(count($result) > 0)
+            return $result[0]->last_name.' '.$result[0]->first_name;
+        return '';
+    }
 }

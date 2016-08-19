@@ -10,3 +10,9 @@
     left: 0px;
 }
 
+.calender-icon {
+	margin-left: 10px !important;
+}
+.calender-width {
+	width: 255px !important;
+}
