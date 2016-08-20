@@ -24,4 +24,10 @@ class Division extends Schooledge {
     public static function queryGroup(){
         return "  ";
     }
+
+    public function classes(){
+
+        return $this->hasMany('App\Models\Classes');
+
+    }
 }

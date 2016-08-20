@@ -1,29 +1,30 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Division;
+use App\Models\Classes;
 use App\Http\Controllers\Controller;
+use App\Models\Division;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ;
 
-class DivisionController extends Controller
+class ClassController extends Controller
 {
     protected $layout = "layouts.main";
     protected $data = array();
-    public $module = 'division';
+    public $module = 'class';
     static $per_page	= '10';
 
     public function __construct()
     {
         parent::__construct();
-        $this->model = new Division();
+        $this->model = new Classes();
         $this->info = $this->model->makeInfo($this->module);
         $this->access = $this->model->validAccess($this->info['id']);
         $this->data = array(
-            'pageTitle'			=> 	'Division',
-            'pageNote'			=>  'View All Divisions',
-            'pageModule'		=> 'division',
-            'pageUrl'			=>  url('division'),
+            'pageTitle'			=> 	'Class',
+            'pageNote'			=>  'View All Classes',
+            'pageModule'		=> 'class',
+            'pageUrl'			=>  url('class'),
             'return' 			=> 	self::returnUrl()
         );
 
@@ -31,16 +32,19 @@ class DivisionController extends Controller
 
     public function getIndex()
     {
-        /*$divisions = Division::find(1)->classes;
+        /*$divisions = Classes::all();
         foreach($divisions as $division){
-            echo $division->name;
+            echo $division->division->name;
         }
+        exit;*/
+        /*$divisions = Classes::find(1)->division;
+        print_r($divisions->name);
         exit;*/
         if($this->access['is_view'] ==0)
             return Redirect::to('dashboard');
 
         $this->data['access']   = $this->access;
-        return view('division.index',$this->data);
+        return view('class.index',$this->data);
     }
 
     public function postData( Request $request)
@@ -62,13 +66,15 @@ class DivisionController extends Controller
             'global'	=> (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
         // Get Query
-        $results = $this->model->getRows( $params );
+        //$results = $this->model->getRows( $params );
+        $results = $this->model->getRecords( $params );
 
         $this->data['rowData']		= $results['rows'];
+
         // Group users permission
         $this->data['access']		= $this->access;
         // Render into template
-        return view('division.table',$this->data);
+        return view('class.table',$this->data);
 
     }
 
@@ -92,11 +98,14 @@ class DivisionController extends Controller
         {
             $this->data['row'] 		=  $row;
         } else {
-            $this->data['row'] 		= $this->model->getColumnTable('tb_division');
+            $this->data['row'] 		= $this->model->getColumnTable('tb_class');
         }
+        //var_dump($row);
+        //exit;
         $this->data['id'] = $id;
+        $this->data['divisions'] = Division::lists('name','id');
 
-        return view('division.form',$this->data);
+        return view('class.form',$this->data);
     }
 
 
@@ -179,7 +188,7 @@ class DivisionController extends Controller
 
         $this->data['id'] = $id;
         $this->data['access']		= $this->access;
-        return view('division.view',$this->data);
+        return view('class.view',$this->data);
     }
 
 }

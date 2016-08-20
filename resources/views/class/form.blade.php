@@ -1,21 +1,25 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>New Division</h2>
+            <h2>New Class</h2>
             <li><a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
             </li>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
             <br />
-            {!! Form::open(array('url'=>'division/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
+            {!! Form::open(array('url'=>'class/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
             {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
-
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="name">Name * :</label>
                 {!! Form::text('name', $row['name'],array('class'=>'form-control', 'placeholder'=>'Name', 'required' => true)) !!}
             </div>
 
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="name">Division * :</label>
+                {!! Form::select('division_id', $divisions,$row['division_id'],array('class'=>'form-control', 'placeholder'=>'Select Division', 'required' => true)) !!}
+
+            </div>
 
             <div class="ln_solid"></div>
             <div class="clearfix"></div>
