@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\student;
+use App\Models\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -12,7 +12,6 @@ class StudentController extends Controller
     protected $data = array();
     public $module = 'student';
     static $per_page	= '10';
-    protected $model;
 
     public function __construct()
     {
@@ -36,11 +35,15 @@ class StudentController extends Controller
             return Redirect::to('dashboard');
 
         $this->data['access']		= $this->access;
+
+
         return view('student.index',$this->data);
     }
 
     public function postData( Request $request)
     {
+        die("calle");
+
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'desc');
         $order = (!is_null($request->input('order')) ? $request->input('order') : '');
         // End Filter sort and order for query
@@ -175,6 +178,9 @@ class StudentController extends Controller
 
         $this->data['id'] = $id;
         $this->data['access']		= $this->access;
+
+            // dd($this->data);
+
         return view('student.view',$this->data);
     }
 
