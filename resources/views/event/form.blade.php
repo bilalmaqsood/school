@@ -55,7 +55,7 @@
                 <div class="col-md-3 col-sm-3 col-xs-6 calender-width">
                     <input name="end_datetime" value="{{$row['end_datetime']}}" type="text"
                            class="form-control has-feedback-left" id="end_datetime" placeholder="End Date & Time"
-                           aria-describedby="inputSuccess2Status2">
+                           aria-describedby="inputSuccess2Status2" required="required">
                     <span class="fa fa-calendar-o form-control-feedback left calender-icon" aria-hidden="true"></span>
                 </div>
             </div>
