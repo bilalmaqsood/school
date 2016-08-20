@@ -174,4 +174,19 @@ class EventController extends Controller
         return view('event.view',$this->data);
     }
 
+    public function getShowCalendar()
+    {
+        $events = Event::all();
+        $data = array();
+        foreach($events as $event)
+        {
+            $data[] = array(
+                'title' => $event->title,
+                'start' => $event->start_datetime,
+                'end' => $event->end_datetime,
+            );
+        }
+        $this->data['events'] = json_encode($data);
+        return view('event.calendar', $this->data);
+    }
 }

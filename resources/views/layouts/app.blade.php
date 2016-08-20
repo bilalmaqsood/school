@@ -30,7 +30,11 @@
     <link href="{{ asset('js/datatables/fixedHeader.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('js/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('js/datatables/scroller.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
+    <!-- calender -->
+    <link href="{{ asset('css/calendar/fullcalendar.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/calendar/fullcalendar.print.css') }}" rel="stylesheet" media="print">
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/nprogress.js') }}"></script>
 
@@ -100,7 +104,8 @@
 <script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/datatables/dataTables.scroller.min.js') }}"></script>
-
+<script src="{{ asset('js/calendar/fullcalendar.min.js') }}"></script>
+<script src="{{ asset('js/datetimepicker.min.js') }}"></script>
 <!-- pace -->
 <script src="{{ asset('js/pace/pace.min.js') }}"></script>
 <!-- skycons -->

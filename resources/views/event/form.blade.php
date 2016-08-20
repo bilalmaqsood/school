@@ -124,19 +124,24 @@
             }
         }
         $(document).ready(function () {
-            $('#start_datetime').daterangepicker({
-                singleDatePicker: true,
-                calender_style: "picker_2"
-            }, function (start, end, label) {
-                console.log(start.toISOString(), end.toISOString(), label);
-            });
-            $('#end_datetime').daterangepicker({
-                singleDatePicker: true,
-                calender_style: "picker_2"
-            }, function (start, end, label) {
-                console.log(start.toISOString(), end.toISOString(), label);
+            $("#start_datetime").datetimepicker({
+                todayBtn:  1,
+                format: 'yyyy-mm-dd hh:ii:ss',
+                autoclose: true,
+                startDate: new Date()
+            }).on('changeDate', function (selected) {
+                console.log(selected.date);
+                var minDate = new Date(selected.date.valueOf());
+                $('#end_datetime').datetimepicker('setStartDate', minDate);
             });
 
+            $("#end_datetime").datetimepicker({
+                        format: 'yyyy-mm-dd hh:ii:ss',
+            })
+                    .on('changeDate', function (selected) {
+                        var minDate = new Date(selected.date.valueOf());
+                        $('#start_datetime').datetimepicker('setEndDate', minDate);
+                    });
         });
 
     </script>

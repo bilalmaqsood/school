@@ -3,7 +3,7 @@ namespace App\Models;
 
 class Event extends Schooledge {
 
-    protected $table = 'tb_news';
+    protected $table = 'tb_event';
     protected $primaryKey = 'id';
 
     public function __construct()
