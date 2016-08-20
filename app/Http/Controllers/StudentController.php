@@ -35,15 +35,11 @@ class StudentController extends Controller
             return Redirect::to('dashboard');
 
         $this->data['access']		= $this->access;
-
-
         return view('student.index',$this->data);
     }
 
     public function postData( Request $request)
     {
-        die("calle");
-
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'desc');
         $order = (!is_null($request->input('order')) ? $request->input('order') : '');
         // End Filter sort and order for query
