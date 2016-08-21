@@ -28,34 +28,34 @@
 
                 <ul class="nav side-menu">
                     <li>
-                        <a href="javascript:void(0)"><i class="fa fa-home"></i>Dashboard</a>
+                        <a href="javascript:void(0)"><i class="fa fa-home"></i>Test Dashboard</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-users"></i>Students</a>
+                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-users"></i>Students</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-graduation-cap"></i>Teachers</a>
+                        <a href="{{ URL::to('teacher') }}"><i class="fa fa-graduation-cap"></i>Teachers</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-users"></i>Parents</a>
+                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-users"></i>Parents</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-table"></i>Classes</a>
+                        <a href="{{ URL::to('class') }}"><i class="fa fa-table"></i>Classes</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-book"></i>Subjects</a>
+                        <a href="{{ URL::to('subject') }}"><i class="fa fa-book"></i>Subjects</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-table"></i>Classes Schedule</a>
+                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-table"></i>Classes Schedule</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-table"></i>School Calender</a>
+                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-table"></i>School Calender</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-newspaper-o"></i>News</a>
+                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-newspaper-o"></i>News</a>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-bullhorn"></i>Events</a>
+                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-bullhorn"></i>Events</a>
                     </li>
                     <li>
                         <a><i class="fa fa-book"></i> Grading System <span class="fa fa-chevron-down"></span></a>
@@ -94,7 +94,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{ URL::to('dashboard') }}"><i class="fa fa-file-image-o"></i>Media Center</a>
+                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-file-image-o"></i>Media Center</a>
                     </li>
                 </ul>
             </div>
