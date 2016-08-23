@@ -18,3 +18,10 @@ table.personal_details td{
 	text-align: left;
 	padding: 8px 15px;
 }
+
+.calender-icon {
+	margin-left: 10px !important;
+}
+.calender-width {
+	width: 235px !important;
+}

@@ -73,13 +73,17 @@ class Schooledge extends Model {
 	   $key = with(new static)->primaryKey;
 	    if($id == NULL )
         {
-			
-            // Insert Here 
+			// Insert Here
 			if(isset($data['_token'])) unset($data['_token']);
-			 $id = \DB::table( $table)->insertGetId($data);
+			$data['created_by'] = \Session::get('uid');
+			if(isset($data['updated_at'])) unset($data['updated_at']);
+			if(isset($data['created_at'])) $data['created_at'] = date("Y-m-d H:i:s");
+			$id = \DB::table( $table)->insertGetId($data);
             
         } else {
-            // Update here 
+            // Update here
+			// updated_by field keep track user id
+			$data['updated_by'] = \Session::get('uid');
 			// update created field if any
 			if(isset($data['_token'])) unset($data['_token']);
 			if(isset($data['created_at'])) unset($data['created_at']);
@@ -90,7 +94,7 @@ class Schooledge extends Model {
 	}			
 
 	static function makeInfo( $id )
-	{	
+	{
 		$row =  \DB::table('tb_module')->where('name', $id)->get();
 		$data = array(
 			'id' => $row[0]->id
