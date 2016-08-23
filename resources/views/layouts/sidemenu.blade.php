@@ -28,7 +28,7 @@
 
                 <ul class="nav side-menu">
                     <li>
-                        <a href="javascript:void(0)"><i class="fa fa-home"></i>Test Dashboard</a>
+                        <a href="javascript:void(0)"><i class="fa fa-home"></i>Dashboard</a>
                     </li>
                     <li>
                         <a href="{{ URL::to('student') }}"><i class="fa fa-users"></i>Students</a>
@@ -40,13 +40,24 @@
                         <a href="{{ URL::to('dashboard') }}"><i class="fa fa-users"></i>Parents</a>
                     </li>
                     <li>
+                        <a href="{{ URL::to('division') }}"><i class="fa fa-table"></i>Divisions</a>
+                    </li>
+                    <li>
                         <a href="{{ URL::to('class') }}"><i class="fa fa-table"></i>Classes</a>
                     </li>
                     <li>
                         <a href="{{ URL::to('subject') }}"><i class="fa fa-book"></i>Subjects</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-table"></i>Classes Schedule</a>
+                        <a><i class="fa fa-table"></i> Classes Schedule <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            <li><a href="{{ URL::to('period') }}">Periods Management</a>
+                            </li>
+                            <li><a href="{{ URL::to('schedule') }}">Classes Schedule</a>
+                            </li>
+                            <li><a href="{{ URL::to('schedule') }}">Classes Schedule List</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="{{ URL::to('dashboard') }}"><i class="fa fa-table"></i>School Calender</a>
