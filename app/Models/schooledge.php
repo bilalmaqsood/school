@@ -53,7 +53,8 @@ class Schooledge extends Model {
 	   $key = with(new static)->primaryKey;
 
 		$result = \DB::select( 
-				self::querySelect() . 
+				self::querySelect() .
+				self::queryJoin() .
 				self::queryWhere().
 				" AND ".$table.".".$key." = '{$id}' ". 
 				self::queryGroup()
