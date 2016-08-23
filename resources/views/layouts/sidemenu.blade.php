@@ -31,7 +31,7 @@
                         <a href="javascript:void(0)"><i class="fa fa-home"></i>Test Dashboard</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-users"></i>Students</a>
+                        <a href="{{ URL::to('student') }}"><i class="fa fa-users"></i>Students</a>
                     </li>
                     <li>
                         <a href="{{ URL::to('teacher') }}"><i class="fa fa-graduation-cap"></i>Teachers</a>
@@ -52,10 +52,10 @@
                         <a href="{{ URL::to('dashboard') }}"><i class="fa fa-table"></i>School Calender</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-newspaper-o"></i>News</a>
+                        <a href="{{ URL::to('news') }}"><i class="fa fa-newspaper-o"></i>News</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dashboard') }}"><i class="fa fa-bullhorn"></i>Events</a>
+                        <a href="{{ URL::to('event') }}"><i class="fa fa-bullhorn"></i>Events</a>
                     </li>
                     <li>
                         <a><i class="fa fa-book"></i> Grading System <span class="fa fa-chevron-down"></span></a>
