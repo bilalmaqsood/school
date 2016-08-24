@@ -43,6 +43,5 @@ class ClassSchedule extends Schooledge {
             Order By day_of_week");
 
         return $result;
-
     }
 }

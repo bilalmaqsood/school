@@ -34,9 +34,9 @@ class ScheduleController extends Controller
 
     public function getIndex()
     {
-        $results = $this->model->classSchedule();
+        /*$results = $this->model->classSchedule();
         var_dump($results);
-        exit;
+        exit;*/
         if($this->access['is_view'] ==0)
             return Redirect::to('dashboard');
 
