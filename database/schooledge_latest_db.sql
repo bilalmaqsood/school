@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2016 at 09:41 AM
+-- Generation Time: Aug 25, 2016 at 07:29 AM
 -- Server version: 5.7.9
 -- PHP Version: 5.6.15
 
@@ -146,6 +146,8 @@ INSERT INTO `tb_event` (`id`, `title`, `body`, `venue`, `created_by`, `updated_b
 DROP TABLE IF EXISTS `tb_grade`;
 CREATE TABLE IF NOT EXISTS `tb_grade` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
   `first_term` double DEFAULT NULL,
   `second_term` double DEFAULT NULL,
   `third_term` double DEFAULT NULL,
@@ -155,10 +157,11 @@ CREATE TABLE IF NOT EXISTS `tb_grade` (
   `fifth_term` double DEFAULT NULL,
   `sixth_term` double DEFAULT NULL,
   `second_exam` double DEFAULT NULL,
-  `second_avg` double DEFAULT NULL,
   `final` double DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -282,6 +285,26 @@ CREATE TABLE IF NOT EXISTS `tb_news` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_payment`
+--
+
+DROP TABLE IF EXISTS `tb_payment`;
+CREATE TABLE IF NOT EXISTS `tb_payment` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `total_amount` int(11) NOT NULL,
+  `due_amount` int(11) NOT NULL,
+  `purpose` text NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
