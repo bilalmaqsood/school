@@ -31,7 +31,7 @@ class Schooledge extends Model {
 		// End Update permission global / own access new ver 1.1
 
 		$rows = array();
-	    $result = \DB::select( self::querySelect() . self::queryWhere(). "
+	    $result = \DB::select( self::querySelect() .self::queryJoin() . self::queryWhere(). "
 				{$params} ". self::queryGroup() ." {$orderConditional}  {$limitConditional} ");
 		
 		if($key =='' ) { $key ='*'; } else { $key = $table.".".$key ; }	
