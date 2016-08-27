@@ -108,4 +108,15 @@ class Controller extends BaseController
         }
         return $rules ;
     }
+        function validateListError( $rules )
+    {
+        $errMsg = \Lang::get('core.note_error') ;
+        $errMsg .= '<hr /> <ul>';
+        foreach($rules as $key=>$val)
+        {
+            $errMsg .= '<li>'.$key.' : '.$val[0].'</li>';
+        }
+        $errMsg .= '</li>'; 
+        return $errMsg;
+    }
 }

@@ -30,9 +30,11 @@
     <link href="{{ asset('js/datatables/fixedHeader.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('js/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('js/datatables/scroller.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/nprogress.js') }}"></script>
+    
 
 </head>
 

@@ -6,7 +6,6 @@
                 <h3>{{ $pageTitle }} <small>{{ $pageNote }}</small></h3>
             </div>
             <div class="title_right">
-
             </div>
         </div>
         <div class="clearfix"></div>
