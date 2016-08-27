@@ -28,7 +28,4 @@ class Parents extends Schooledge  {
         return "  ";
     }
 
-    public function getStudent(){
-
-    }
 }
