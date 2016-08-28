@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
-
+use Illuminate\Http\Request;
 class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
@@ -108,15 +108,61 @@ class Controller extends BaseController
         }
         return $rules ;
     }
-        function validateListError( $rules )
+
+
+    function validateListError( $rules )
     {
-        $errMsg = \Lang::get('core.note_error') ;
+        $errMsg = \Lang::get('core.note_error');
         $errMsg .= '<hr /> <ul>';
-        foreach($rules as $key=>$val)
-        {
-            $errMsg .= '<li>'.$key.' : '.$val[0].'</li>';
+        foreach ($rules as $key => $val) {
+            $errMsg .= '<li>' . $key . ' : ' . $val[0] . '</li>';
         }
-        $errMsg .= '</li>'; 
+        $errMsg .= '</li>';
         return $errMsg;
+    }
+
+    function validatePost(  $table )
+    {
+        $request = new Request;
+        return $request->all();
+        /*
+        $request = new Request;
+        if(!is_null(Input::file($field)))
+        {
+
+            $file = Input::file($field);
+            $destinationPath = public_path(). $f['option']['path_to_upload'];
+            $filename = $file->getClientOriginalName();
+            $extension =$file->getClientOriginalExtension(); //if you need extension of the file
+            $rand = rand(1000,100000000);
+            $newfilename = strtotime(date('Y-m-d H:i:s')).'-'.$rand.'.'.$extension;
+            $uploadSuccess = $file->move($destinationPath, $newfilename);
+            if($f['option']['resize_width'] != '0' && $f['option']['resize_width'] !='')
+            {
+                if( $f['option']['resize_height'] ==0 )
+                {
+                    $f['option']['resize_height']	= $f['option']['resize_width'];
+                }
+                $orgFile = $destinationPath.'/'.$newfilename;
+                \SiteHelpers::cropImage($f['option']['resize_width'] , $f['option']['resize_height'] , $orgFile ,  $extension,	 $orgFile)	;
+            }
+
+            if( $uploadSuccess ) {
+                $data[$field] = $newfilename;
+            }
+        } else {
+            unset($data[$field]);
+        }
+
+        $global	= (isset($this->access['is_global']) ? $this->access['is_global'] : 0 );
+
+        if($global == 0 )
+            $data['entry_by'] = \Session::get('uid');
+        */
+        return $data;
+    }
+    public function changeDateTimeFormat($date)
+    {
+        return date("Y-m-d H:i:s", strtotime($date));
     }
 }

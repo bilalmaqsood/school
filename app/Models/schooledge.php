@@ -31,7 +31,7 @@ class Schooledge extends Model {
 		// End Update permission global / own access new ver 1.1
 
 		$rows = array();
-	    $result = \DB::select( self::querySelect() . self::queryWhere(). " 
+	    $result = \DB::select( self::querySelect() . self::queryWhere(). "
 				{$params} ". self::queryGroup() ." {$orderConditional}  {$limitConditional} ");
 		
 		if($key =='' ) { $key ='*'; } else { $key = $table.".".$key ; }	
@@ -53,7 +53,8 @@ class Schooledge extends Model {
 	   $key = with(new static)->primaryKey;
 
 		$result = \DB::select( 
-				self::querySelect() . 
+				self::querySelect() .
+				self::queryJoin() .
 				self::queryWhere().
 				" AND ".$table.".".$key." = '{$id}' ". 
 				self::queryGroup()
@@ -73,13 +74,17 @@ class Schooledge extends Model {
 	   $key = with(new static)->primaryKey;
 	    if($id == NULL )
         {
-			
-            // Insert Here 
+			// Insert Here
 			if(isset($data['_token'])) unset($data['_token']);
-			 $id = \DB::table( $table)->insertGetId($data);
+			$data['created_by'] = \Session::get('uid');
+			if(isset($data['updated_at'])) unset($data['updated_at']);
+			if(isset($data['created_at'])) $data['created_at'] = date("Y-m-d H:i:s");
+			$id = \DB::table( $table)->insertGetId($data);
             
         } else {
-            // Update here 
+            // Update here
+			// updated_by field keep track user id
+			$data['updated_by'] = \Session::get('uid');
 			// update created field if any
 			if(isset($data['_token'])) unset($data['_token']);
 			if(isset($data['created_at'])) unset($data['created_at']);
@@ -90,7 +95,7 @@ class Schooledge extends Model {
 	}			
 
 	static function makeInfo( $id )
-	{	
+	{
 		$row =  \DB::table('tb_module')->where('name', $id)->get();
 		$data = array(
 			'id' => $row[0]->id
@@ -233,6 +238,43 @@ class Schooledge extends Model {
 	    foreach(\DB::select("SHOW COLUMNS FROM $table") as $column)
 		    $columns[$column->Field] = $column->Field;
         return $columns;
-	}	
+	}
 
+	public static function getRecords( $args )
+	{
+		$table = with(new static)->table;
+		$key = with(new static)->primaryKey;
+
+		extract( array_merge( array(
+			'page' 		=> '0' ,
+			'limit'  	=> '0' ,
+			'sort' 		=> '' ,
+			'order' 	=> '' ,
+			'params' 	=> '' ,
+			'joins'		=>'',
+			'global'	=> 1
+		), $args ));
+
+		$offset = ($page-1) * $limit ;
+		$limitConditional = ($page !=0 && $limit !=0) ? "LIMIT  $offset , $limit" : '';
+		$orderConditional = ($sort !='' && $order !='') ?  " ORDER BY {$sort} {$order} " : '';
+
+		// Update permission global / own access new ver 1.1
+		$table = with(new static)->table;
+		if($global == 0 )
+			$params .= " AND {$table}.entry_by ='".\Session::get('uid')."'";
+		$rows = array();
+		$result = \DB::select(self::querySelect(). self::queryJoin() . self::queryWhere(). "
+				{$params} ". self::queryGroup() ." {$orderConditional}  {$limitConditional} ");
+		//var_dump($result);
+		//exit;
+
+		if($key =='' ) { $key ='*'; } else { $key = $table.".".$key ; }
+		$total = count($result);
+
+
+		return $results = array('rows'=> $result , 'total' => $total);
+
+
+	}
 }
