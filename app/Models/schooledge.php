@@ -53,7 +53,8 @@ class Schooledge extends Model {
 	   $key = with(new static)->primaryKey;
 
 		$result = \DB::select( 
-				self::querySelect() . 
+				self::querySelect() .
+				self::queryJoin() .
 				self::queryWhere().
 				" AND ".$table.".".$key." = '{$id}' ". 
 				self::queryGroup()
@@ -262,10 +263,6 @@ class Schooledge extends Model {
 		$table = with(new static)->table;
 		if($global == 0 )
 			$params .= " AND {$table}.entry_by ='".\Session::get('uid')."'";
-		// End Update permission global / own access new ver 1.1
-
-		//print_r( \DB::table($table)->join('tb_division','tb_class.division_id','=','tb_division.id')->select('tb_class.*', 'tb_division.name AS division-name')->limit($limit)->offset($offset)->get());
-		//var_dump(self::queryJoin());
 		$rows = array();
 		$result = \DB::select(self::querySelect(). self::queryJoin() . self::queryWhere(). "
 				{$params} ". self::queryGroup() ." {$orderConditional}  {$limitConditional} ");
@@ -273,10 +270,6 @@ class Schooledge extends Model {
 		//exit;
 
 		if($key =='' ) { $key ='*'; } else { $key = $table.".".$key ; }
-		//$counter_select = preg_replace( '/[\s]*SELECT(.*)FROM/Usi', 'SELECT count('.$key.') as total FROM', self::querySelect() );
-
-		//$total = \DB::select( self::querySelect() . self::queryWhere(). "
-		//		{$params} ". self::queryGroup() ." {$orderConditional}  ");
 		$total = count($result);
 
 
