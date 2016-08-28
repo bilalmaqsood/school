@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
 
-class Teacher extends Schooledge {
+class Mastergradebook extends Schooledge {
 
-    protected $table = 'tb_teachers';
+    protected $table = 'tb_grade';
     protected $primaryKey = 'id';
 
     public function __construct()
@@ -13,12 +13,12 @@ class Teacher extends Schooledge {
 
     public static function querySelect(  ){
 
-        return "  SELECT tb_teachers.* FROM tb_teachers ";
+        return "  SELECT tb_grade.* FROM tb_grade ";
     }
 
     public static function queryWhere(  ){
 
-        return "  WHERE tb_teachers.id IS NOT NULL";
+        return "  WHERE tb_grade.id IS NOT NULL";
     }
 
     public static function queryGroup(){

@@ -165,4 +165,69 @@ class Controller extends BaseController
     {
         return date("Y-m-d H:i:s", strtotime($date));
     }
+
+    public function getComboselect( Request $request)
+    {
+
+        if($request->ajax() == true && \Auth::check() == true)
+        {
+            $param = explode(':',$request->input('filter'));
+            $parent = (!is_null($request->input('parent')) ? $request->input('parent') : null);
+            $limit = (!is_null($request->input('limit')) ? $request->input('limit') : null);
+            $rows = $this->model->getComboselect($param,$limit,$parent);
+            $items = array();
+            $fields = explode("|",$param[2]);
+            if(in_array('status', $param) && !empty($rows))
+            {
+                $items = $this->getExamType($rows[0]->status);
+            }
+            else
+            {
+                foreach($rows as $row)
+                {
+                    $value = "";
+                    foreach($fields as $item=>$val)
+                    {
+                        if($val != "") $value .= $row->$val." ";
+                    }
+                    $items[] = array($row->$param['1'] , $value);
+
+                }
+            }
+
+            return json_encode($items);
+        } else {
+            return json_encode(array('OMG'=>" Ops .. Cant access the page !"));
+        }
+    }
+
+    public function getExamType($status)
+    {
+        $result = array();
+        if($status == 0 || $status == 5)
+        {
+            $result[] = array(1,'1st Term');
+        }
+        elseif($status == 1 || $status == 6)
+        {
+            $result[] = array(1,'1st Term');
+            $result[] = array(2,'2nd Term');
+        }
+        elseif($status == 2 || $status == 7)
+        {
+            $result[] = array(1,'2nd Term');
+            $result[] = array(2,'3rd Term');
+        }
+        elseif($status == 3 || $status == 8)
+        {
+            $result[] = array(3,'2rd Term');
+            $result[] = array(4,'Exam');
+        }
+        elseif($status == 4 || $status == 9)
+        {
+            $result[] = array(4,'Exam');
+        }
+
+        return $result;
+    }
 }

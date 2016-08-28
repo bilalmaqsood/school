@@ -84,7 +84,7 @@
             <div class="controls">
                 <label for="fullname">Hire Date * :</label>
                 <div class=" xdisplay_inputx form-group has-feedback">
-                {!! Form::text('register_date', $row['register_date'],array('id' =>'register_date', 'class'=>'form-control has-feedback-left', 'aria-describedby' => 'inputSuccess2Status', 'placeholder'=>'Hire Date', 'required' => true)) !!}
+                {!! Form::text('hire_date', $row['hire_date'],array('id' =>'hire_date', 'class'=>'form-control has-feedback-left', 'aria-describedby' => 'inputSuccess2Status', 'placeholder'=>'Hire Date', 'required' => true)) !!}
             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
             </div>
             </div>
@@ -163,7 +163,7 @@
       }, function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
       });
-            $('#register_date').daterangepicker({
+            $('#hire_date').daterangepicker({
         singleDatePicker: true,
         calender_style: "picker_1"
       }, function(start, end, label) {

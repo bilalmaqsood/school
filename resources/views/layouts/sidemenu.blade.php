@@ -9,7 +9,7 @@
         <!-- menu prile quick info -->
         <div class="profile">
             <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="{{ asset('images/img.jpg') }}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>
@@ -71,9 +71,13 @@
                     <li>
                         <a><i class="fa fa-book"></i> Grading System <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
-                            <li><a href="page_404.html">General Settings</a>
+                            <li><a href="{{ URL::to('gradebook/manage-marks') }}">Manage Marks</a>
                             </li>
-                            <li><a href="page_500.html">Permission Settings</a>
+                            <li><a href="{{ URL::to('gradebook') }}">Master Grade Book</a>
+                            </li>
+                            <li><a href="page_500.html">Grade Sheet</a>
+                            </li>
+                            <li><a href="page_500.html">Transcript</a>
                             </li>
                         </ul>
                     </li>

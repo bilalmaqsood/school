@@ -87,7 +87,7 @@ class TeacherController extends Controller
         {
             $this->data['row'] 		=  $row;
         } else {
-            $this->data['row'] 		= $this->model->getColumnTable('tb_users');
+            $this->data['row'] 		= $this->model->getColumnTable('tb_teachers');
         }
         $this->data['id'] = $id;
 

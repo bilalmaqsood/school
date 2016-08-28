@@ -107,6 +107,7 @@
 <script src="{{ asset('js/datatables/dataTables.scroller.min.js') }}"></script>
 <script src="{{ asset('js/calendar/fullcalendar.min.js') }}"></script>
 <script src="{{ asset('js/datetimepicker.min.js') }}"></script>
+<script src="{{ asset('js/jquery.jCombo.min.js') }}"></script>
 <!-- pace -->
 <script src="{{ asset('js/pace/pace.min.js') }}"></script>
 <!-- skycons -->
