@@ -25,11 +25,9 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <select name="category"class="form-control">
-                        <option <?php if($row['category'] == 'Grade 1') echo 'selected'; ?> >Grade 1</option>
-                        <option <?php if($row['category'] == 'Grade 2') echo 'selected'; ?>>Grade 2</option>
-                        <option>Grade 3</option>
-                        <option>Grade 4</option>
-                        <option>Grade 5</option>
+                        <option <?php if($row['category'] == 'Sports') echo 'selected'; ?> >Sports</option>
+                        <option <?php if($row['category'] == 'Announcement') echo 'selected'; ?> >Announcement</option>
+                        <option <?php if($row['category'] == 'Information') echo 'selected'; ?> >Information</option>
                     </select>
                 </div>
             </div>

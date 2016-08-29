@@ -1,28 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
-
-
-        <div class="">
-          <div class="page-title">
-            <div class="title_left">
-              <h3>
-                    Student Profile
-                </h3>
-            </div>
-
-            <div class="title_right">
-              <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search for...">
-                  <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                        </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
 
           <div class="row">
 
@@ -125,23 +100,15 @@
                       <!-- end of image cropping -->
 
                     </div>
-                    <h3>Samuel Doe</h3>
+                    <h3>{{$row->first_name}} {{$row->last_name}}</h3>
 
                     <ul class="list-unstyled user_data">
-                      <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
+                      <li><i class="fa fa-map-marker user-profile-icon"></i> {{$row->city}}, {{$row->country}}
                       </li>
 
-                      <li>
-                        <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
-                      </li>
-
-                      <li class="m-top-xs">
-                        <i class="fa fa-external-link user-profile-icon"></i>
-                        <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
-                      </li>
                     </ul>
 
-                    <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                    <a class="btn btn-success" href="{{ URL::to($pageModule.'/update/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
                     <br>
 
                     
@@ -171,34 +138,34 @@
                         
                         <tr>
                           <td><label>Last Name</label></td>
-                          <td>{{$row['last_name']}}</td>
+                          <td>{{$row->last_name}}</td>
                           <td><label>City</label></td>
-                          <td>{{$row['city']}}</td>
+                          <td>{{$row->city}}</td>
                         </tr>
 
                         <tr>
                           <td><label >Middle Name </label>  </td>
-                          <td>{{$row['middle_name']}}</td>
+                          <td>{{$row->middle_name}}</td>
                           <td><label>Country </label> </td>
-                          <td>{{$row['country']}}</td>
+                          <td>{{$row->country}}</td>
                         </tr> 
                         <tr>
                           <td><label>First Name</label></td>
-                          <td>{{$row['first_name']}}</td>
+                          <td>{{$row->first_name}}</td>
                           <td><label>Phone No</label></td>
-                          <td>{{$row['phone_number']}}</td>
+                          <td>{{$row->phone_number}}</td>
                         </tr>
                         <tr>
                           <td><label>Relationship to Student</label></td>
                           <td>Undefine</td>
                           <td><label>Mobile No</label></td>
-                          <td>{{$row['phone_number']}}</td>
+                          <td>{{$row->phone_number}}</td>
                         </tr>
                         <tr>
                           <td><label>Occupation</label></td>
-                          <td>{{$row['occupcation']}}</td>
+                          <td>abc</td>
                           <td><label>Email Address</label></td>
-                          <td>{{$row['email']}}</td>
+                          <td>{{$row->email}}</td>
                         </tr>
                         <tr>
                           <td><label>Community</label></td>
@@ -218,38 +185,38 @@
                         
                         <tr>
                           <td><label>Last Name</label></td>
-                          <td>{{$row['last_name']}}</td>
+                          <td>{{$row2["last_name"]}}</td>
                           <td><label>City</label></td>
-                          <td>{{$row['city']}}</td>
+                          <td>{{$row2["city"]}}</td>
                         </tr>
 
                         <tr>
                           <td><label >Middle Name </label>  </td>
-                          <td>{{$row['middle_name']}}</td>
+                          <td>{{$row2["middle_name"]}}</td>
                           <td><label>Country </label> </td>
-                          <td>{{$row['country']}}</td>
+                          <td>{{$row2["country"]}}</td>
                         </tr> 
                         <tr>
                           <td><label>First Name</label></td>
-                          <td>{{$row['first_name']}}</td>
+                          <td>{{$row2["first_name"]}}</td>
                           <td><label>Phone No</label></td>
-                          <td>{{$row['phone_number']}}</td>
+                          <td>{{$row2["phone_number"]}}</td>
                         </tr>
                         <tr>
                           <td><label>Relationship to Student</label></td>
                           <td>Undefine</td>
                           <td><label>Mobile No</label></td>
-                          <td>{{$row['phone_number']}}</td>
+                          <td>{{$row2["phone_number"]}}</td>
                         </tr>
                         <tr>
                           <td><label>Occupation</label></td>
-                          <td>{{$row['occupcation']}}</td>
+                          <td>abc</td>
                           <td><label>Email Address</label></td>
-                          <td>{{$row['email']}}</td>
+                          <td>{{$row2["email"]}}</td>
                         </tr>
                         <tr>
                           <td><label>Community</label></td>
-                          <td>Undefine</td>
+                          <td>{{$row2["community"]}}</td>
                         </tr>
 
                       </table>
@@ -266,11 +233,6 @@
 
             </div>
           </div>
-
-    {!! Form::close() !!}
- 
-
-@stop
 
       @section('js_section');
  <script>

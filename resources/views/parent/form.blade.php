@@ -8,7 +8,7 @@
         </div>
         <div class="x_content">
             <br />
-            {!! Form::open(array('url'=>'teacher/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
+            {!! Form::open(array('url'=>'parents/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
             {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Last Name * :</label>
@@ -26,14 +26,15 @@
                 <label for="fullname">Email * :</label>
                 {!! Form::email('email', $row['email'],array('class'=>'form-control', 'placeholder'=>'Email', 'required' => true)) !!}
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                <label for="fullname">Password * :</label>
-                {!! Form::text('password', $row['password'],array('class'=>'form-control', 'placeholder'=>'Password')) !!}
-            </div>
+            
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Nationality * :</label>
                 {!! Form::text('nationality', $row['nationality'],array('class'=>'form-control', 'placeholder'=>'Nationality', 'required' => true)) !!}
             </div>
+            <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label>Religion *:</label>
+                    {!! Form::text('religion', "", /* $row['id'],*/ array('class'=>'form-control', 'placeholder'=>'Religion ','required'=>'required' )) !!}
+                 </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Community * :</label>
                 {!! Form::text('community', $row['community'],array('class'=>'form-control', 'placeholder'=>'Community', 'required' => true)) !!}
@@ -44,8 +45,12 @@
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">'
                 <label for="fullname">County * :</label>
-                {!! Form::text('country', $row['country'],array('class'=>'form-control', 'placeholder'=>'County', 'required' => true)) !!}
+                {!! Form::text('country', $row['country'],array('class'=>'form-control', 'placeholder'=>'country', 'required' => true)) !!}
             </div>
+            <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                   <label>Country of Origin *:</label>
+                    {!! Form::text('county_of_origin',$row['county_of_origin'], array('class'=>'form-control', 'placeholder'=>'Country of Origin','required'=>'required' )) !!}
+               </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Phone Number * :</label>
                 {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control', 'placeholder'=>'Phone Number', 'required' => true)) !!}
@@ -53,6 +58,10 @@
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Mobile Number * :</label>
                 {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control', 'placeholder'=>'Mobile Number', 'required' => true)) !!}
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Occupcation * :</label>
+                {!! Form::text('occupcation', $row['occupcation'],array('class'=>'form-control', 'placeholder'=>'Occupcation', 'required' => true)) !!}
             </div>
 
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
@@ -79,17 +88,7 @@
 
                   
 
-            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-            <div class="control-group">
-            <div class="controls">
-                <label for="fullname">Hire Date * :</label>
-                <div class=" xdisplay_inputx form-group has-feedback">
-                {!! Form::text('hire_date', $row['hire_date'],array('id' =>'hire_date', 'class'=>'form-control has-feedback-left', 'aria-describedby' => 'inputSuccess2Status', 'placeholder'=>'Hire Date', 'required' => true)) !!}
-            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
-            </div>
-            </div>
-                    </div>
-                    </div>
+            
 
             <div class="clearfix"></div>
             <div class="ln_solid"></div>
@@ -163,12 +162,7 @@
       }, function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
       });
-            $('#hire_date').daterangepicker({
-        singleDatePicker: true,
-        calender_style: "picker_1"
-      }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-      });
+            
 
 
     });

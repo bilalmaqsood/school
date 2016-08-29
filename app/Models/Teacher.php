@@ -3,7 +3,7 @@ namespace App\Models;
 
 class Teacher extends Schooledge {
 
-    protected $table = 'tb_users';
+    protected $table = 'tb_teachers';
     protected $primaryKey = 'id';
 
     public function __construct()
@@ -13,15 +13,19 @@ class Teacher extends Schooledge {
 
     public static function querySelect(  ){
 
-        return "  SELECT tb_users.* FROM tb_users ";
+        return "  SELECT tb_teachers.* FROM tb_teachers ";
     }
 
     public static function queryWhere(  ){
 
-        return "  WHERE tb_users.id IS NOT NULL";
+        return "  WHERE tb_teachers.id IS NOT NULL";
     }
 
     public static function queryGroup(){
         return "  ";
+    }
+
+    public static function queryJoin(){
+        return "";
     }
 }

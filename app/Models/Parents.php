@@ -1,38 +1,35 @@
 <?php
 namespace App\Models;
 
-class Division extends Schooledge {
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-    protected $table = 'tb_division';
+class Parents extends Schooledge  {
+
+    protected $table = 'tb_parent';
     protected $primaryKey = 'id';
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
+
     }
 
     public static function querySelect(  ){
 
-        return "SELECT * FROM tb_division";
+        return "  SELECT tb_parent.* FROM tb_parent  ";
     }
 
     public static function queryWhere(  ){
 
-        return "  WHERE tb_division.id IS NOT NULL";
+        return "  WHERE tb_parent.id IS NOT NULL ";
     }
 
     public static function queryGroup(){
         return "  ";
     }
 
-    public function classes(){
-
-        return $this->hasMany('App\Models\Classes');
-
-    }
-
     public static function queryJoin(){
-
         return "";
     }
+
 }
