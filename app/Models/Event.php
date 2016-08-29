@@ -24,4 +24,7 @@ class Event extends Schooledge {
     public static function queryGroup(){
         return "  ";
     }
+    public static function queryJoin(){
+        return "";
+    }
 }

@@ -1,7 +1,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>List of Students</h2>
+            <h2>List of Parents</h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     @if($access['is_add'] ==1)
@@ -21,7 +21,7 @@
                     <th class="text-center">Last name</th>
                     <th class="text-center">E-mail</th>
                     <th class="text-center">Gender</th>
-                    
+                    <th class="text-center">Position</th>
                     <th class="text-center">Age</th>
                     <th class="text-center">Mobile No</th>
                     <th class="text-center">Action</th>
@@ -34,7 +34,7 @@
                         <td class="text-center table_td">{{ $row->last_name }}</td>
                         <td class="text-center table_td">{{ $row->email }}</td>
                         <td class="text-center table_td">{{ \SiteHelpers::getGender($row->gender) }}</td>
-                       
+                        <td class="text-center table_td">{{ $row->occupcation }}</td>
                         <td class="text-center table_td">{{ \SiteHelpers::getAge($row->date_of_birth) }}</td>
                         <td class="text-center table_td">{{ $row->mobile_number }}</td>
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center table_td">

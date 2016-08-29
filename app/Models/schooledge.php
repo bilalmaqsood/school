@@ -8,43 +8,38 @@ class Schooledge extends Model {
 
 	public static function getRows( $args )
 	{
-       $table = with(new static)->table;
-	   $key = with(new static)->primaryKey;
-	   
-        extract( array_merge( array(
+		$table = with(new static)->table;
+		$key = with(new static)->primaryKey;
+
+		extract( array_merge( array(
 			'page' 		=> '0' ,
 			'limit'  	=> '0' ,
 			'sort' 		=> '' ,
 			'order' 	=> '' ,
 			'params' 	=> '' ,
-			'global'	=> 1	  
-        ), $args ));
-		
-		$offset = ($page-1) * $limit ;	
-		$limitConditional = ($page !=0 && $limit !=0) ? "LIMIT  $offset , $limit" : '';	
+			'joins'		=>'',
+			'global'	=> 1
+		), $args ));
+
+		$offset = ($page-1) * $limit ;
+		$limitConditional = ($page !=0 && $limit !=0) ? "LIMIT  $offset , $limit" : '';
 		$orderConditional = ($sort !='' && $order !='') ?  " ORDER BY {$sort} {$order} " : '';
 
 		// Update permission global / own access new ver 1.1
 		$table = with(new static)->table;
 		if($global == 0 )
-				$params .= " AND {$table}.entry_by ='".\Session::get('uid')."'";
-		// End Update permission global / own access new ver 1.1
-
+			$params .= " AND {$table}.entry_by ='".\Session::get('uid')."'";
 		$rows = array();
-	    $result = \DB::select( self::querySelect() . self::queryWhere(). "
+		$result = \DB::select(self::querySelect(). self::queryJoin() . self::queryWhere(). "
 				{$params} ". self::queryGroup() ." {$orderConditional}  {$limitConditional} ");
-		
-		if($key =='' ) { $key ='*'; } else { $key = $table.".".$key ; }	
-		$counter_select = preg_replace( '/[\s]*SELECT(.*)FROM/Usi', 'SELECT count('.$key.') as total FROM', self::querySelect() ); 	
+		//var_dump($result);
+		//exit;
 
-		$total = \DB::select( self::querySelect() . self::queryWhere(). " 
-				{$params} ". self::queryGroup() ." {$orderConditional}  ");
-		$total = count($total);
+		if($key =='' ) { $key ='*'; } else { $key = $table.".".$key ; }
+		$total = count($result);
 
 
-		return $results = array('rows'=> $result , 'total' => $total);	
-
-	
+		return $results = array('rows'=> $result , 'total' => $total);
 	}	
 
 	public static function getRow( $id )

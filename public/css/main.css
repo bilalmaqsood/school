@@ -18,6 +18,9 @@ table.personal_details td{
 	text-align: left;
 	padding: 8px 15px;
 }
+ .xdisplay_inputx.form-group.has-feedback{
+ 	margin-bottom: 0px;		
+ }
 
 .calender-icon {
 	margin-left: 10px !important;

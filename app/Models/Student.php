@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Schooledge  {
 	
-	protected $table = 'tb_users';
+	protected $table = 'tb_students';
 	protected $primaryKey = 'id';
 
 	public function __construct() {
@@ -16,15 +16,22 @@ class Student extends Schooledge  {
 
 	public static function querySelect(  ){
 		
-		return "  SELECT tb_users.* FROM tb_users  ";
+		return "  SELECT tb_students.* FROM tb_students  ";
 	}	
 
 	public static function queryWhere(  ){
 		
-		return "  WHERE tb_users.id IS NOT NULL ";
+		return "  WHERE tb_students.id IS NOT NULL ";
 	}
 	
 	public static function queryGroup(){
 		return "  ";
+	}
+	public function getParent(){
+		 return $this->hasOne( 'App\Models\Parents', 'id', 'parent_id' );
+	}
+
+	public static function queryJoin(){
+		return "";
 	}
 }

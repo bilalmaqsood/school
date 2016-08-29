@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
 
-class Division extends Schooledge {
+class Mastergradebook extends Schooledge {
 
-    protected $table = 'tb_division';
+    protected $table = 'tb_grade';
     protected $primaryKey = 'id';
 
     public function __construct()
@@ -13,26 +13,19 @@ class Division extends Schooledge {
 
     public static function querySelect(  ){
 
-        return "SELECT * FROM tb_division";
+        return "  SELECT tb_grade.* FROM tb_grade ";
     }
 
     public static function queryWhere(  ){
 
-        return "  WHERE tb_division.id IS NOT NULL";
+        return "  WHERE tb_grade.id IS NOT NULL";
     }
 
     public static function queryGroup(){
         return "  ";
     }
 
-    public function classes(){
-
-        return $this->hasMany('App\Models\Classes');
-
-    }
-
     public static function queryJoin(){
-
         return "";
     }
 }
