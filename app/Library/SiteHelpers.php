@@ -1611,4 +1611,61 @@ class SiteHelpers
             return $result[0]->last_name.' '.$result[0]->first_name;
         return '';
     }
+
+    static function getClassName($id)
+    {
+        $result = DB::select("Select name from tb_class where id = $id");
+        if(count($result) > 0)
+            return ucwords($result[0]->name);
+        return '';
+    }
+
+    static function getSubjectName($id)
+    {
+        $result = DB::select("Select name from tb_subject where id = $id");
+        if(count($result) > 0)
+            return ucwords($result[0]->name);
+        return '';
+    }
+
+    static function getDivisionName($id)
+    {
+        $result = DB::select("Select tb_division.name from tb_class join tb_division on tb_class.division_id = tb_division.id
+                  where tb_class.id = $id");
+        if(count($result) > 0)
+            return ucwords($result[0]->name);
+        return '';
+    }
+
+    static function getSemester($status)
+    {
+        if($status >=0 && $status < 5)
+            return 'First Semester';
+        return 'Second Semester';
+    }
+
+    static function getExamType($status)
+    {
+        if($status == 0 || $status == 1 || $status == 5)
+        {
+            return '1st Term';
+        }
+        elseif($status == 2 || $status == 6)
+        {
+            return '2nd Term';
+        }
+        elseif($status == 3 || $status == 7)
+        {
+            return '3rd Term';
+        }
+        elseif($status == 4 || $status == 8 || $status == 9)
+        {
+            return 'Exam';
+        }
+
+        return '';
+
+    }
+
+
 }

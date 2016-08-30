@@ -1,8 +1,12 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>Class: Name | Subject: Name Division Name| Exam Type: Type</h2>
-            <li><a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClosed('#{{ $pageModule }}')"><i class="fa fa-close"></i></a></li>
+            <h2>
+                Semester: {{ \SiteHelpers::getSemester($exam) }} Subject: {{ \SiteHelpers::getSubjectName($subject) }}   Class: {{ \SiteHelpers::getClassName($class) }}   Division: {{ \SiteHelpers::getDivisionName($class) }} Exam Type: {{ \SiteHelpers::getExamType($exam) }}
+            </h2>
+            <li>
+                <a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClosed('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
+            </li>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
