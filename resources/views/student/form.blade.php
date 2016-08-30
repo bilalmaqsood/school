@@ -27,7 +27,7 @@
                         </li>
                       </ul>
                     </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    <li><a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
                     </li>
                   </ul>
                   <div class="clearfix"></div>
@@ -153,8 +153,9 @@
                     {!! Form::text('avatar', $row['avatar'],array('class'=>'form-control', 'placeholder'=>'avatar ','required'=>'required' )) !!}
                  </div>
                  <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                            <label>class_id *:</label>
-                    {!! Form::text('class_id', $row['class_id'],array('class'=>'form-control', 'placeholder'=>'class ','required'=>'required' )) !!}
+                            <label>Class Name *:</label>
+                     <select id="class_name" name="class" class="form-control" required>
+                </select>
                  </div>
                         
                         </div>
@@ -162,7 +163,7 @@
                     {{-- <div class="ln_solid"></div> --}}
                     <div class="form-group">
                       <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                        <button type="submit" class="btn btn-primary">Cancel</button>
+                        <a href="javascript:void(0)" class="btn btn-primary" onclick="ajaxViewClose('#{{ $pageModule }}')">Cancel</a>
                         <button type="submit" class="btn btn-success" id="submit-btn">Submit</button>
                         
                       </div>
@@ -259,5 +260,17 @@
 
 
     </script>
+
+        <script type="text/javascript">
+        $(document).ready(function () {
+            $("#class_name").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_class:id:name') }}");
+
+            
+
+           
+ });
+
+    </script>
+
 
          </div>

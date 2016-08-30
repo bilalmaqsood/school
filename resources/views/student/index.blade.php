@@ -28,4 +28,5 @@
 
 @section('js_section')
 
+
 @stop
