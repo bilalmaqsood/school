@@ -9,4 +9,4 @@ Route::controller('/news', 'NewsController');
 Route::controller('/period', 'PeriodController');
 Route::controller('/schedule', 'ScheduleController');
 Route::controller('/gradebook', 'MastergradebookController');
-Route::controller('/grade', 'GradeController');
+Route::controller('/gradesheet', 'GradeController');
