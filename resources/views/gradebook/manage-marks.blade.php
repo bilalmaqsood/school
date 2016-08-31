@@ -1,7 +1,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>Select Class</h2>
+            <h2>Select Marks Sheet</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -17,7 +17,7 @@
                 </select>
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group">
-                <label for="semester">Exam * :</label>
+                <label for="semester">Period * :</label>
                 <select id="exam" name="exam" class="form-control" required>
                 </select>
             </div>

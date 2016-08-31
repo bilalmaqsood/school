@@ -204,28 +204,44 @@ class Controller extends BaseController
     public function getExamType($status)
     {
         $result = array();
-        if($status == 0 || $status == 5)
+        if($status == 0)
         {
             $result[] = array(1,'1st Term');
         }
-        elseif($status == 1 || $status == 6)
+        elseif($status == 1)
         {
             $result[] = array(1,'1st Term');
             $result[] = array(2,'2nd Term');
         }
-        elseif($status == 2 || $status == 7)
+        elseif($status == 2)
         {
-            $result[] = array(1,'2nd Term');
-            $result[] = array(2,'3rd Term');
+            $result[] = array(2,'2nd Term');
+            $result[] = array(3,'3rd Term');
         }
-        elseif($status == 3 || $status == 8)
+        elseif($status == 3)
         {
-            $result[] = array(3,'2rd Term');
+            $result[] = array(3,'3rd Term');
             $result[] = array(4,'Exam');
         }
-        elseif($status == 4 || $status == 9)
+        elseif($status == 4)
         {
-            $result[] = array(4,'Exam');
+            $result[] = array(5,'1st Term');
+        }
+        elseif($status == 5)
+        {
+            $result[] = array(5,'1st Term');
+            $result[] = array(6,'2nd Term');
+        }
+        elseif($status == 6)
+        {
+            $result[] = array(6,'2nd Term');
+            $result[] = array(7,'3rd Term');
+        }
+        elseif($status == 7)
+        {
+            $result[] = array(7,'3rd Term');
+            $result[] = array(8,'Exam');
+
         }
 
         return $result;

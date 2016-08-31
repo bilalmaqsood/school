@@ -33,7 +33,7 @@ class MastergradebookController extends Controller
     {
         if($this->access['is_view'] ==0)
             return Redirect::to('dashboard');
-        $this->data['pageTitle'] = 'Manage Exam Marks';
+        $this->data['pageTitle'] = 'Manage Marks';
         $this->data['pageNote'] = 'There should be no way to edit previous grade once next grade has been entered';
         $this->data['access'] = $this->access;
         return view('gradebook.index',$this->data);
@@ -44,6 +44,18 @@ class MastergradebookController extends Controller
         // Group users permission
         $this->data['access']		= $this->access;
         return view('gradebook.manage-marks', $this->data);
+    }
+
+    public function getShow( $id = 1)
+    {
+        if($this->access['is_detail'] ==0)
+            return Redirect::to('dashboard')
+                ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
+
+        $rows = \DB::table('tb_grade')->select('*')->where('subject_id', $id)->get();
+        $this->data['rows'] = $rows;
+        $this->data['access']		= $this->access;
+        return view('gradebook.view',$this->data);
     }
 
     public function postSave( Request $request, $id =0)
@@ -60,6 +72,14 @@ class MastergradebookController extends Controller
             {
                 $rData[$exam] = $gMarks[$index];
                 $id = $this->model->insertRow($rData , $gIds[$index]);
+            }
+            if($status == 8) {
+                $this->updateSecondSemesterAvgMarks($subject);
+                $status++;
+            }
+            if($status == 4)
+            {
+                $this->updateFirstSemesterAvgMarks($subject);
             }
             \DB::table('tb_subject')->where('id',$subject)->update(array('status'=>$status));
             return response()->json(array(
@@ -80,7 +100,7 @@ class MastergradebookController extends Controller
 
     public function postUpdate(Request $request)
     {
-        if($this->access['is_add'] ==0 )
+        if($this->access['is_add'] ==0)
             return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
         if($this->access['is_edit'] ==0 )
             return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
@@ -119,4 +139,27 @@ class MastergradebookController extends Controller
         elseif($status == 8)
             return 'second_exam';
     }
+
+    private function updateFirstSemesterAvgMarks($subject_id)
+    {
+        $rows = \DB::table('tb_grade')->select('id','first_term', 'second_term', 'third_term', 'first_exam')->where('subject_id', $subject_id)->get();
+        foreach($rows as $row)
+        {
+            $avg = ($row->first_term + $row->second_term + $row->third_term + $row->first_exam)/4;
+            \DB::table('tb_grade')->where('id',$row->id)->update(array('first_avg'=>$avg));
+        }
+    }
+
+    private function updateSecondSemesterAvgMarks($subject_id)
+    {
+        $rows = \DB::table('tb_grade')->select('id','first_avg', 'four_term', 'fifth_term', 'sixth_term', 'second_exam')->where('subject_id', $subject_id)->get();
+        foreach($rows as $row)
+        {
+            $sec_avg = ($row->four_term + $row->fifth_term + $row->sixth_term + $row->second_exam)/4;
+            $final = ($sec_avg + $row->first_avg) / 2;
+            \DB::table('tb_grade')->where('id',$row->id)->update(array('second_avg'=>$sec_avg, 'final' => $final));
+        }
+    }
+
+
 }
