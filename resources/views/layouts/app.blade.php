@@ -32,11 +32,15 @@
     <link href="{{ asset('js/datatables/scroller.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
+    <link href="{{ asset('crop/cropper.min.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- calender -->
     <link href="{{ asset('css/calendar/fullcalendar.css') }}" rel="stylesheet">
     <link href="{{ asset('css/calendar/fullcalendar.print.css') }}" rel="stylesheet" media="print">
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/nprogress.js') }}"></script>
+
+    <script src="{{ asset('crop/cropper.min.js') }}"></script>
     
 
 </head>

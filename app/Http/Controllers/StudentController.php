@@ -188,5 +188,29 @@ class StudentController extends Controller
 
         return view('student.view',$this->data);
     }
+    function uploadFileThumbnail($file)
+    {
+        $width=100;
+        $height=100;
+        if(!empty($file)) {
+            $destinationPath = public_path() . '/upload/';
+
+            $file = str_replace('data:image/png;base64,', '', $file);
+            $img = str_replace(' ', '+', $file);
+            $data = base64_decode($img);
+            $filename = date('ymdhis') . '_croppedImage' . ".png";
+            $file = $destinationPath . $filename;
+            $success = file_put_contents($file, $data);
+
+            // THEN RESIZE IT
+            $returnData = 'upload/' . $filename;
+            $image = Image::make(file_get_contents(URL::asset($returnData)));
+            $image = $image->resize($width,$height)->save($destinationPath . $filename);
+
+            if($success){
+                return $returnData;
+            }
+        }
+    }
 
 }

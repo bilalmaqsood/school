@@ -156,6 +156,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -205,6 +206,7 @@ return [
         'Input'     => Illuminate\Support\Facades\Input::class,
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

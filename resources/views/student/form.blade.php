@@ -34,15 +34,13 @@
                 </div>
                 <div class="x_content">
 
-                     
-                  
-                 
-
-
-
                      {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
 
-                    
+                    <div class="featured_image">
+                        <img src="http://33.media.tumblr.com/tumblr_m4rq7pkc2J1r0b7h1o1_r1_500.gif" alt="" />
+                    </div>
+
+                    <label class="data-url"></label>
                      <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                     <label>Last name *:</label>
                     {!! Form::text('last_name', $row['last_name'] , array('class'=>'form-control', 'placeholder'=>'Last Name','required'=>'required' )) !!}
@@ -251,11 +249,26 @@
         calender_style: "picker_1"
       }, function(start, end, label) {
         // console.log(start.toISOString(), end.toISOString(), label);
-      }); 
-       
+      });
+
+              var $image = $(".featured_image > img");
+              originalData = {};
 
 
-    });
+              $image.cropper({
+                  aspectRatio: 100/100,
+                  resizable: false,
+                  zoomable: false,
+                  rotatable: false,
+                  multiple: false,
+                  dragend: function(data) {
+                      originalData = $image.cropper("getCroppedCanvas");
+                      console.log(originalData.toDataURL());
+                      $('.data-url').text(originalData.toDataURL());
+                  }
+              });
+
+          });
 
 
     </script>
