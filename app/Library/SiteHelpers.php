@@ -1637,6 +1637,14 @@ class SiteHelpers
         return '';
     }
 
+    static function getTeacherName($id)
+    {
+        $result = DB::select("Select first_name, last_name from tb_users where id = $id");
+        if(count($result) > 0)
+            return ucwords($result[0]->last_name.' '.$result[0]->first_name);
+        return '';
+    }
+
     static function getSemester($status)
     {
         if($status >=0 && $status < 5)
@@ -1648,15 +1656,15 @@ class SiteHelpers
     {
         if($status == 0 || $status == 1 || $status == 5)
         {
-            return '1st Term';
+            return '1st Period';
         }
         elseif($status == 2 || $status == 6)
         {
-            return '2nd Term';
+            return '2nd Period';
         }
         elseif($status == 3 || $status == 7)
         {
-            return '3rd Term';
+            return '3rd Period';
         }
         elseif($status == 4 || $status == 8 || $status == 9)
         {
