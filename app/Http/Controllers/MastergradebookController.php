@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Models\Mastergradebook;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -39,6 +40,8 @@ class MastergradebookController extends Controller
         return view('gradebook.index',$this->data);
     }
 
+
+
     public function postManageMarks(Request $request)
     {
         // Group users permission
@@ -46,18 +49,39 @@ class MastergradebookController extends Controller
         return view('gradebook.manage-marks', $this->data);
     }
 
+    public function postManageGradebook(Request $request)
+    {
+        // Group users permission
+        $this->data['access']		= $this->access;
+        return view('gradebook.manage-gradebook', $this->data);
+    }
+
     public function getShow( $id = 1)
+    {
+        if($this->access['is_view'] ==0)
+            return Redirect::to('dashboard');
+        $this->data['pageTitle'] = 'View Master Grade Book';
+        $this->data['pageNote'] = '';
+        $this->data['access'] = $this->access;
+        return view('gradebook.view',$this->data);
+    }
+
+    public function postDetail(Request $request, $id = 1)
     {
         if($this->access['is_detail'] ==0)
             return Redirect::to('dashboard')
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
-
+        $data = $request->all();
+        $teacher = \DB::table('tb_subject')->select('teacher_id')->where('id', $data['subject'])->get();
         $rows = \DB::table('tb_grade')->select('*')->where('subject_id', $id)->get();
+        if(count($rows) > 0)
+            $this->data['teacher'] = $teacher[0]->teacher_id;
+        $this->data['subject'] = $data['subject'];
+        $this->data['class'] = $data['class'];
         $this->data['rows'] = $rows;
         $this->data['access']		= $this->access;
-        return view('gradebook.view',$this->data);
+        return view('gradebook.detail',$this->data);
     }
-
     public function postSave( Request $request, $id =0)
     {
         if (!empty($id)) {
@@ -145,7 +169,7 @@ class MastergradebookController extends Controller
         $rows = \DB::table('tb_grade')->select('id','first_term', 'second_term', 'third_term', 'first_exam')->where('subject_id', $subject_id)->get();
         foreach($rows as $row)
         {
-            $avg = ($row->first_term + $row->second_term + $row->third_term + $row->first_exam)/4;
+            $avg = round(($row->first_term + $row->second_term + $row->third_term + $row->first_exam)/4);
             \DB::table('tb_grade')->where('id',$row->id)->update(array('first_avg'=>$avg));
         }
     }
@@ -155,8 +179,8 @@ class MastergradebookController extends Controller
         $rows = \DB::table('tb_grade')->select('id','first_avg', 'four_term', 'fifth_term', 'sixth_term', 'second_exam')->where('subject_id', $subject_id)->get();
         foreach($rows as $row)
         {
-            $sec_avg = ($row->four_term + $row->fifth_term + $row->sixth_term + $row->second_exam)/4;
-            $final = ($sec_avg + $row->first_avg) / 2;
+            $sec_avg = round(($row->four_term + $row->fifth_term + $row->sixth_term + $row->second_exam)/4);
+            $final = round(($sec_avg + $row->first_avg) / 2);
             \DB::table('tb_grade')->where('id',$row->id)->update(array('second_avg'=>$sec_avg, 'final' => $final));
         }
     }

@@ -21,10 +21,10 @@ class GradeController extends Controller
         $this->info = $this->model->makeInfo($this->module);
         $this->access = $this->model->validAccess($this->info['id']);
         $this->data = array(
-            'pageTitle'			=> 	'Grade Sheets',
-            'pageNote'			=>  'View All Classes',
-            'pageModule'		=> 'class',
-            'pageUrl'			=>  url('class'),
+            'pageTitle'			=> 	'Grade Sheet',
+            'pageNote'			=>  '',
+            'pageModule'		=> 'gradesheet',
+            'pageUrl'			=>  url('gradesheet'),
             'return' 			=> 	self::returnUrl()
         );
 
@@ -39,7 +39,13 @@ class GradeController extends Controller
         return view('grade.index',$this->data);
     }
 
-    public function getShow( $id = null)
+    public function postMarkSheet(Request $request)
+    {
+        $this->data['access']		= $this->access;
+        return view('grade.mark-sheet', $this->data);
+    }
+
+    public function postShow( $id = null)
     {
         if($this->access['is_detail'] ==0)
             return Redirect::to('dashboard')

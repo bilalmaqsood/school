@@ -75,7 +75,7 @@
                             </li>
                             <li><a href="{{ URL::to('gradebook') }}">Master Grade Book</a>
                             </li>
-                            <li><a href="page_500.html">Grade Sheet</a>
+                            <li><a href="{{ URL::to('gradesheet') }}">Grade Sheet</a>
                             </li>
                             <li><a href="page_500.html">Transcript</a>
                             </li>
