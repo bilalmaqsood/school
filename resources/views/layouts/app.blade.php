@@ -33,6 +33,7 @@
     <link href="{{ asset('css/datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{ asset('crop/cropper.min.css') }}" rel="stylesheet" type="text/css" />
+    <!--<link href="{{ asset('crop/main.css') }}" rel="stylesheet" type="text/css" />-->
 
     <!-- calender -->
     <link href="{{ asset('css/calendar/fullcalendar.css') }}" rel="stylesheet">
