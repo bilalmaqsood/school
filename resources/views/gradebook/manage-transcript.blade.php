@@ -1,24 +1,23 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>Select Class</h2>
+            <h2>Select Student</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            {!! Form::open(array('url'=>'gradebook/detail/', 'class'=>'form-horizontal', 'data-parsley-validate'=>true,'id'=> 'grademarks-form')) !!}
+            {!! Form::open(array('url'=>'gradebook/transcript-sheet/', 'class'=>'form-horizontal', 'data-parsley-validate'=>true,'id'=> 'grademarks-form')) !!}
             <div class="col-md-6 col-sm-9 col-xs-12 form-group">
                 <label for="class">Class * :</label>
                 <select id="class" name="class" class="form-control" required>
                 </select>
             </div>
             <div class="col-md-6 col-sm-9 col-xs-12 form-group">
-                <label for="semester">Subject * :</label>
-                <select id="subject" name="subject" class="form-control" required>
+                <label for="semester">Student * :</label>
+                <select id="student" name="student" class="form-control" required>
                 </select>
             </div>
-            <input type="hidden" name="teacher" value="{{ Session::get('uid') }}">
             <div class="col-md-3 col-sm-3 col-xs-6 form-group">
-                <button type="submit" class="btn btn-success">Master Grade Book</button>
+                <button type="submit" class="btn btn-success">View Transcript</button>
             </div>
             {!! Form::close() !!}
         </div>
@@ -27,7 +26,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#class").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_class:id:name') }}");
-        $("#subject").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_subject:id:name')}}&parent=class_id:",
+        $("#student").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_students:id:last_name')}}&parent=class_id:",
                 {parent: '#class'});
 
         $.listen('parsley:field:validate', function () {
