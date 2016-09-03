@@ -1675,5 +1675,20 @@ class SiteHelpers
 
     }
 
+    static function getRemarks($marks)
+    {
+        if($marks < 50)
+            return 'Poor';
+        elseif($marks >= 51 && $marks <61)
+            return 'Fair';
+        elseif($marks >= 61 && $marks <71)
+            return 'Average';
+        elseif($marks >= 71 && $marks <81)
+            return 'Good';
+        elseif($marks >= 81 && $marks <91)
+            return 'Very Good';
+        elseif($marks >= 90 && $marks <= 100)
+            return 'Excellent';
 
+    }
 }

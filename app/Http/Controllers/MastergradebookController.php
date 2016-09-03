@@ -56,6 +56,13 @@ class MastergradebookController extends Controller
         return view('gradebook.manage-gradebook', $this->data);
     }
 
+    public function postManageTranscript(Request $request)
+    {
+        // Group users permission
+        $this->data['access']		= $this->access;
+        return view('gradebook.manage-transcript', $this->data);
+    }
+
     public function getShow( $id = 1)
     {
         if($this->access['is_view'] ==0)
@@ -64,6 +71,76 @@ class MastergradebookController extends Controller
         $this->data['pageNote'] = '';
         $this->data['access'] = $this->access;
         return view('gradebook.view',$this->data);
+    }
+
+    public function getTranscript( $id = 1)
+    {
+        if($this->access['is_view'] ==0)
+            return Redirect::to('dashboard');
+        $this->data['pageTitle'] = 'Transcript Sheet';
+        $this->data['pageNote'] = '';
+        $this->data['access'] = $this->access;
+        return view('gradebook.transcript',$this->data);
+    }
+
+    public function postTranscriptSheet(Request $request, $id = 1)
+    {
+        if($this->access['is_detail'] ==0)
+            return Redirect::to('dashboard')
+                ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
+        $data = $request->all();
+        /*
+        $rows = \DB::table('tb_student_class')
+            ->join('tb_subject', 'tb_subject.class_id', '=', 'tb_student_class.class_id')
+            ->join('tb_grade', 'tb_grade.subject_id', '=', 'tb_subject.id')
+            ->select('tb_grade.*', 'tb_subject.class_id')
+            ->where('tb_student_class.student_id', $data['student'])
+            ->orderBy('tb_subject.class_id', 'asc')
+            ->get();
+        */
+
+        $student_subjects = \DB::table('tb_student_class')
+            ->join('tb_subject', 'tb_subject.class_id', '=', 'tb_student_class.class_id')
+            ->select('tb_subject.id', 'tb_subject.name')
+            ->where('tb_student_class.student_id', 1)
+            ->orderBy('tb_subject.class_id', 'asc')
+            ->get();
+        $student_previous_classes = \DB::table('tb_student_class')->select('tb_student_class.*')->where('student_id', 1)->get();
+        $transcript_matrix_sheet = array();
+        $pivot = 0;
+        $col = 0;
+        $row = 0;
+        for($subject_index = 0; $subject_index < count($student_subjects); $subject_index++)
+        {
+
+            for($class_index = 0; $class_index < count($student_previous_classes); $class_index++)
+            {
+
+                $final = \DB::table('tb_grade')->join('tb_subject', 'tb_subject.id', '=', 'tb_grade.subject_id')
+                    ->select('tb_grade.final')->where('tb_grade.subject_id', $student_subjects[$subject_index]->id)->where('tb_subject.class_id', $student_previous_classes[$class_index]->class_id)->get();
+                if(count($final))
+                {
+                    $pivot++;
+                    $col++;
+                    $transcript_matrix_sheet[$row][$col] = $final[0]->final;
+                }
+                if($pivot == count($student_previous_classes))
+                {
+                    $pivot = 0;
+                    $row++;
+                    $col = 0;
+                }
+            }
+
+        }
+        $student = \DB::table('tb_students')->select('tb_students.*')->where('id', $data['student'])->get();
+        $this->data['student'] = $student[0];
+        $this->data['class'] = $data['class'];
+        $this->data['transcript_matrix_sheet'] = $transcript_matrix_sheet;
+        $this->data['student_subjects'] = $student_subjects;
+        $this->data['student_previous_classes'] = $student_previous_classes;
+        $this->data['access']		= $this->access;
+        return view('gradebook.transcript-sheet',$this->data);
     }
 
     public function postDetail(Request $request, $id = 1)

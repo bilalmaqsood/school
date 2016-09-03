@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
+<?php $total = 0; $sum = 0; $marks = 0;?>
     <div class="">
             <div class="page-title"></div>
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -67,11 +67,17 @@
                                         <td width="56" valign="top"><p align="center">{{ $row->final }}</p></td>
                                         <td width="56" valign="top"><p align="center">{{ $row->second_avg }}</p></td>
                                         <td width="40" valign="top"><p align="center">{{ round(($row->first_avg + $row->second_avg)/2)  }}</p></td>
+                                        <?php
+                                            $total++;
+                                            $sum = $sum+round(($row->first_avg + $row->second_avg)/2);
+                                        ?>
                                     </tr>
                                     @endforeach
-
                                 </table>
-                                <p>Comments:  Good</p>
+                                <?php
+                                    $marks = round($sum/$total);;
+                                ?>
+                                <p>Comments:  {{ \SiteHelpers::getRemarks($marks) }}</p>
                             </center>
                         </div>
                     </div>
