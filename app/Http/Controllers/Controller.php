@@ -28,6 +28,8 @@ class Controller extends BaseController
                 \Session::put('gid', \Auth::user()->group_id);
                 \Session::put('eid', \Auth::user()->email);
                 \Session::put('fid', \Auth::user()->first_name.' '. \Auth::user()->last_name);
+                $sidemenu = \DB::table('tb_group')->select('tb_group.data_access')->where('id', \Auth::user()->group_id)->get();
+                \Session::put('sidemenu', json_decode($sidemenu[0]->data_access));
             }
         }
     }
