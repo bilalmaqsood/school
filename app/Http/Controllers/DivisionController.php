@@ -31,11 +31,6 @@ class DivisionController extends Controller
 
     public function getIndex()
     {
-        /*$divisions = Division::find(1)->classes;
-        foreach($divisions as $division){
-            echo $division->name;
-        }
-        exit;*/
         if($this->access['is_view'] ==0)
             return Redirect::to('dashboard');
 

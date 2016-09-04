@@ -88,24 +88,6 @@
                 return false;
             }
         }
-          $(document).ready(function() {
-
-      $('#date_of_birth').daterangepicker({
-        singleDatePicker: true,
-        calender_style: "picker_1"
-      }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-      });
-            $('#register_date').daterangepicker({
-        singleDatePicker: true,
-        calender_style: "picker_1"
-      }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-      });
-
-
-    });
-
     </script>
 </div>
 
