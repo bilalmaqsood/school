@@ -13,6 +13,7 @@
 @include('moduleroutes.php');
 Route::get('/', 'UserController@getLogin');
 Route::get('/', 'UserController@getLogin');
+Route::get('/calender', 'EventController@getShowCalendar');
 
 Route::get('/restric',function(){
 

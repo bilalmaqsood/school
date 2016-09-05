@@ -10,3 +10,4 @@ Route::controller('/period', 'PeriodController');
 Route::controller('/schedule', 'ScheduleController');
 Route::controller('/gradebook', 'MastergradebookController');
 Route::controller('/gradesheet', 'GradeController');
+Route::controller('/setting', 'GeneralsettingController');

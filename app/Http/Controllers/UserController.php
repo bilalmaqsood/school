@@ -70,6 +70,8 @@ class UserController extends Controller
                     else
                     {
                         \DB::table('tb_users')->where('id', '=',$row->id )->update(array('last_login' => date("Y-m-d H:i:s")));
+                        $sidemenu = \DB::table('tb_group')->select('tb_group.data_access')->where('id', $row->group_id)->get();
+                        \Session::put('sidemenu', json_decode($sidemenu[0]->data_access));
                         \Session::put('uid', $row->id);
                         \Session::put('gid', $row->group_id);
                         \Session::put('eid', $row->email);
