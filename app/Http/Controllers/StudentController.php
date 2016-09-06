@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Student;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -69,7 +70,6 @@ class StudentController extends Controller
 
     function getUpdate(Request $request, $id = NULL)
     {
-
         if($id =='')
         {
             if($this->access['is_add'] ==0 )
@@ -82,12 +82,16 @@ class StudentController extends Controller
                 return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
         }
 
-        $row = $this->model->find($id);
+        $row = $this->model->getRow($id);
+
         if($row)
         {
-            $this->data['row'] 		=  $row;
+            $this->data['row'] 		= (array)$row;
         } else {
-            $this->data['row'] 		= $this->model->getColumnTable('tb_students');
+            $userFields =   $this->model->getColumnTable('tb_students');
+            $studentFields =   $this->model->getColumnTable('tb_users');
+            $records = array_merge($studentFields,$userFields);
+            $this->data['row'] = array_merge($studentFields,$userFields) ;
         }
         $this->data['id'] = $id;
 
@@ -97,17 +101,33 @@ class StudentController extends Controller
 
     function postSave( Request $request, $id =0)
     {
+        $fields = $this->model->getColumnTable('tb_students');
         $data = $request->all();
-        $id = $this->model->insertRow($data , $request->input('id'));
+        $user = array_diff_key($data,$fields);
+        $student = array_intersect_key($data,$fields);
+
+        if($data['user_id']== NULL){
+            $users = new User();
+            $userId = $users->insertRow($user , $data['user_id']);
+            $student['user_id'] = $userId;
+            $id = $this->model->insertRow($student , $request->input('id'));
+        }
+        else{
+            $id = $this->model->insertRow($student , $request->input('id'));
+            if($user['password'] == NULL ){
+                unset($user['password']);
+            }
+            $users = new User();
+            $userId = $users->insertRow($user , $data['user_id']);
+        }
 
         return response()->json(array(
             'status'=>'success',
             'message'=> \Lang::get('core.note_success')
         ));
 
-        // $rules = $this->validateForm();
-        $rules = [ 
-
+        /* $rules = $this->validateForm();
+        $rules = [
                 "last_name" => "required|min:8",
                 "middle_name" => "required",
                 "first_name" => "required",
@@ -126,13 +146,12 @@ class StudentController extends Controller
             ));
 
         } else {
-
             $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
             return Response::json(array(
                 'message'	=> $message,
                 'status'	=> 'error'
             ));
-        }
+        }*/
 
     }
 

@@ -42,17 +42,15 @@
 
     support: {
       fileList: !!$('<input type="file">').prop('files'),
-      blobURLs: !!window.URL && URL.createObjectURL,
+      blobURLs: !!window.URL && webkitURL.createObjectURL,
       formData: !!window.FormData
     },
 
     init: function () {
       this.support.datauri = this.support.fileList && this.support.blobURLs;
-
       if (!this.support.formData) {
         this.initIframe();
       }
-
       this.initTooltip();
       this.initModal();
       this.addListener();
@@ -62,7 +60,7 @@
       this.$avatarView.on('click', $.proxy(this.click, this));
       this.$avatarInput.on('change', $.proxy(this.change, this));
       this.$avatarForm.on('submit', $.proxy(this.submit, this));
-      this.$avatarBtns.on('click', $.proxy(this.rotate, this));
+      //this.$avatarBtns.on('click', $.proxy(this.rotate, this));
     },
 
     initTooltip: function () {
@@ -138,14 +136,15 @@
         files = this.$avatarInput.prop('files');
 
         if (files.length > 0) {
+          console.log('file length > 0');
           file = files[0];
 
           if (this.isImageFile(file)) {
             if (this.url) {
-              URL.revokeObjectURL(this.url); // Revoke the old one
+              webkitURL.revokeObjectURL(this.url); // Revoke the old one
             }
 
-            this.url = URL.createObjectURL(file);
+            this.url = webkitURL.createObjectURL(file);
             this.startCropper();
           }
         }
@@ -277,7 +276,6 @@
     },
 
     submitDone: function (data) {
-      console.log(data);
 
       if ($.isPlainObject(data) && data.state === 200) {
         if (data.result) {
@@ -311,7 +309,10 @@
 
     cropDone: function () {
       this.$avatarForm.get(0).reset();
-      this.$avatar.attr('src', this.url);
+      var currentUrl = this.url;
+      var firstPos = currentUrl.indexOf('upload');
+      var newUrl = currentUrl.substring(firstPos,currentUrl.length);
+      this.$avatar.attr('src', newUrl);
       this.stopCropper();
       this.$avatarModal.modal('hide');
     },

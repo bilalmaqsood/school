@@ -11,7 +11,15 @@
     <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form class="avatar-form" action="{{ URL::to('imagecrop') }}" enctype="multipart/form-data" method="post">
+                {!! Form::open(
+                    array(
+                    'url'=>'imagecrop',
+                    'method' => 'post',
+                     'class'=>'avatar-form',
+                     'files' => true ,
+                     'parsley-validate'=>true,
+                     'novalidate'=>' ',)
+                     ) !!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title" id="avatar-modal-label">Change Avatar</h4>
@@ -40,16 +48,28 @@
                             </div>
 
                             <div class="row avatar-btns">
+                                <div class="col-md-9">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary" data-method="rotate" data-option="-90" title="Rotate -90 degrees">Rotate Left</button>
+                                        <button type="button" class="btn btn-primary" data-method="rotate" data-option="-15">-15deg</button>
+                                        <button type="button" class="btn btn-primary" data-method="rotate" data-option="-30">-30deg</button>
+                                        <button type="button" class="btn btn-primary" data-method="rotate" data-option="-45">-45deg</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary" data-method="rotate" data-option="90" title="Rotate 90 degrees">Rotate Right</button>
+                                        <button type="button" class="btn btn-primary" data-method="rotate" data-option="15">15deg</button>
+                                        <button type="button" class="btn btn-primary" data-method="rotate" data-option="30">30deg</button>
+                                        <button type="button" class="btn btn-primary" data-method="rotate" data-option="45">45deg</button>
+                                    </div>
+                                </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-primary btn-block avatar-save">Done</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                {!! Form::close() !!}
             </div>
         </div>
     </div><!-- /.modal -->
-    <!-- Loading state
-    <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div> -->
 </div>

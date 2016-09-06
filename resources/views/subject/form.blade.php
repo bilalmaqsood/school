@@ -115,11 +115,12 @@
                 return false;
             }
         }
-          $(document).ready(function() {
+    $(document).ready(function() {
 
       $('#date_of_birth').daterangepicker({
         singleDatePicker: true,
-        calender_style: "picker_1"
+        calender_style: "picker_1",
+        format: 'YYYY-MM-DD',
       }, function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
       });
@@ -129,10 +130,7 @@
       }, function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
       });
-
-
     });
-
     </script>
 </div>
 

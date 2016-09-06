@@ -5,7 +5,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            {!! Form::open(array('url'=>'', 'class'=>'form-horizontal', 'data-parsley-validate'=>true,'id'=> 'gradesheet-form')) !!}
+            {!! Form::open(array('url'=>'', 'class'=>'form-horizontal', 'data-parsley-validate'=>true, 'id'=> 'gradesheet-form')) !!}
             <div class="col-md-6 col-sm-6 col-xs-12 form-group">
                 <label for="class">Class * :</label>
                 <select id="class" name="class" class="form-control" required>
@@ -24,10 +24,11 @@
             {!! Form::close() !!}
         </div>
     </div>
+</div>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#class").jCombo("{{ URL::to('gradesheet/comboselect?filter=tb_class:id:name') }}");
-            $("#student").jCombo("{{ URL::to('gradesheet/comboselect?filter=tb_students:id:first_name')}}&parent=class_id:",
+            $("#student").jCombo("{{ URL::to('gradesheet/comboselect?filter=tb_students:id:user_id')}}&parent=class_id:",
                     {parent: '#class'});
 
             $("#student").change(function() {
@@ -39,7 +40,7 @@
                 validateFront();
             });
             $('#gradesheet-form .btn').on('click', function () {
-                $('#grademarks-form').parsley().validate();
+                $('#gradesheet-form').parsley().validate();
                 validateFront();
                 if ($('#gradesheet-form').parsley().isValid() == true) {
                     var options = {
@@ -74,4 +75,3 @@
         }
 
     </script>
-</div>

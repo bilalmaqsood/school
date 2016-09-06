@@ -21,7 +21,7 @@
     </div>
     <script>
         $(document).ready(function(){
-            reloadData('#{{ $pageModule }}','manage-gradebook');
+            reloadData('#{{ $pageModule }}','manage-transcript');
         });
     </script>
 @endsection

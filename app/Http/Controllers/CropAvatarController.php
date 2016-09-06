@@ -75,7 +75,7 @@ class CropAvatarController extends Controller
     }
 
     private function setDst() {
-        $this -> dst = 'img/' . date('YmdHis') . '.png';
+        $this -> dst = public_path() . '/upload/' . date('YmdHis') . '.png';
     }
 
     private function crop($src, $dst, $data) {

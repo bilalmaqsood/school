@@ -4,9 +4,9 @@ namespace App\Models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Schooledge  {
+class User extends Schooledge  {
 	
-	protected $table = 'tb_students';
+	protected $table = 'tb_users';
 	protected $primaryKey = 'id';
 
 	public function __construct() {
@@ -16,22 +16,19 @@ class Student extends Schooledge  {
 
 	public static function querySelect(  ){
 
-		return "  SELECT tb_users.*,tb_students.* FROM tb_students  ";
+		return "  SELECT * FROM tb_users  ";
 	}
 
 	public static function queryWhere(  ){
 		
-		return "  WHERE tb_students.id IS NOT NULL ";
+		return "  WHERE tb_users.id IS NOT NULL ";
 	}
 	
 	public static function queryGroup(){
 		return "  ";
 	}
-	public function getParent(){
-		 return $this->hasOne( 'App\Models\Parents', 'id', 'parent_id' );
-	}
 
 	public static function queryJoin(){
-		return " JOIN tb_class ON tb_students.class_id=tb_class.id JOIN tb_users ON tb_students.user_id=tb_users.id";
+		return "";
 	}
 }
