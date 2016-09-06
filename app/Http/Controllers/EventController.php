@@ -184,6 +184,9 @@ class EventController extends Controller
                 'title' => $event->title,
                 'start' => $event->start_datetime,
                 'end' => $event->end_datetime,
+                'body' => $event->body,
+                'venue' => $event->venue
+
             );
         }
         $this->data['events'] = json_encode($data);
