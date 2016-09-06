@@ -11,3 +11,4 @@ Route::controller('/schedule', 'ScheduleController');
 Route::controller('/gradebook', 'MastergradebookController');
 Route::controller('/gradesheet', 'GradeController');
 Route::controller('/setting', 'GeneralsettingController');
+Route::controller('/finance', 'FinancialController');

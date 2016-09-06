@@ -1691,4 +1691,9 @@ class SiteHelpers
             return 'Excellent';
 
     }
+
+    static public function changeDateTimeFormat($date)
+    {
+        return date(CNF_DATEFORMAT, strtotime($date));
+    }
 }

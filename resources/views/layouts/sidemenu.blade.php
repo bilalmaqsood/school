@@ -100,7 +100,7 @@
                                 </li>
                                 <li><a href="{{ URL::to('gradesheet') }}">Grade Sheet</a>
                                 </li>
-                                <li><a href="page_500.html">Transcript</a>
+                                <li><a href="{{ URL::to('gradebook/transcript') }}">Transcript</a>
                                 </li>
                             </ul>
                         </li>
@@ -109,9 +109,9 @@
                         <li>
                             <a><i class="fa fa-university"></i> Finance <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu" style="display: none">
-                                <li><a href="page_404.html">Fees Payment</a>
+                                <li><a href="{{ URL::to('finance') }}">Fees Payment</a>
                                 </li>
-                                <li><a href="page_500.html">Receipt</a>
+                                <li><a href="{{ URL::to('receipt') }}">Receipt</a>
                                 </li>
                             </ul>
                         </li>

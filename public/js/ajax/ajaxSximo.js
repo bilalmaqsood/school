@@ -142,7 +142,27 @@ function ajaxRemoveRecord( id, url, rowId)
 
 	}
 }
+function ajaxUpdateStatus( id, url, rowId, status)
+{
+	var datas = {'id':rowId};
+	var message = '';
+	if(status == 1)
+		message = 'Are u sure to refund a selected row?';
+	else
+		message = 'Are u sure to paid a selected row?';
+	if(confirm(message)) {
+		$.post( url+'/change-status' ,datas,function( data ) {
+			if(data.status == 'success' )
+			{
+				//notyMessage(data.message);
+				ajaxFilter( id ,url+'/data' );
+			} else {
+				//notyMessageError(data.message);
+			}
+		});
 
+	}
+}
 function ajaxViewDetail( id , url )
 {
 	//$('.ajaxLoading').show();

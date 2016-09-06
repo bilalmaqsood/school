@@ -14,6 +14,7 @@
 Route::get('/', 'UserController@getLogin');
 Route::get('/', 'UserController@getLogin');
 Route::get('/calender', 'EventController@getShowCalendar');
+Route::get('/receipt', 'FinancialController@getReceipt');
 
 Route::get('/restric',function(){
 
