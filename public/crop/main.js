@@ -312,6 +312,7 @@
       var currentUrl = this.url;
       var firstPos = currentUrl.indexOf('upload');
       var newUrl = currentUrl.substring(firstPos,currentUrl.length);
+      //$('#avatar').attr('src',newUrl);
       this.$avatar.attr('src', newUrl);
       this.stopCropper();
       this.$avatarModal.modal('hide');
