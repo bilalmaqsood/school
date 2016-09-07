@@ -121,4 +121,53 @@ class GeneralsettingController extends Controller
         ));
     }
 
+    public function getModuleaccess()
+    {
+        $groups = \DB::table('tb_group')->get();
+
+        $modules = array(
+            0 => 'Dashboard',
+            1 => 'Students',
+            2 => 'Teachers',
+            3 => 'Parents',
+            4 => 'Divisions',
+            5 => 'Classes',
+            6 => 'Subjects',
+            7 => 'Classes Schedule',
+            8 => 'School Calender',
+            9 => 'News',
+            10 => 'Events',
+            11 => 'Grading System',
+            12 => 'Finance',
+            13 => 'Administrator Task',
+            14 => 'Media Center',
+        );
+        $principal = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 2)->get();
+        $registrar = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 3)->get();
+        $finance = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 4)->get();
+        $teacher = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 5)->get();
+        $student = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 6)->get();
+        $this->data['modules'] = $modules;
+        $this->data['groups'] = $groups;
+        $this->data['principal'] = json_decode($principal[0]->data_access);
+        $this->data['registrar'] = json_decode($registrar[0]->data_access);
+        $this->data['finance'] = json_decode($finance[0]->data_access);
+        $this->data['teacher'] = json_decode($teacher[0]->data_access);
+        $this->data['student'] = json_decode($student[0]->data_access);
+        return view('setting.module_access', $this->data);
+    }
+    public function postSaveDataaccess(Request $request)
+    {
+        $data = $request->all();
+        foreach($data['permission'] as $groupId=>$moduleAccess){
+            foreach($moduleAccess as $moduleId=>$data) {
+                \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->update(array('data_access'=>json_encode($data)));
+            }
+        }
+        return response()->json(array(
+            'status'=>'success',
+            'message'=> \Lang::get('core.note_success')
+        ));
+    }
+
 }
