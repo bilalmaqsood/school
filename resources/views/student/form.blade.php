@@ -5,14 +5,12 @@
         <div class="x_title">
             <h2>Personal Details</h2>
             <a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
-
-            </ul>
             <div class="clearfix"></div>
         </div>
         <div class="container" id="crop-avatar">
             <!-- Current avatar -->
             <div class="avatar-view" title="Change the avatar">
-                <img src="http://33.media.tumblr.com/tumblr_m4rq7pkc2J1r0b7h1o1_r1_500.gif" alt="Avatar">
+                <img src="{{ asset('/').$row['avatar'] }}" alt="Avatar">
             </div>
 
             <!-- Cropping modal -->
@@ -56,20 +54,6 @@
                                 </div>
 
                                 <div class="row avatar-btns">
-                                    <!--<div class="col-md-9">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="-90" title="Rotate -90 degrees">Rotate Left</button>
-                                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="-15">-15deg</button>
-                                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="-30">-30deg</button>
-                                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="-45">-45deg</button>
-                                        </div>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="90" title="Rotate 90 degrees">Rotate Right</button>
-                                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="15">15deg</button>
-                                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="30">30deg</button>
-                                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="45">45deg</button>
-                                        </div>
-                                    </div>-->
                                     <div class="col-md-3">
                                         <button type="submit" class="btn btn-primary btn-block avatar-save">Done</button>
                                     </div>
@@ -205,11 +189,6 @@
         $(document).ready(function() {
             $.listen('parsley:field:validate', function() {
                 validateFront();
-            });
-            //Avatar Path added
-            $('.avatar-view img').on('change',function(){
-                var avatarPath = $('.avatar-view img').attr('src');
-                $('#avatar').val(avatarPath);
             });
 
             $('#submit-btn').on('click', function() {
