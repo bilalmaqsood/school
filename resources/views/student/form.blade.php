@@ -10,7 +10,7 @@
         <div class="container" id="crop-avatar">
             <!-- Current avatar -->
             <div class="avatar-view" title="Change the avatar">
-                <img src="{{ asset('/').$row['avatar'] }}" alt="Avatar">
+                <img src="{{ asset('/').$row['avatar'] }}" alt="Select Avatar">
             </div>
 
             <!-- Cropping modal -->
@@ -81,6 +81,7 @@
             {!! Form::hidden('user_id', $row['user_id']) !!}
             {!! Form::hidden('group_id', 1) !!}
             {!! Form::hidden('status', 1) !!}
+            {!! Form::hidden('avatar', $row['avatar'],array('id'=>'avatar','class'=>'form-control', 'placeholder'=>'avatar ','required'=>'required' )) !!}
 
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Last name *:</label>
@@ -164,10 +165,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                <label>Avatar *:</label>
-                {!! Form::hidden('avatar', $row['avatar'],array('id'=>'avatar','class'=>'form-control', 'placeholder'=>'avatar ','required'=>'required' )) !!}
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>class_id *:</label>
