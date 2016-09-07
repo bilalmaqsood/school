@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Classes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -94,6 +95,7 @@ class StudentController extends Controller
             $this->data['row'] = array_merge($studentFields,$userFields) ;
         }
         $this->data['id'] = $id;
+        $this->data['classes'] = Classes::lists('name','id');
 
         return view('student.form',$this->data);
     }

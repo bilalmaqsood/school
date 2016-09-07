@@ -98,9 +98,9 @@
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Gender *:</label>
                 <p>
-                    M:
-                    <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
-                    <input type="radio" class="flat" name="gender" id="genderF" value="F" />
+
+                    Male:<input type="radio" class="flat" name="gender" id="genderM" value="1" checked="" required />
+                    Female:<input type="radio" class="flat" name="gender" id="genderF" value="2" />
                 </p>
 
             </div>
@@ -167,8 +167,12 @@
                 </div>
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                <label>class_id *:</label>
-                {!! Form::text('class_id', $row['class_id'],array('class'=>'form-control', 'placeholder'=>'class ','required'=>'required' )) !!}
+                <label>Class *:</label>
+                @if(!empty($row['class_id']))
+                    {!! Form::select('class_id', $classes,$row['class_id'],array('class'=>'form-control', 'placeholder'=>'Select Class', 'required' => true)) !!}
+                @else
+                    {!! Form::select('class_id', $classes,'',array('class'=>'form-control', 'placeholder'=>'Select Class', 'required' => true)) !!}
+                @endif
             </div>
             {{-- <div class="ln_solid"></div> --}}
             <div class="form-group">
