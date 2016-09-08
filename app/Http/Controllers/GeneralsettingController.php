@@ -142,18 +142,23 @@ class GeneralsettingController extends Controller
             13 => 'Administrator Task',
             14 => 'Media Center',
         );
-        $principal = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 2)->get();
-        $registrar = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 3)->get();
-        $finance = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 4)->get();
-        $teacher = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 5)->get();
-        $student = \DB::table('tb_group')->select('tb_group.data_access')->where('id', 6)->get();
+        $dataAccess = array();
+        foreach($groups as $group){
+            foreach($modules as $moduleKey => $moduleName){
+                $modulePermission = \DB::table('tb_group_access')->where('group_id',$group->id)->where('module_id',$moduleKey)->get();
+                if(!empty($modulePermission)){
+                    $dataAccess[$group->id][$moduleKey] = json_decode($modulePermission[0]->data_access,true);
+                }
+                else{
+                    $dataAccess[$group->id][$moduleKey] = array ('is_global' => 0 ,'is_view' => 0, 'is_detail' => 0, 'is_add' => 0, 'is_edit' => 0, 'is_remove' => 0, 'is_excel' => 0 ) ;
+                }
+            }
+        }
+
         $this->data['modules'] = $modules;
         $this->data['groups'] = $groups;
-        $this->data['principal'] = json_decode($principal[0]->data_access);
-        $this->data['registrar'] = json_decode($registrar[0]->data_access);
-        $this->data['finance'] = json_decode($finance[0]->data_access);
-        $this->data['teacher'] = json_decode($teacher[0]->data_access);
-        $this->data['student'] = json_decode($student[0]->data_access);
+        $this->data['access'] = $dataAccess;
+
         return view('setting.module_access', $this->data);
     }
     public function postSaveDataaccess(Request $request)
@@ -161,7 +166,12 @@ class GeneralsettingController extends Controller
         $data = $request->all();
         foreach($data['permission'] as $groupId=>$moduleAccess){
             foreach($moduleAccess as $moduleId=>$data) {
-                \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->update(array('data_access'=>json_encode($data)));
+                $entry = \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->count();
+                if($entry == 0) {
+                    \DB::table('tb_group_access')->insert(array('group_id'=>$groupId,'module_id'=>$moduleId,'data_access'=>json_encode($data)));
+                }else{
+                    \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->update(array('data_access'=>json_encode($data)));
+                }
             }
         }
         return response()->json(array(

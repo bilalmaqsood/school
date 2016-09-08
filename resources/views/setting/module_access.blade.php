@@ -3,7 +3,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Module Permission</h3>
+                <h3>Permission</h3>
             </div>
             <div class="title_right"></div>
         </div>
@@ -39,7 +39,6 @@
                                                 <table class="table table-bordered table-striped table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th>#</th>
                                                         <th>Modules</th>
                                                         <th>Global</th>
                                                         <th>Listing</th>
@@ -52,19 +51,25 @@
                                                     <tbody>
                                                     @if(is_array(json_decode($group->data_access)))
                                                         <?php $availableModule = json_decode($group->data_access); ?>
-                                                        @for($index = 0; $index < count($modules); $index++)
+                                                        <tr>
+                                                            <td>{{ $modules[0] }}</td>
+                                                            <td><input name="dashboard" type="checkbox" checked disabled></td>
+                                                            <td><input name="dashboard" type="checkbox" checked disabled></td>
+                                                            <td><input name="dashboard" type="checkbox" checked disabled></td>
+                                                            <td><input name="dashboard" type="checkbox" checked disabled></td>
+                                                            <td><input name="dashboard" type="checkbox" checked disabled></td>
+                                                            <td><input name="dashboard" type="checkbox" checked disabled></td>
+                                                        </tr>
+                                                        @for($index = 1; $index < count($modules); $index++)
                                                             @if($availableModule[$index]==1)
                                                             <tr>
-                                                                <th scope="row">{{ $index + 1 }}</th>
                                                                 <td>{{ $modules[$index] }}</td>
-
-                                                                <?php //echo $group->id[$index]['is_global']; die('here3'); ?>
-                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_global]" type="checkbox" @if($principal[$index] == '1') {{ 'checked' }} @endif></td>
-                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_list]" type="checkbox" @if($registrar[$index] == '1') {{ 'checked' }} @endif></td>
-                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_detail]" type="checkbox" @if($finance[$index] == '1') {{ 'checked' }} @endif></td>
-                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_edit] " type="checkbox" @if($teacher[$index] == '1') {{ 'checked' }} @endif></td>
-                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_remove] " type="checkbox" @if($student[$index] == '1') {{ 'checked' }} @endif></td>
-                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_add] " type="checkbox" @if($student[$index] == '1') {{ 'checked' }} @endif></td>
+                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_global]" type="checkbox" @if(isset($access[$group->id][$index]['is_global']) && ($access[$group->id][$index]['is_global'] == '1')) {{ 'checked' }} @endif></td>
+                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_view]" type="checkbox" @if(isset($access[$group->id][$index]['is_view']) && ($access[$group->id][$index]['is_view']== '1')) {{ 'checked' }} @endif></td>
+                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_detail]" type="checkbox" @if(isset($access[$group->id][$index]['is_detail']) && ($access[$group->id][$index]['is_detail'] == '1')) {{ 'checked' }} @endif></td>
+                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_edit] " type="checkbox" @if(isset($access[$group->id][$index]['is_edit']) && $access[$group->id][$index]['is_edit'] == '1') {{ 'checked' }} @endif></td>
+                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_remove] " type="checkbox" @if(isset($access[$group->id][$index]['is_remove']) && $access[$group->id][$index]['is_remove'] == '1') {{ 'checked' }} @endif></td>
+                                                                <td><input name="permission[{{$group->id}}][{{$index}}][is_add] " type="checkbox" @if(isset($access[$group->id][$index]['is_add']) && $access[$group->id][$index]['is_add']  == '1') {{ 'checked' }} @endif></td>
                                                             </tr>
                                                             @endif
                                                         @endfor
