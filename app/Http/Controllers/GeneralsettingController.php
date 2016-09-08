@@ -164,13 +164,16 @@ class GeneralsettingController extends Controller
     public function postSaveDataaccess(Request $request)
     {
         $data = $request->all();
+        $noPermission = array('is_global'=>0,'is_view'=>0,'is_detail'=>0,'is_edit'=>0,'is_remove'=>0,'is_add'=>0);
         foreach($data['permission'] as $groupId=>$moduleAccess){
             foreach($moduleAccess as $moduleId=>$data) {
                 $entry = \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->count();
+                $permission = array_replace($noPermission, $data);
+
                 if($entry == 0) {
-                    \DB::table('tb_group_access')->insert(array('group_id'=>$groupId,'module_id'=>$moduleId,'data_access'=>json_encode($data)));
+                    \DB::table('tb_group_access')->insert(array('group_id'=>$groupId,'module_id'=>$moduleId,'data_access'=>json_encode($permission)));
                 }else{
-                    \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->update(array('data_access'=>json_encode($data)));
+                    \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->update(array('data_access'=>json_encode($permission)));
                 }
             }
         }
