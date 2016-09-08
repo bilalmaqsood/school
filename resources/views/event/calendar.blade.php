@@ -64,19 +64,19 @@
                                     <span id="end_date"></span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 text-right">Description</label>
-                                <div class="col-sm-9">
-                                    <span id="description"></span>
-                                </div>
-                            </div>
+                            
                             <div class="form-group">
                                 <label class="col-sm-3 text-right">venue</label>
                                 <div class="col-sm-9">
                                     <span id="venue"></span>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label class="col-sm-3 text-right">Description</label>
+                                <div class="col-sm-9">
+                                    <span id="description"></span>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
