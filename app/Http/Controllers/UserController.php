@@ -103,13 +103,42 @@ class UserController extends Controller
         $email = \Session::get('eid');
         $result = \DB::select('select * from tb_users where email = :email AND id  = :id', ['email' => $email, 'id' => $id]);
         $info = $result[0];
-        var_dump($info); die;
+        // dd($info); die;
         $this->data = array(
-            'pageTitle'	=> 'My Profile',
-            'pageNote'	=> 'View Detail My Info',
-            'info'		=> $info,
+            'pageTitle' => 'My Profile',
+            'pageNote'  => 'View Detail My Info',
+            'row'       => $info,
         );
         return view('user.profile',$this->data);
+    }
+    public function postProfile(Request $request) {
+
+        if(!\Auth::check()) return redirect('user/login');
+        $id = \Session::get('uid');
+        $password = $request->input("password");
+        $last_name = $request->input("last_name");
+        $middle_name = $request->input("middle_name");
+        $first_name = $request->input("first_name");
+        $mobile_number = $request->input("mobile_number");
+        $phone_number = $request->input("phone_number");
+
+
+        if (isset($password) && !empty($password)) {
+        $data = [
+            'password' => bcrypt($password),
+        ];
+    $responce = \DB::table('tb_users')->where("id","=",$id)->update($data);
+        }
+        $data = [
+            
+            'first_name' => $first_name,
+            'middle_name' => $middle_name,
+            'last_name' => $last_name,
+            'mobile_number' => $mobile_number,
+            'phone_number' => $phone_number,
+        ];
+    $responce = \DB::table('tb_users')->where("id","=",$id)->update($data);
+        return view('user.profile');
     }
 
     public function getLogout() {
