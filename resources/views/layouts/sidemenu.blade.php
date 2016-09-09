@@ -126,6 +126,8 @@
                                 </li>
                                 <li><a href="{{ URL::to('setting/sidemenu') }}">Module Permission Setting</a>
                                 </li>
+                                <li><a href="{{ URL::to('setting/moduleaccess') }}">Pages Permission Setting</a>
+                                </li>
                                 <li><a href="page_500.html">User Role</a>
                                 </li>
 
