@@ -1,3 +1,5 @@
+<link href="{{ asset('css/bootstrap-timepicker.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ asset('js/bootstrap-timepicker.js') }}"></script>
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
@@ -59,6 +61,8 @@
         </div>
     </div>
     <script type="text/javascript">
+        $('#start_time').timepicker();
+        $('#end_time').timepicker();
         $(document).ready(function () {
             $.listen('parsley:field:validate', function () {
                 validateFront();
