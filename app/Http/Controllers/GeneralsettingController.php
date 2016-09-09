@@ -161,7 +161,7 @@ class GeneralsettingController extends Controller
 
         return view('setting.module_access', $this->data);
     }
-    public function postSaveDataaccess(Request $request)
+    public function postSavePermission(Request $request)
     {
         $data = $request->all();
         $noPermission = array('is_global'=>0,'is_view'=>0,'is_detail'=>0,'is_edit'=>0,'is_remove'=>0,'is_add'=>0);
