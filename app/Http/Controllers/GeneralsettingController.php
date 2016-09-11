@@ -121,4 +121,66 @@ class GeneralsettingController extends Controller
         ));
     }
 
+    public function getModuleaccess()
+    {
+        $groups = \DB::table('tb_group')->get();
+
+        $modules = array(
+            0 => 'Dashboard',
+            1 => 'Students',
+            2 => 'Teachers',
+            3 => 'Parents',
+            4 => 'Divisions',
+            5 => 'Classes',
+            6 => 'Subjects',
+            7 => 'Classes Schedule',
+            8 => 'School Calender',
+            9 => 'News',
+            10 => 'Events',
+            11 => 'Grading System',
+            12 => 'Finance',
+            13 => 'Administrator Task',
+            14 => 'Media Center',
+        );
+        $dataAccess = array();
+        foreach($groups as $group){
+            foreach($modules as $moduleKey => $moduleName){
+                $modulePermission = \DB::table('tb_group_access')->where('group_id',$group->id)->where('module_id',$moduleKey)->get();
+                if(!empty($modulePermission)){
+                    $dataAccess[$group->id][$moduleKey] = json_decode($modulePermission[0]->data_access,true);
+                }
+                else{
+                    $dataAccess[$group->id][$moduleKey] = array ('is_global' => 0 ,'is_view' => 0, 'is_detail' => 0, 'is_add' => 0, 'is_edit' => 0, 'is_remove' => 0, 'is_excel' => 0 ) ;
+                }
+            }
+        }
+
+        $this->data['modules'] = $modules;
+        $this->data['groups'] = $groups;
+        $this->data['access'] = $dataAccess;
+
+        return view('setting.module_access', $this->data);
+    }
+    public function postSavePermission(Request $request)
+    {
+        $data = $request->all();
+        $noPermission = array('is_global'=>0,'is_view'=>0,'is_detail'=>0,'is_edit'=>0,'is_remove'=>0,'is_add'=>0);
+        foreach($data['permission'] as $groupId=>$moduleAccess){
+            foreach($moduleAccess as $moduleId=>$data) {
+                $entry = \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->count();
+                $permission = array_replace($noPermission, $data);
+
+                if($entry == 0) {
+                    \DB::table('tb_group_access')->insert(array('group_id'=>$groupId,'module_id'=>$moduleId,'data_access'=>json_encode($permission)));
+                }else{
+                    \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->update(array('data_access'=>json_encode($permission)));
+                }
+            }
+        }
+        return response()->json(array(
+            'status'=>'success',
+            'message'=> \Lang::get('core.note_success')
+        ));
+    }
+
 }

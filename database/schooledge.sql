@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2016 at 09:58 AM
+-- Generation Time: Sep 08, 2016 at 10:55 AM
 -- Server version: 5.7.9
 -- PHP Version: 5.6.15
 
@@ -200,6 +200,7 @@ DROP TABLE IF EXISTS `tb_group`;
 CREATE TABLE IF NOT EXISTS `tb_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
+  `data_access` varchar(300) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
@@ -207,14 +208,14 @@ CREATE TABLE IF NOT EXISTS `tb_group` (
 -- Dumping data for table `tb_group`
 --
 
-INSERT INTO `tb_group` (`id`, `name`) VALUES
-(1, 'Admin'),
-(2, 'Principal'),
-(3, 'Registrar'),
-(4, 'Finance Officer'),
-(5, 'Teacher'),
-(6, 'Student'),
-(7, 'Parents');
+INSERT INTO `tb_group` (`id`, `name`, `data_access`) VALUES
+(1, 'Admin', '["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]'),
+(2, 'Principal', '["1","1","1","1","1","1","1","1","1","1","1","1","1","0","1"]'),
+(3, 'Registrar', '["1","1","1","1","0","0","0","1","0","1","1","0","0","0","1"]'),
+(4, 'Finance Officer', '["1","1","1","0","0","0","0","0","0","1","1","0","1","0","1"]'),
+(5, 'Teacher', '["1","1","0","0","1","1","1","1","1","1","1","1","0","0","1"]'),
+(6, 'Student', '["1","0","0","0","0","0","0","0","0","1","1","1","0","0","1"]'),
+(7, 'Parents', '["1","1","0","0","0","0","0","0","0","1","1","0","0","0","1"]');
 
 -- --------------------------------------------------------
 
@@ -231,25 +232,30 @@ CREATE TABLE IF NOT EXISTS `tb_group_access` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_group_access`
 --
 
 INSERT INTO `tb_group_access` (`id`, `group_id`, `module_id`, `data_access`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-14 20:18:19', NULL),
-(2, 1, 2, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-14 20:19:38', NULL),
-(3, 1, 3, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-22 11:18:59', '2016-08-22 11:18:59'),
-(4, 1, 4, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-22 11:18:59', '2016-08-22 11:18:59'),
-(5, 1, 5, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-22 11:19:21', '2016-08-22 11:19:21'),
-(6, 1, 6, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-22 12:02:15', '2016-08-22 12:02:15'),
-(7, 1, 7, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-23 10:58:16', '2016-08-23 10:58:16'),
-(8, 1, 8, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-23 11:30:24', '2016-08-23 11:30:24'),
-(9, 1, 9, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-23 12:39:17', '2016-08-23 12:39:17'),
-(10, 1, 10, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-29 15:56:45', '2016-08-29 15:56:45'),
-(11, 1, 11, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-29 16:16:14', '2016-08-29 16:16:14'),
-(12, 1, 12, '{"is_global":"1","is_view":"1","is_detail":"1","is_add":"1","is_edit":"1","is_remove":"1","is_excel":"1"}', '2016-08-29 16:17:49', '2016-08-29 16:17:49');
+(1, 1, 1, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-14 20:18:19', NULL),
+(2, 1, 2, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-14 20:19:38', NULL),
+(3, 1, 3, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-22 11:18:59', '2016-08-22 11:18:59'),
+(4, 1, 4, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-22 11:18:59', '2016-08-22 11:18:59'),
+(5, 1, 5, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-22 11:19:21', '2016-08-22 11:19:21'),
+(6, 1, 6, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-22 12:02:15', '2016-08-22 12:02:15'),
+(7, 1, 7, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-23 10:58:16', '2016-08-23 10:58:16'),
+(8, 1, 8, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-23 11:30:24', '2016-08-23 11:30:24'),
+(9, 1, 9, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-23 12:39:17', '2016-08-23 12:39:17'),
+(10, 1, 10, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-29 15:56:45', '2016-08-29 15:56:45'),
+(11, 1, 11, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-29 16:16:14', '2016-08-29 16:16:14'),
+(12, 1, 12, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-08-29 16:17:49', '2016-08-29 16:17:49'),
+(13, 2, 1, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":0,"is_remove":0,"is_add":0}', '2016-09-07 10:22:01', '2016-09-07 10:22:01'),
+(14, 3, 1, '{"is_global":"1","is_view":"1","is_detail":"1","is_edit":"1","is_remove":"1","is_add":"1"}', '2016-09-07 10:22:01', NULL),
+(15, 3, 0, '{"is_global":"1","is_view":"1"}', '2016-09-08 06:52:26', NULL),
+(16, 1, 13, '{"is_global":"1","is_view":"1","is_detail":0,"is_edit":0,"is_remove":0,"is_add":0}', '2016-09-08 06:55:05', NULL),
+(17, 1, 14, '{"is_global":"1","is_view":"1","is_detail":0,"is_edit":0,"is_remove":0,"is_add":0}', '2016-09-08 06:55:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -262,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `tb_module` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_module`
@@ -271,16 +277,19 @@ CREATE TABLE IF NOT EXISTS `tb_module` (
 INSERT INTO `tb_module` (`id`, `name`) VALUES
 (1, 'student'),
 (2, 'teacher'),
-(3, 'division'),
+(3, 'parent'),
 (4, 'class'),
-(5, 'subject'),
-(6, 'event'),
-(7, 'news'),
-(8, 'period'),
-(9, 'schedule'),
-(10, 'parents'),
+(5, 'division'),
+(6, 'class'),
+(7, 'subject'),
+(8, 'calender'),
+(9, 'news'),
+(10, 'event'),
 (11, 'gradebook'),
-(12, 'grade');
+(12, 'finance'),
+(13, 'setting'),
+(14, 'media'),
+(15, 'grade');
 
 -- --------------------------------------------------------
 
@@ -424,8 +433,8 @@ CREATE TABLE IF NOT EXISTS `tb_students` (
 --
 
 INSERT INTO `tb_students` (`id`, `class_id`, `user_id`, `status`, `gender`, `community`, `religion`, `city`, `country`, `date_of_birth`, `nationality`, `county_of_origin`, `register_date`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(0, 1, 3, 1, 0, 'Muslims', 'Muslim', 'Bombay', 'India', '2001-12-29', 'Indian', 'Bombay', '2016-06-15', 1, 1, '2016-09-05 09:32:10', '2016-09-05 09:32:10'),
-(1, 1, 2, 0, 0, 'test', 'Islam', 'Lahore', 'Pakistan', '2009-10-10', 'Pakistani', 'Lahore', '1999-01-10', 1, 1, '2016-08-28 19:02:06', '2016-08-28 19:02:06');
+(0, 2, 3, 1, 1, 'Muslims', 'Muslim', 'Bombay', 'India', '2001-12-29', 'Indian', 'Bombay', '2016-06-15', 1, 1, '2016-09-05 09:32:10', '2016-09-05 09:32:10'),
+(1, 1, 2, 1, 2, 'test', 'Islam', 'Lahore', 'Pakistan', '2009-10-10', 'Pakistani', 'Lahore', '1999-01-10', 1, 1, '2016-08-28 19:02:06', '2016-08-28 19:02:06');
 
 -- --------------------------------------------------------
 
@@ -537,8 +546,8 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
 --
 
 INSERT INTO `tb_users` (`id`, `group_id`, `first_name`, `middle_name`, `last_name`, `email`, `password`, `status`, `mobile_number`, `phone_number`, `avatar`, `remember_token`, `created_by`, `updated_by`, `last_login`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Mario', '', 'John', 'admin@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '03245643214', '0423452671', 'test', 'UQblKBAZ9wFijyphnJngwpNLSXHg6fwiTccrIHEfM9WoYUKtQX6kyBqB4gMt', 0, 1, '2016-09-05 09:48:11', '2016-08-14 04:09:21', '2016-09-05 04:47:08'),
-(2, 6, 'Davis', 'Baksh', 'Haroon', 'ali@gmail.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '03245643214', '0423452671', '7', '9OgReSB71uE92qXnjP6vLbw7kfcgTf6VXVbJCRvNw4bjSYytOtulNAl0CgC4', 1, 1, '2016-09-05 09:35:15', '2016-09-04 17:26:34', '2016-09-05 04:35:48'),
+(1, 1, 'Mario', '', 'John', 'admin@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '03245643214', '0423452671', 'test', 'bRKhgJBtIwT1B8vEUVutTcD07DY2nglcsDwnYjfyKKHe9Y4pBmTfxNQJLTGG', 0, 1, '2016-09-08 05:51:56', '2016-08-14 04:09:21', '2016-09-06 04:15:34'),
+(2, 1, 'Davis', 'Baksh', 'Haroon', 'ali@gmail.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '03245643214', '0423452671', 'upload/20160907055010.png', '9OgReSB71uE92qXnjP6vLbw7kfcgTf6VXVbJCRvNw4bjSYytOtulNAl0CgC4', 1, 1, '2016-09-05 09:35:15', '2016-09-04 17:26:34', '2016-09-05 04:35:48'),
 (3, 1, 'Mario', '1', 'Li', 'mario@gmail.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '0324563214', '048755665525', 'test', 'BWFKlo9lgvRygX0HyJV6dkQAWoX5sR4iyGHdJtDGs5gdY2G1VYgOM5WBMi8b', 1, 1, '2016-09-05 09:36:18', '2016-09-05 09:32:10', '2016-09-05 04:36:36');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
