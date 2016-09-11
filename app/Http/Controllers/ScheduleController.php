@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\ClassSchedule;
 use App\Models\Subject;
 use App\Models\Period;
+use App\Models\Classes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -20,6 +21,8 @@ class ScheduleController extends Controller
     {
         parent::__construct();
         $this->model = new ClassSchedule();
+        $this->class = new Classes();
+        $this->period = new Period();
         $this->info = $this->model->makeInfo($this->module);
         $this->access = $this->model->validAccess($this->info['id']);
         $this->data = array(
@@ -34,13 +37,124 @@ class ScheduleController extends Controller
 
     public function getIndex()
     {
-        /*$results = $this->model->classSchedule();
-        var_dump($results);
-        exit;*/
+        $classes = Classes::all();
+        $periods = Period::all();
+        $monday = array();
+        $tuesday = array();
+        $wednesday = array();
+        $thursday = array();
+        $friday = array();
+        foreach($classes as $cindex => $class)
+        {
+            foreach($periods as $pindex => $period)
+            {
+                $mon = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
+                    ->where('period_id', '=', $period->id)
+                    ->where('day_of_week', '=', 1)
+                    ->get();
+                $tues = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
+                    ->where('period_id', '=', $period->id)
+                    ->where('day_of_week', '=', 2)
+                    ->get();
+                $wednes = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
+                    ->where('period_id', '=', $period->id)
+                    ->where('day_of_week', '=', 3)
+                    ->get();
+                $thurs = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
+                    ->where('period_id', '=', $period->id)
+                    ->where('day_of_week', '=', 4)
+                    ->get();
+                $fri = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
+                    ->where('period_id', '=', $period->id)
+                    ->where('day_of_week', '=', 5)
+                    ->get();
+                $monday[$cindex][$pindex]['class_id'] = $class->id;
+                $monday[$cindex][$pindex]['day_of_week'] = 1;
+                $monday[$cindex][$pindex]['period_id'] = $period->id;
+
+                $tuesday[$cindex][$pindex]['class_id'] = $class->id;
+                $tuesday[$cindex][$pindex]['day_of_week'] = 2;
+                $tuesday[$cindex][$pindex]['period_id'] = $period->id;
+
+                $wednesday[$cindex][$pindex]['class_id'] = $class->id;
+                $wednesday[$cindex][$pindex]['day_of_week'] = 3;
+                $wednesday[$cindex][$pindex]['period_id'] = $period->id;
+
+                $thursday[$cindex][$pindex]['class_id'] = $class->id;
+                $thursday[$cindex][$pindex]['day_of_week'] = 4;
+                $thursday[$cindex][$pindex]['period_id'] = $period->id;
+
+                $friday[$cindex][$pindex]['class_id'] = $class->id;
+                $friday[$cindex][$pindex]['day_of_week'] = 5;
+                $friday[$cindex][$pindex]['period_id'] = $period->id;
+
+                if(count($mon) > 0)
+                {
+                    $monday[$cindex][$pindex]['subject_id'] = $mon[0]->subject_id;
+                    $monday[$cindex][$pindex]['id'] = $mon[0]->id;
+                }
+                else
+                {
+                    $monday[$cindex][$pindex]['subject_id'] = '';
+                    $monday[$cindex][$pindex]['id'] = '';
+                }
+
+                if(count($tues) > 0)
+                {
+                    $tuesday[$cindex][$pindex]['subject_id'] = $tues[0]->subject_id;
+                    $tuesday[$cindex][$pindex]['id'] = $tues[0]->id;
+                }
+                else
+                {
+                    $tuesday[$cindex][$pindex]['subject_id'] = '';
+                    $tuesday[$cindex][$pindex]['id'] = '';
+                }
+
+                if(count($wednes) > 0)
+                {
+                    $wednesday[$cindex][$pindex]['subject_id'] = $wednes[0]->subject_id;
+                    $wednesday[$cindex][$pindex]['id'] = $wednes[0]->id;
+                }
+                else
+                {
+                    $wednesday[$cindex][$pindex]['subject_id'] = '';
+                    $wednesday[$cindex][$pindex]['id'] = '';
+                }
+
+                if(count($thurs) > 0)
+                {
+                    $thursday[$cindex][$pindex]['subject_id'] = $thurs[0]->subject_id;
+                    $thursday[$cindex][$pindex]['id'] = $thurs[0]->id;
+                }
+                else
+                {
+                    $thursday[$cindex][$pindex]['subject_id'] = '';
+                    $thursday[$cindex][$pindex]['id'] = '';
+                }
+
+                if(count($fri) > 0)
+                {
+                    $friday[$cindex][$pindex]['subject_id'] = $fri[0]->subject_id;
+                    $friday[$cindex][$pindex]['id'] = $fri[0]->id;
+                }
+                else
+                {
+                    $friday[$cindex][$pindex]['subject_id'] = '';
+                    $friday[$cindex][$pindex]['id'] = '';
+                }
+            }
+        }
         if($this->access['is_view'] ==0)
             return Redirect::to('dashboard');
 
         $this->data['access']   = $this->access;
+        $this->data['monday']   = $monday;
+        $this->data['tuesday']   = $tuesday;
+        $this->data['wednesday']   = $wednesday;
+        $this->data['thursday']   = $thursday;
+        $this->data['friday']   = $friday;
+        $this->data['classes']   = $classes;
+        $this->data['periods']   = $periods;
         return view('schedule.index',$this->data);
     }
 
@@ -167,6 +281,34 @@ class ScheduleController extends Controller
 
         }
 
+    }
+
+    public function getPopup(Request $request)
+    {
+        $data = $request->all();
+        $this->data['subject_id'] = $data['subject_id'];
+        $this->data['class_id'] = $data['class_id'];
+        $this->data['day_of_week'] = $data['day_of_week'];
+        $this->data['period_id'] = $data['period_id'];
+        return view('schedule.popup', $this->data);
+    }
+
+
+    public function postSavedata(Request $request)
+    {
+        $data = $request->all();
+        $data = array(
+            'subject_id' => $data['subject_id'],
+            'class_id' => $data['class_id'],
+            'day_of_week' => $data['day_of_week'],
+            'period_id' => $data['period_id']
+        );
+        $id = $this->model->insertRow($data , $request->input('id'));
+        return response()->json(array(
+            'status'=>'success',
+            'subject_title' => \SiteHelpers::getSubjectName($data['subject_id']),
+            'message'=> \Lang::get('core.note_success')
+        ));
     }
 
     public function getShow( $id = null)
