@@ -1,9 +1,7 @@
-<link href="{{ asset('css/bootstrap-timepicker.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ asset('js/bootstrap-timepicker.js') }}"></script>
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>New Event</h2>
+            <h2>New Year</h2>
             <li><a href="javascript:void(0)" class="pull-right close-link"
                    onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
             </li>
@@ -11,42 +9,24 @@
         </div>
         <div class="x_content">
             <br/>
-            {!! Form::open(array('url'=>'period/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
-            {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'required' => true)) !!}
+            {!! Form::open(array('url'=>'setting/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
+            {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Period No<span
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Name<span
                             class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    {!! Form::text('name', $row['name'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Period No', 'required' => true)) !!}
+                    {!! Form::text('name', $row['name'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Name', 'required' => true)) !!}
                 </div>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Start Time<span
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Year<span
                             class="required">*</span>
                 </label>
-                <div class="col-md-3 col-sm-3 col-xs-6 calender-width">
-                    <input name="start_time" value="{{$row['start_time']}}" type="text"
-                           class="form-control has-feedback-left" id="start_time" placeholder="Start Time"
-                           aria-describedby="inputSuccess2Status2" required="required">
-                    <span class="fa fa-calendar-o form-control-feedback left calender-icon" aria-hidden="true"></span>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {!! Form::text('year', $row['year'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Year like 2016/2017', 'required' => true)) !!}
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">End Time<span
-                            class="required"></span>
-                </label>
-                <div class="col-md-3 col-sm-3 col-xs-6 calender-width">
-                    <input name="end_time" value="{{$row['end_time']}}" type="text"
-                           class="form-control has-feedback-left" id="end_time" placeholder="End Time"
-                           aria-describedby="inputSuccess2Status2" required="required">
-                    <span class="fa fa-calendar-o form-control-feedback left calender-icon" aria-hidden="true"></span>
-                </div>
-            </div>
-
-
             <div class="clearfix"></div>
             <div class="ln_solid"></div>
             <div class="clearfix"></div>
@@ -61,8 +41,6 @@
         </div>
     </div>
     <script type="text/javascript">
-        $('#start_time').timepicker();
-        $('#end_time').timepicker();
         $(document).ready(function () {
             $.listen('parsley:field:validate', function () {
                 validateFront();
@@ -103,10 +81,10 @@
             if (data.status == 'success') {
                 ajaxViewClose('#{{ $pageModule }}');
                 ajaxFilter('#{{ $pageModule }}', '{{ $pageUrl }}/data');
-                //notyMessage(data.message);
+                notyMessage(data.message);
                 $('#sximo-modal').modal('hide');
             } else {
-                //notyMessageError(data.message);
+                notyMessageError(data.message);
                 $('.ajaxLoading').hide();
                 return false;
             }

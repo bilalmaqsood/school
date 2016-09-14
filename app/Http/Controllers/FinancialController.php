@@ -1,29 +1,29 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Event;
+use App\Models\Financial;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ;
 
-class EventController extends Controller
+class FinancialController extends Controller
 {
     protected $layout = "layouts.main";
     protected $data = array();
-    public $module = 'event';
+    public $module = 'finance';
     static $per_page	= '10';
 
     public function __construct()
     {
         parent::__construct();
-        $this->model = new Event();
+        $this->model = new Financial();
         $this->info = $this->model->makeInfo($this->module);
         $this->access = $this->model->validAccess($this->info['id']);
         $this->data = array(
-            'pageTitle'			=> 	'Event',
-            'pageNote'			=>  'View All Event',
-            'pageModule'		=> 'event',
-            'pageUrl'			=>  url('event'),
+            'pageTitle'			=> 	'Financial',
+            'pageNote'			=>  'View All Financial Records',
+            'pageModule'		=> 'finance',
+            'pageUrl'			=>  url('finance'),
             'return' 			=> 	self::returnUrl()
         );
 
@@ -35,7 +35,17 @@ class EventController extends Controller
             return Redirect::to('dashboard');
 
         $this->data['access']		= $this->access;
-        return view('event.index',$this->data);
+        return view('financial.index',$this->data);
+    }
+    public function getReceipt()
+    {
+        if($this->access['is_view'] ==0)
+            return Redirect::to('dashboard');
+
+        $this->data['access']		= $this->access;
+        $this->data['pageTitle']		= 'Receipt';
+        $this->data['pageNote']		= 'View All Receipt';
+        return view('financial.receipt',$this->data);
     }
 
     public function postData( Request $request)
@@ -63,7 +73,36 @@ class EventController extends Controller
         // Group users permission
         $this->data['access']		= $this->access;
         // Render into template
-        return view('event.table',$this->data);
+        return view('financial.table',$this->data);
+
+    }
+
+    public function postReceiptData( Request $request)
+    {
+        $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'desc');
+        $order = (!is_null($request->input('order')) ? $request->input('order') : '');
+        // End Filter sort and order for query
+        // Filter Search for query
+        $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
+
+
+        $page = $request->input('page', 1);
+        $params = array(
+            'page'		=> $page ,
+            'limit'		=> (!is_null($request->input('rows')) ? filter_var($request->input('rows'),FILTER_VALIDATE_INT) : 25 ) ,
+            'sort'		=> $sort ,
+            'order'		=> $order,
+            'params'	=> $filter,
+            'global'	=> (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
+        );
+        // Get Query
+        $results = $this->model->getRows( $params );
+
+        $this->data['rowData']		= $results['rows'];
+        // Group users permission
+        $this->data['access']		= $this->access;
+        // Render into template
+        return view('financial.receipt-data',$this->data);
 
     }
 
@@ -87,11 +126,11 @@ class EventController extends Controller
         {
             $this->data['row'] 		=  $row;
         } else {
-            $this->data['row'] 		= $this->model->getColumnTable('tb_event');
+            $this->data['row'] 		= $this->model->getColumnTable('tb_payment');
         }
         $this->data['id'] = $id;
 
-        return view('event.form',$this->data);
+        return view('financial.form',$this->data);
     }
 
 
@@ -103,10 +142,10 @@ class EventController extends Controller
         if ($validator->passes()) {
             //$data = $this->validatePost('sb_event');
             $data = $request->all();
-            if(isset($data['start_datetime']))
-                $date['start_datetime'] = $this->changeDateTimeFormat($data['start_datetime']);
-            if(isset($data['end_datetime']))
-                $date['end_datetime'] = $this->changeDateTimeFormat($data['end_datetime']);
+            if(empty($data['no']))
+                $data['no'] = substr(rand().time(), 0, 6);
+            if(empty($request->input('id')))
+                $data['status'] = 0;
             $id = $this->model->insertRow($data , $request->input('id'));
 
             return response()->json(array(
@@ -171,25 +210,57 @@ class EventController extends Controller
 
         $this->data['id'] = $id;
         $this->data['access']		= $this->access;
-        return view('event.view',$this->data);
+        return view('financial.view',$this->data);
     }
 
-    public function getShowCalendar()
+    public function postChangeStatus(Request $request)
     {
-        $events = Event::all();
-        $data = array();
-        foreach($events as $event)
-        {
-            $data[] = array(
-                'title' => $event->title,
-                'start' => $event->start_datetime,
-                'end' => $event->end_datetime,
-                'body' => $event->body,
-                'venue' => $event->venue
+        if($this->access['is_edit'] ==0) {
+            return response()->json(array(
+                'status'=>'error',
+                'message'=> \Lang::get('core.note_restric')
+            ));
+            die;
 
-            );
         }
-        $this->data['events'] = json_encode($data);
-        return view('event.calendar', $this->data);
+        if(!empty($request->input('id')))
+        {
+            $row = $this->model->find($request->input('id'));
+            if($row)
+            {
+                if($row->status == 1)
+                {
+                    $data = array(
+                        'received_date' => '',
+                        'status' => 0,
+                    );
+                }
+                else
+                {
+                    $data = array(
+                        'received_date' => date("Y-m-d H:i:s"),
+                        'status' => 1,
+                    );
+                }
+                $id = $this->model->insertRow($data , $request->input('id'));
+            }
+            else
+            {
+                return response()->json(array(
+                    'status'=>'error',
+                    'message'=> 'error in payment'
+                ));
+            }
+            return response()->json(array(
+                'status'=>'success',
+                'message'=> 'Update successfully'
+            ));
+        } else {
+            return response()->json(array(
+                'status'=>'error',
+                'message'=> 'error in payment'
+            ));
+
+        }
     }
 }

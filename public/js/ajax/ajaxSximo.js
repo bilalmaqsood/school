@@ -2,8 +2,7 @@
 
 function reloadData( id,url   )
 {
-	console.log(id);
-	//$('.ajaxLoading').show();
+	$('.ajaxLoading').show();
 	$.post( url ,function( data ) {
 		$( id +'Grid' ).html( data );
 		$('.ajaxLoading').hide();
@@ -133,6 +132,27 @@ function ajaxRemoveRecord( id, url, rowId)
 		$.post( url+'/delete' ,datas,function( data ) {
 			if(data.status == 'success' )
 			{
+				notyMessage(data.message);
+				ajaxFilter( id ,url+'/data' );
+			} else {
+				notyMessageError(data.message);
+			}
+		});
+
+	}
+}
+function ajaxUpdateStatus( id, url, rowId, status)
+{
+	var datas = {'id':rowId};
+	var message = '';
+	if(status == 1)
+		message = 'Are u sure to refund a selected row?';
+	else
+		message = 'Are u sure to paid a selected row?';
+	if(confirm(message)) {
+		$.post( url+'/change-status' ,datas,function( data ) {
+			if(data.status == 'success' )
+			{
 				//notyMessage(data.message);
 				ajaxFilter( id ,url+'/data' );
 			} else {
@@ -142,7 +162,6 @@ function ajaxRemoveRecord( id, url, rowId)
 
 	}
 }
-
 function ajaxViewDetail( id , url )
 {
 	//$('.ajaxLoading').show();

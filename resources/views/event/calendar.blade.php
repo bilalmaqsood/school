@@ -46,18 +46,37 @@
                     <div id="testmodal2" style="padding: 5px 20px;">
                         <form id="antoform2" class="form-horizontal calender" role="form">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Title</label>
+                                <label class="col-sm-3 text-right">Title</label>
                                 <div class="col-sm-9">
                                     <span id="title"></span>
                                 </div>
                             </div>
+                            
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Description</label>
+                                <label class="col-sm-3 text-right">Start Date</label>
+                                <div class="col-sm-9">
+                                    <span id="start_date"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 text-right">End Date</label>
+                                <div class="col-sm-9">
+                                    <span id="end_date"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-3 text-right">venue</label>
+                                <div class="col-sm-9">
+                                    <span id="venue"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 text-right">Description</label>
                                 <div class="col-sm-9">
                                     <span id="description"></span>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -98,7 +117,12 @@
                     $('#fc_view').click();
                     $('#title').val(calEvent.title);
                     categoryClass = $("#event_type").val();
-
+                    $("#CalenderModalView #title").text(calEvent.title);
+                    console.log(calEvent.body);
+                    $("#CalenderModalView #description").text(calEvent.body);
+                    $("#CalenderModalView #venue").text(calEvent.venue);
+                    $("#CalenderModalView #start_date").text(calEvent.start);
+                    $("#CalenderModalView #end_date").text(calEvent.end);
                     $(".antosubmit2").on("click", function() {
                         calEvent.title = $("#title").val();
 

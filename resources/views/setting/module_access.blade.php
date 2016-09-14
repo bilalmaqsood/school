@@ -9,6 +9,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="row">
+            <div class="ajaxLoading"></div>
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
@@ -17,7 +18,7 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        {!! Form::open(array('url'=>'setting/save-dataaccess/', 'class'=>'', 'id'=> 'demo-form2')) !!}
+                        {!! Form::open(array('url'=>'setting/save-permission/', 'id'=> 'demo-form2')) !!}
 
                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                             <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
@@ -29,8 +30,6 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <button id="save_changes" class="btn btn-success pull-right">Save Changes</button>
-
                             <div id="myTabContent" class="tab-content">
                                 @foreach($groups as $group)
                                     <div role="tabpanel" class="tab-pane fade" id="tab_content{{ $group->id }}" aria-labelledby="tab-{{ $group->id }}">
@@ -83,6 +82,8 @@
                                 @endforeach
 
                             </div>
+                            <button id="save_changes" class="btn btn-success pull-right">Save Changes</button>
+
                         </div>
                         {!! Form::close() !!}
                     </div>
@@ -93,40 +94,35 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-
+            $('.nav-tabs a[href="#tab_content1"]').tab('show');
             $('#demo-form2 #save_changes').on('click', function () {
+                console.log('button pressed');
                 var this_master = $("#demo-form2");
                 this_master.find('input[type="checkbox"]').each( function () {
                     var checkbox_this = $(this);
-                    console.log(checkbox_this);
-
                     if( checkbox_this.is(":checked") == true ) {
                         checkbox_this.attr('value','1');
-                    } else {
-                        //checkbox_this.prop('checked',true);
-                        //DONT' ITS JUST CHECK THE CHECKBOX TO SUBMIT FORM DATA
-                        checkbox_this.attr('value','2');
                     }
-                })
-                var options = {
-                    dataType: 'json',
-                    beforeSubmit: showRequest,
-                    success: showResponse
-                }
-                $('#demo-form2').ajaxSubmit(options);
-                return false;
+                });
+                    var options = {
+                        dataType: 'json',
+                        beforeSubmit: showRequest,
+                        success: showResponse
+                    }
+                    $('#demo-form2').ajaxSubmit(options);
+                    return false;
             });
         });
 
         function showRequest() {
-            //$('.ajaxLoading').show();
+            $('.ajaxLoading').show();
         }
         function showResponse(data) {
-
             if (data.status == 'success') {
-                window.location.reload();
+                notyMessage(data.message);
+                $('#sximo-modal').modal('hide');
             } else {
-                //notyMessageError(data.message);
+                notyMessageError(data.message);
                 $('.ajaxLoading').hide();
                 return false;
             }

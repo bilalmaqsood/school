@@ -70,7 +70,11 @@ class UserController extends Controller
                     else
                     {
                         \DB::table('tb_users')->where('id', '=',$row->id )->update(array('last_login' => date("Y-m-d H:i:s")));
-                        $sidemenu = \DB::table('tb_group')->select('tb_group.data_access')->where('id', $row->group_id)->get();
+                        $school_year = \DB::table('tb_school')->select('id', 'year')->orderBy('id', 'desc')->get();
+                        $sidemenu = \DB::table('tb_group')->select('tb_group.data_access', 'tb_group.name')->where('id', $row->group_id)->get();
+                        \Session::put('selected_year', $school_year[0]->id);
+                        \Session::put('school_year', $school_year);
+                        \Session::put('gname', $sidemenu[0]->name);
                         \Session::put('sidemenu', json_decode($sidemenu[0]->data_access));
                         \Session::put('uid', $row->id);
                         \Session::put('gid', $row->group_id);
@@ -103,13 +107,42 @@ class UserController extends Controller
         $email = \Session::get('eid');
         $result = \DB::select('select * from tb_users where email = :email AND id  = :id', ['email' => $email, 'id' => $id]);
         $info = $result[0];
-        var_dump($info); die;
+        // dd($info); die;
         $this->data = array(
-            'pageTitle'	=> 'My Profile',
-            'pageNote'	=> 'View Detail My Info',
-            'info'		=> $info,
+            'pageTitle' => 'My Profile',
+            'pageNote'  => 'View Detail My Info',
+            'row'       => $info,
         );
         return view('user.profile',$this->data);
+    }
+    public function postProfile(Request $request) {
+
+        if(!\Auth::check()) return redirect('user/login');
+        $id = \Session::get('uid');
+        $password = $request->input("password");
+        $last_name = $request->input("last_name");
+        $middle_name = $request->input("middle_name");
+        $first_name = $request->input("first_name");
+        $mobile_number = $request->input("mobile_number");
+        $phone_number = $request->input("phone_number");
+
+
+        if (isset($password) && !empty($password)) {
+        $data = [
+            'password' => bcrypt($password),
+        ];
+    $responce = \DB::table('tb_users')->where("id","=",$id)->update($data);
+        }
+        $data = [
+            
+            'first_name' => $first_name,
+            'middle_name' => $middle_name,
+            'last_name' => $last_name,
+            'mobile_number' => $mobile_number,
+            'phone_number' => $phone_number,
+        ];
+    $responce = \DB::table('tb_users')->where("id","=",$id)->update($data);
+        return view('user.profile');
     }
 
     public function getLogout() {
@@ -117,5 +150,19 @@ class UserController extends Controller
         \Session::flush();
         return Redirect::to('');
             //->with('message', \SiteHelpers::alert('info','Your are now logged out!'));
+    }
+
+
+    public function getChangeYear(Request $request)
+    {
+        $id = $request->input('id');
+        if($id != '')
+        {
+            \Session::put('selected_year', $id);
+        }
+        return response()->json(array(
+            'status'=>'success',
+            'message'=> 'Changed Year'
+        ));
     }
 }

@@ -21,7 +21,6 @@ class Authenticate
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                die("called authenticate middlewasre");
                 return redirect()->guest('login');
             }
         }

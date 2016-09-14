@@ -1,9 +1,7 @@
-<link href="{{ asset('css/bootstrap-timepicker.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ asset('js/bootstrap-timepicker.js') }}"></script>
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>New Event</h2>
+            <h2>New Fees Payment</h2>
             <li><a href="javascript:void(0)" class="pull-right close-link"
                    onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
             </li>
@@ -11,42 +9,54 @@
         </div>
         <div class="x_content">
             <br/>
-            {!! Form::open(array('url'=>'period/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
-            {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'required' => true)) !!}
+            {!! Form::open(array('url'=>'finance/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
+            {!! Form::hidden('id', $row['id']) !!}
+            {!! Form::hidden('no', $row['no']) !!}
+            {!! Form::hidden('created_at', $row['created_at']) !!}
+            {!! Form::hidden('updated_at', $row['updated_at']) !!}
+            {!! Form::hidden('created_by', $row['created_by']) !!}
+            {!! Form::hidden('updated_by', $row['updated_by']) !!}
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Period No<span
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Student<span
                             class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    {!! Form::text('name', $row['name'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Period No', 'required' => true)) !!}
+                    <select id="student" name="student_id" class="form-control  col-md-7 col-xs-12" required>
+                    </select>
                 </div>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Start Time<span
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Purpose<span
                             class="required">*</span>
                 </label>
-                <div class="col-md-3 col-sm-3 col-xs-6 calender-width">
-                    <input name="start_time" value="{{$row['start_time']}}" type="text"
-                           class="form-control has-feedback-left" id="start_time" placeholder="Start Time"
-                           aria-describedby="inputSuccess2Status2" required="required">
-                    <span class="fa fa-calendar-o form-control-feedback left calender-icon" aria-hidden="true"></span>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {!! Form::text('purpose', $row['purpose'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Purpose', 'required' => true)) !!}
                 </div>
             </div>
-
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">End Time<span
-                            class="required"></span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Amount in Words<span
+                            class="required">*</span>
                 </label>
-                <div class="col-md-3 col-sm-3 col-xs-6 calender-width">
-                    <input name="end_time" value="{{$row['end_time']}}" type="text"
-                           class="form-control has-feedback-left" id="end_time" placeholder="End Time"
-                           aria-describedby="inputSuccess2Status2" required="required">
-                    <span class="fa fa-calendar-o form-control-feedback left calender-icon" aria-hidden="true"></span>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {!! Form::text('amount_in_words', $row['amount_in_words'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Amount in Words', 'required' => true)) !!}
                 </div>
             </div>
-
-
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Amount in Number<span
+                            class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {!! Form::text('amount', $row['amount'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Amount in Number', 'required' => true)) !!}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Due Amount<span
+                            class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {!! Form::text('due', $row['due'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Due Amount')) !!}
+                </div>
+            </div>
             <div class="clearfix"></div>
             <div class="ln_solid"></div>
             <div class="clearfix"></div>
@@ -61,9 +71,9 @@
         </div>
     </div>
     <script type="text/javascript">
-        $('#start_time').timepicker();
-        $('#end_time').timepicker();
         $(document).ready(function () {
+            $("#student").jCombo("{{ URL::to('finance/comboselect?filter=tb_users:id:last_name')}}",
+                    {  selected_value : '{{ $row["student_id"] }}' });
             $.listen('parsley:field:validate', function () {
                 validateFront();
             });
@@ -111,26 +121,6 @@
                 return false;
             }
         }
-        $(document).ready(function () {
-            $("#start_datetime").datetimepicker({
-                todayBtn:  1,
-                format: 'yyyy-mm-dd hh:ii:ss',
-                autoclose: true,
-                startDate: new Date()
-            }).on('changeDate', function (selected) {
-                console.log(selected.date);
-                var minDate = new Date(selected.date.valueOf());
-                $('#end_datetime').datetimepicker('setStartDate', minDate);
-            });
-
-            $("#end_datetime").datetimepicker({
-                        format: 'yyyy-mm-dd hh:ii:ss',
-            })
-                    .on('changeDate', function (selected) {
-                        var minDate = new Date(selected.date.valueOf());
-                        $('#start_datetime').datetimepicker('setEndDate', minDate);
-                    });
-        });
 
     </script>
 </div>
