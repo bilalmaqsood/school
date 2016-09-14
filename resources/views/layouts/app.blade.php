@@ -31,6 +31,7 @@
     <link href="{{ asset('js/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('js/datatables/scroller.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('js/toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{ asset('crop/cropper.min.css') }}" rel="stylesheet" type="text/css" />
     <!--<link href="{{ asset('crop/main.css') }}" rel="stylesheet" type="text/css" />-->
@@ -121,6 +122,7 @@
 <!-- AJax -->
 <link href="{{ asset('js/ajax/ajaxSximo.css')}}" rel="stylesheet">
 <script type="text/javascript" src="{{ asset('js/ajax/ajaxSximo.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/toastr/toastr.js') }}"></script>
 
 @yield('js_section');
 

@@ -2,13 +2,6 @@
 @section('content')
     <div class="">
         <div class="page-title">
-            <div class="x_content bs-example-popovers">
-                <div class="alert alert-success alert-dismissible hidden" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                    </button>
-                    <strong>Note!</strong> Page Permission Saved Successfully
-                </div>
-            </div>
             <div class="title_left">
                 <h3>Permission</h3>
             </div>
@@ -16,6 +9,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="row">
+            <div class="ajaxLoading"></div>
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
@@ -121,15 +115,14 @@
         });
 
         function showRequest() {
-            //$('.ajaxLoading').show();
+            $('.ajaxLoading').show();
         }
         function showResponse(data) {
-            console.log('data saved successfully');
             if (data.status == 'success') {
-                $('.alert-success').removeClass('hidden');
-                //window.location.reload();
+                notyMessage(data.message);
+                $('#sximo-modal').modal('hide');
             } else {
-                //notyMessageError(data.message);
+                notyMessageError(data.message);
                 $('.ajaxLoading').hide();
                 return false;
             }

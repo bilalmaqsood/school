@@ -26,10 +26,12 @@ class Controller extends BaseController
             {
                 \Session::put('uid', \Auth::user()->id);
                 \Session::put('gid', \Auth::user()->group_id);
+                \Session::put('gname', \Auth::user()->gname);
                 \Session::put('eid', \Auth::user()->email);
                 \Session::put('fid', \Auth::user()->first_name.' '. \Auth::user()->last_name);
-                $sidemenu = \DB::table('tb_group')->select('tb_group.data_access')->where('id', \Auth::user()->group_id)->get();
-                \Session::put('sidemenu', json_decode($sidemenu[0]->data_access));
+                \Session::put('sidemenu', \Auth::user()->sidemenu);
+                \Session::put('selected_year',  \Auth::user()->selected_id);
+                \Session::put('school_year',  \Auth::user()->school_year);
             }
         }
     }

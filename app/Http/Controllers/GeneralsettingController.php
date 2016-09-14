@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
+use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ;
@@ -15,10 +16,11 @@ class GeneralsettingController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->model = new School();
         $this->data = array(
             'pageTitle'			=> 	'General Setting',
-            'pageNote'			=>  '',
-            'pageModule'		=> '',
+            'pageNote'			=>  'Manage School Year',
+            'pageModule'		=> 'setting',
             'pageUrl'			=>  url('setting'),
             'return' 			=> 	self::returnUrl()
         );
@@ -27,7 +29,122 @@ class GeneralsettingController extends Controller
 
     public function getIndex()
     {
+        if(\Session::get('gid') != 1)
+            return Redirect::to('dashboard');
 
+        return view('setting.index',$this->data);
+    }
+
+    public function postData( Request $request)
+    {
+        $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'desc');
+        $order = (!is_null($request->input('order')) ? $request->input('order') : '');
+        // End Filter sort and order for query
+        // Filter Search for query
+        $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
+
+
+        $page = $request->input('page', 1);
+        $params = array(
+            'page'		=> $page ,
+            'limit'		=> (!is_null($request->input('rows')) ? filter_var($request->input('rows'),FILTER_VALIDATE_INT) : 25 ) ,
+            'sort'		=> $sort ,
+            'order'		=> $order,
+            'params'	=> $filter,
+            'global'	=> (isset($this->access['is_global']) ? $this->access['is_global'] : 1 )
+        );
+        // Get Query
+        $results = $this->model->getRows( $params );
+
+        $this->data['rowData']		= $results['rows'];
+        // Render into template
+        return view('setting.table',$this->data);
+
+    }
+
+    function getUpdate(Request $request, $id = null)
+    {
+
+        if(\Session::get('gid') != 1)
+            return Redirect::to('dashboard');
+
+        $row = $this->model->find($id);
+        if($row)
+        {
+            $this->data['row'] 		=  $row;
+        } else {
+            $this->data['row'] 		= $this->model->getColumnTable('tb_school');
+        }
+        $this->data['id'] = $id;
+
+        return view('setting.form',$this->data);
+    }
+
+
+    function postSave( Request $request, $id =0)
+    {
+        $rules = array();
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->passes()) {
+            $data = $request->all();
+            $id = $this->model->insertRow($data , $request->input('id'));
+            return response()->json(array(
+                'status'=>'success',
+                'message'=> \Lang::get('core.note_success')
+            ));
+
+        } else {
+
+            $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
+            return Response::json(array(
+                'message'	=> $message,
+                'status'	=> 'error'
+            ));
+        }
+
+    }
+
+    public function postDelete( Request $request)
+    {
+        if(\Session::get('gid') != 1)
+            return Redirect::to('dashboard');
+        // delete multipe rows
+        if(count($request->input('id')) >=1)
+        {
+            $this->model->destroy($request->input('id'));
+
+            return response()->json(array(
+                'status'=>'success',
+                'message'=> 'delete successfully'
+            ));
+        } else {
+            return response()->json(array(
+                'status'=>'error',
+                'message'=> 'error in delete'
+            ));
+
+        }
+
+    }
+
+    public function getShow( $id = null)
+    {
+
+        if($this->access['is_detail'] ==0)
+            return Redirect::to('dashboard')
+                ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
+
+        $row = $this->model->getRow($id);
+        if($row)
+        {
+            $this->data['row'] =  $row;
+        } else {
+            $this->data['row'] = $this->model->getColumnTable('sb_invoiceproducts');
+        }
+
+        $this->data['id'] = $id;
+        $this->data['access']		= $this->access;
+        return view('event.view',$this->data);
     }
 
     public function getSidemenu()
@@ -160,6 +277,49 @@ class GeneralsettingController extends Controller
         $this->data['access'] = $dataAccess;
 
         return view('setting.module_access', $this->data);
+    }
+
+    public function getGeneral()
+    {
+        return view('setting.general_setting', $this->data);
+    }
+
+    public function postSaveGeneralSetting(Request $request)
+    {
+        $rules = array(
+            'school_name' => 'required|min:2',
+            'school_address' => 'required|min:2',
+            'school_no' => 'required|min:2',
+            'school_email' => 'required|email',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if (!$validator->fails())
+        {
+            $val = "<?php \n";
+            $val .= "define('CNF_APPNAME','" . $request->input('school_name') . "');\n";
+            $val .= "define('CNF_APPADDRESS','" . $request->input('school_address') . "');\n";
+            $val .= "define('CNF_APPEMAIL','" . $request->input('school_email') . "');\n";
+            $val .= "define('CNF_APPNO','" . $request->input('school_no') . "');\n";
+            $val .= "define('CNF_FRONT','true');\n";
+            $val .= "define('CNF_DATEFORMAT','" . $request->input('school_date_format') . "');\n";
+            $val .= "define('CNF_CURRENCY','" . $request->input('school_currency_format') . "');\n";
+            $val .= "?>";
+            $filename = base_path() . '/public/setting.php';
+            $fp = fopen($filename, "w+");
+            fwrite($fp, $val);
+            fclose($fp);
+            return response()->json(array(
+                'status'=>'success',
+                'message'=> \Lang::get('core.note_success')
+            ));
+        }
+        else {
+            $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
+            return response()->json(array(
+                'message'	=> $message,
+                'status'	=> 'error'
+            ));
+        }
     }
     public function postSavePermission(Request $request)
     {

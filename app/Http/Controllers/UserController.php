@@ -70,7 +70,11 @@ class UserController extends Controller
                     else
                     {
                         \DB::table('tb_users')->where('id', '=',$row->id )->update(array('last_login' => date("Y-m-d H:i:s")));
-                        $sidemenu = \DB::table('tb_group')->select('tb_group.data_access')->where('id', $row->group_id)->get();
+                        $school_year = \DB::table('tb_school')->select('id', 'year')->orderBy('id', 'desc')->get();
+                        $sidemenu = \DB::table('tb_group')->select('tb_group.data_access', 'tb_group.name')->where('id', $row->group_id)->get();
+                        \Session::put('selected_year', $school_year[0]->id);
+                        \Session::put('school_year', $school_year);
+                        \Session::put('gname', $sidemenu[0]->name);
                         \Session::put('sidemenu', json_decode($sidemenu[0]->data_access));
                         \Session::put('uid', $row->id);
                         \Session::put('gid', $row->group_id);
@@ -146,5 +150,19 @@ class UserController extends Controller
         \Session::flush();
         return Redirect::to('');
             //->with('message', \SiteHelpers::alert('info','Your are now logged out!'));
+    }
+
+
+    public function getChangeYear(Request $request)
+    {
+        $id = $request->input('id');
+        if($id != '')
+        {
+            \Session::put('selected_year', $id);
+        }
+        return response()->json(array(
+            'status'=>'success',
+            'message'=> 'Changed Year'
+        ));
     }
 }

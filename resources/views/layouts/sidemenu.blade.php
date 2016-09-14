@@ -13,7 +13,7 @@
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>{{ \Session::get('fid') }}</h2>
             </div>
         </div>
         <!-- /menu prile quick info -->
@@ -24,9 +24,19 @@
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 
             <div class="menu_section">
-                <h3>General</h3>
+                <h3>
+                    {{ \Session::get('gname') }}
+                </h3>
 
                 <ul class="nav side-menu">
+                    <li>
+                        <select id="school_year"class="form-control">
+                            @foreach(\Session::get('school_year') as $school_year)
+                                <option value="{{ $school_year->id }}" @if(\Session::get('selected_year') == $school_year->id) {{ 'selected'  }}@endif>{{ $school_year->year }}</option>
+                            @endforeach
+                        </select>
+
+                    </li>
                     @if(\Session::get('sidemenu')[0] == 1)
                         <li>
                             <a href="dashboard"><i class="fa fa-home"></i>Dashboard</a>
@@ -120,17 +130,14 @@
                         <li>
                             <a><i class="fa fa-asterisk"></i>Administrator Task <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu" style="display: none">
-                                <li><a href="page_404.html">General Setting</a>
+                                <li><a href="{{ URL::to('setting') }}">Manage School</a>
                                 </li>
-                                <li><a href="page_500.html">Backup & Restore</a>
+                                <li><a href="{{ URL::to('setting/general') }}">General Setting</a>
+                                </li>
+                                <li><a href="{{ URL::to('setting/moduleaccess') }}">User Role</a>
                                 </li>
                                 <li><a href="{{ URL::to('setting/sidemenu') }}">Module Permission Setting</a>
                                 </li>
-                                <li><a href="{{ URL::to('setting/moduleaccess') }}">Pages Permission Setting</a>
-                                </li>
-                                <li><a href="page_500.html">User Role</a>
-                                </li>
-
                             </ul>
                         </li>
                     @endif
@@ -145,3 +152,29 @@
         <!-- /sidebar menu -->
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        //$("#school_year").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_school:id:year')}}",
+          //      {selected_value: '{{ \Session::get('year') }}', initial_text: 'Select Year'});
+
+    });
+
+    $("#school_year").on('change', function () {
+        var id = $(this).val();
+        if(id != '')
+        {
+            var datas = {
+                    id: id
+            };
+            $.get('user/change-year',datas ,function( data ) {
+                if(data.status =='success')
+                {
+                    notyMessage(data.message);
+                    window.location.reload();
+                } else {
+
+                }
+            });
+        }
+    });
+</script>

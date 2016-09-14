@@ -11,6 +11,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="row">
+            <div class="ajaxLoading"></div>
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
@@ -75,7 +76,6 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-
             $('#demo-form2 #save_changes').on('click', function () {
                 var this_master = $("#demo-form2");
                 this_master.find('input[type="checkbox"]').each( function () {
@@ -85,8 +85,6 @@
                     if( checkbox_this.is(":checked") == true ) {
                         checkbox_this.attr('value','1');
                     } else {
-                        //checkbox_this.prop('checked',true);
-                        //DONT' ITS JUST CHECK THE CHECKBOX TO SUBMIT FORM DATA
                         checkbox_this.attr('value','2');
                     }
                 })
@@ -101,14 +99,15 @@
         });
 
         function showRequest() {
-            //$('.ajaxLoading').show();
+            $('.ajaxLoading').show();
         }
         function showResponse(data) {
 
             if (data.status == 'success') {
-                window.location.reload();
+                notyMessage(data.message);
+                $('.ajaxLoading').hide();
             } else {
-                //notyMessageError(data.message);
+                notyMessageError(data.message);
                 $('.ajaxLoading').hide();
                 return false;
             }

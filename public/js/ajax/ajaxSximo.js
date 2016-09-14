@@ -2,8 +2,7 @@
 
 function reloadData( id,url   )
 {
-	console.log(id);
-	//$('.ajaxLoading').show();
+	$('.ajaxLoading').show();
 	$.post( url ,function( data ) {
 		$( id +'Grid' ).html( data );
 		$('.ajaxLoading').hide();
@@ -133,10 +132,10 @@ function ajaxRemoveRecord( id, url, rowId)
 		$.post( url+'/delete' ,datas,function( data ) {
 			if(data.status == 'success' )
 			{
-				//notyMessage(data.message);
+				notyMessage(data.message);
 				ajaxFilter( id ,url+'/data' );
 			} else {
-				//notyMessageError(data.message);
+				notyMessageError(data.message);
 			}
 		});
 
