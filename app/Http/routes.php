@@ -12,7 +12,6 @@
 */
 @include('moduleroutes.php');
 Route::get('/', 'UserController@getLogin');
-Route::get('/', 'UserController@getLogin');
 Route::get('/calender', 'EventController@getShowCalendar');
 Route::get('/receipt', 'FinancialController@getReceipt');
 
@@ -23,10 +22,24 @@ Route::get('/restric',function(){
 });
 
 Route::controller('/user', 'UserController');
-Route::controller('/dashboard', 'DashboardController');
 
 Route::group(['middleware' => 'auth'], function()
 {
+    Route::controller('/dashboard', 'DashboardController');
+    Route::controller('/student', 'StudentController');
+    Route::controller('/teacher', 'TeacherController');
+    Route::controller('/division', 'DivisionController');
+    Route::controller('/class', 'ClassController');
+    Route::controller('/subject', 'SubjectController');
+    Route::controller('/event', 'EventController');
+    Route::controller('/news', 'NewsController');
+    Route::controller('/period', 'PeriodController');
+    Route::controller('/schedule', 'ScheduleController');
+    Route::controller('/gradebook', 'MastergradebookController');
+    Route::controller('/gradesheet', 'GradeController');
+    Route::controller('/setting', 'GeneralsettingController');
+    Route::controller('/finance', 'FinancialController');
+    Route::controller('/imagecrop', 'CropAvatarController');
     /*
     Route::get('core/elfinder', 'Core\ElfinderController@getIndex');
     Route::post('core/elfinder', 'Core\ElfinderController@getIndex');
