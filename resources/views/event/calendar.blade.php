@@ -93,8 +93,6 @@
     <script>
         $(window).load(function() {
             var event="{{$events}}";
-            //console.log(event);
-            //console.log();
             var date = new Date();
             var d = date.getDate();
             var m = date.getMonth();

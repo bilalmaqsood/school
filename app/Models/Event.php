@@ -16,9 +16,9 @@ class Event extends Schooledge {
         return "  SELECT tb_event.* FROM tb_event ";
     }
 
-    public static function queryWhere(  ){
-
-        return "  WHERE tb_event.id IS NOT NULL";
+    public static function queryWhere(){
+        $year_id = \Session::get('selected_year');
+        return "  WHERE tb_event.id IS NOT NULL AND tb_event.year_id = '$year_id'";
     }
 
     public static function queryGroup(){

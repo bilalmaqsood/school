@@ -17,8 +17,8 @@ class Subject extends Schooledge {
     }
 
     public static function queryWhere(  ){
-
-        return "  WHERE tb_subject.id IS NOT NULL";
+        $year_id = \Session::get('selected_year');
+        return "  WHERE tb_subject.id IS NOT NULL  AND tb_subject.year_id = '$year_id'";
     }
 
     public static function queryGroup(){

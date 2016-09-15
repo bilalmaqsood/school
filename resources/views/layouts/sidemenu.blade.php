@@ -54,7 +54,7 @@
                     @endif
                     @if(\Session::get('sidemenu')[3] == 1)
                         <li>
-                            <a href="{{ URL::to('') }}"><i class="fa fa-users"></i>Parents</a>
+                            <a href="{{ URL::to('parents') }}"><i class="fa fa-users"></i>Parents</a>
                         </li>
                     @endif
                     @if(\Session::get('sidemenu')[4] == 1)
@@ -79,8 +79,6 @@
                                 <li><a href="{{ URL::to('period') }}">Periods Management</a>
                                 </li>
                                 <li><a href="{{ URL::to('schedule') }}">Classes Schedule</a>
-                                </li>
-                                <li><a href="{{ URL::to('schedule') }}">Classes Schedule List</a>
                                 </li>
                             </ul>
                         </li>

@@ -32,14 +32,6 @@ class ClassController extends Controller
 
     public function getIndex()
     {
-        /*$divisions = Classes::all();
-        foreach($divisions as $division){
-            echo $division->division->name;
-        }
-        exit;*/
-        /*$divisions = Classes::find(1)->division;
-        print_r($divisions->name);
-        exit;*/
         if($this->access['is_view'] ==0)
             return Redirect::to('dashboard');
 
@@ -100,11 +92,8 @@ class ClassController extends Controller
         } else {
             $this->data['row'] 		= $this->model->getColumnTable('tb_class');
         }
-        //var_dump($row);
-        //exit;
         $this->data['id'] = $id;
-        $this->data['divisions'] = Division::lists('name','id');
-
+        $this->data['divisions'] = Division::where('year_id', '=', \Session::get('selected_year'))->lists('name','id');
         return view('class.form',$this->data);
     }
 

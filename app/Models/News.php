@@ -17,8 +17,8 @@ class News extends Schooledge {
     }
 
     public static function queryWhere(  ){
-
-        return "  WHERE tb_news.id IS NOT NULL";
+        $year_id = \Session::get('selected_year');
+        return "  WHERE tb_news.id IS NOT NULL AND tb_news.year_id = '$year_id'";
     }
 
     public static function queryGroup(){
