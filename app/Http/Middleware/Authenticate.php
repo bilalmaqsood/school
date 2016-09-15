@@ -17,12 +17,9 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(\Auth::check())
-        {}
-        else{
-            echo 'not login in middleware';
+        if(!\Auth::check())
             return Redirect::to('/');
-        }
+
         if (Auth::guard($guard)->guest()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);

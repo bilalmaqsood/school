@@ -2,12 +2,14 @@
 @section('content')
     <a class="hiddenanchor" id="toregister"></a>
     <a class="hiddenanchor" id="tologin"></a>
-
     <div id="wrapper">
         <div class="animate form">
             <section class="login_content">
                 <form method="post" action="{{ url('user/signin')}}" >
                     <h1>Login</h1>
+                    @if(Session::has('message'))
+                        {!! Session::get('message') !!}
+                    @endif
                     <div>
                         <input name="email" type="email" class="form-control" placeholder="Email" required="email" />
                     </div>

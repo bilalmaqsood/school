@@ -93,7 +93,7 @@ class UserController extends Controller
             else
             {
                 return Redirect::to('user/login')
-                    //->with('message', \SiteHelpers::alert('error','Your username/password combination was incorrect'))
+                    ->with('message', \SiteHelpers::alert('error','Your username/password combination was incorrect'))
                     ->withInput();
             }
         }

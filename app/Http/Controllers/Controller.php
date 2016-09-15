@@ -29,11 +29,13 @@ class Controller extends BaseController
                 \Session::put('gname', \Auth::user()->gname);
                 \Session::put('eid', \Auth::user()->email);
                 \Session::put('fid', \Auth::user()->first_name.' '. \Auth::user()->last_name);
-                \Session::put('sidemenu', \Auth::user()->sidemenu);
+                $sidemenu = \DB::table('tb_group')->select('tb_group.data_access', 'tb_group.name')->where('id', \Auth::user()->group_id)->get();
+                \Session::put('sidemenu', json_decode($sidemenu[0]->data_access));
                 \Session::put('selected_year',  \Auth::user()->selected_id);
                 \Session::put('school_year',  \Auth::user()->school_year);
             }
         }
+
     }
 
     function returnUrl()
