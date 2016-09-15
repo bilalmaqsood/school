@@ -93,7 +93,7 @@ class StudentController extends Controller
             $this->data['row'] = array_merge($studentFields,$userFields) ;
         }
         $this->data['id'] = $id;
-        $this->data['parents'] = \DB::table('tb_parent')->join('tb_users', 'tb_parent.user_id', '=', 'tb_users.id')->select('tb_users.first_name', 'tb_users.last_name', 'tb_parent.id')->where('tb_users.year_id', '=', \Session::get('selected_year'))->get();
+        $this->data['parents'] = \DB::table('tb_parent')->join('tb_users', 'tb_parent.user_id', '=', 'tb_users.id')->select('tb_users.first_name', 'tb_users.last_name', 'tb_parent.parent_id as id')->where('tb_users.year_id', '=', \Session::get('selected_year'))->get();
         $this->data['classes'] = \DB::table('tb_class')->select('tb_class.name', 'tb_class.id')->where('tb_class.year_id', '=', \Session::get('selected_year'))->get();
         return view('student.form',$this->data);
     }

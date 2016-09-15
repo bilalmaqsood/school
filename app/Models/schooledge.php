@@ -74,6 +74,7 @@ class Schooledge extends Model {
 			$data['created_by'] = \Session::get('uid');
 			if(isset($data['updated_at'])) unset($data['updated_at']);
 			if(isset($data['created_at'])) $data['created_at'] = date("Y-m-d H:i:s");
+			$data['year_id'] = \Session::get('selected_year');
 			$id = \DB::table( $table)->insertGetId($data);
             
         } else {
@@ -84,9 +85,10 @@ class Schooledge extends Model {
 			if(isset($data['_token'])) unset($data['_token']);
 			if(isset($data['created_at'])) unset($data['created_at']);
 			if(isset($data['updated_at'])) $data['updated_at'] = date("Y-m-d H:i:s");
+			$data['year_id'] = \Session::get('selected_year');
 			\DB::table($table)->where($key,$id)->update($data);
         }
-		$data['year_id'] = \Session::get('selected_year');
+
         return $id;    
 	}			
 

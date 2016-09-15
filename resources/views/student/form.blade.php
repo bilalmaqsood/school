@@ -105,8 +105,8 @@
                 <label>Gender *:</label>
                 <p>
 
-                    Male:<input type="radio" class="flat" name="gender" id="genderM" value="1" checked="" required />
-                    Female:<input type="radio" class="flat" name="gender" id="genderF" value="2" />
+                    Male: <input type="radio" class="flat" name="gender" id="genderM" value="1" @if($row['gender'] == 1) {{ 'checked=""' }} @endif required />
+                    Female: <input type="radio" class="flat" name="gender" id="genderF" value="2" @if($row['gender'] == 2) {{ 'checked=""' }} @endif />
                 </p>
 
             </div>

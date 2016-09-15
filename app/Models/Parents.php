@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Parents extends Schooledge  {
 
     protected $table = 'tb_parent';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'parent_id';
 
     public function __construct() {
         parent::__construct();
@@ -23,7 +23,7 @@ class Parents extends Schooledge  {
     public static function queryWhere(  ){
 
         $year_id = \Session::get('selected_year');
-        return "  WHERE tb_parent.id IS NOT NULL AND tb_parent.year_id = '$year_id'";
+        return "  WHERE tb_parent.parent_id IS NOT NULL AND tb_parent.year_id = '$year_id'";
     }
 
     public static function queryGroup(){
@@ -31,7 +31,7 @@ class Parents extends Schooledge  {
     }
 
     public static function queryJoin(){
-        return "JOIN tb_users ON tb_parent.user_id=tb_users.id";
+        return " JOIN tb_users ON tb_parent.user_id = tb_users.id ";
     }
 
 }

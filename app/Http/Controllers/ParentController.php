@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parents;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -85,13 +86,14 @@ class ParentController extends Controller
             if($this->access['is_edit'] ==0 )
                 return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
         }
-
-        $row = $this->model->find($id);
+        $row = $this->model->getRow($id);
         if($row)
         {
-            $this->data['row'] 		=  $row;
+            $this->data['row'] 		=  (array)$row;
         } else {
-            $this->data['row'] 		= $this->model->getColumnTable('tb_parent');
+            $userFields =   $this->model->getColumnTable('tb_users');
+            $parentFields =   $this->model->getColumnTable('tb_parent');
+            $this->data['row'] = array_merge($parentFields,$userFields) ;
         }
         $this->data['id'] = $id;
 
@@ -101,55 +103,52 @@ class ParentController extends Controller
 
     function postSave( Request $request, $id =0)
     {
-        $data = $request->all();
-        
+        $flag = 0;
+        $rules = array(
+            'email'=>'required|email|unique:tb_users'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if($request->input('parent_id') != '')
+        {
+            $flag = 1;
+        }
+        else
+        {
+            if($validator->passes())
+                $flag = 1;
+            else
+                $flag = 0;
+        }
+        if ($flag != 0)
+        {
+            $fields = $this->model->getColumnTable('tb_parent');
+            $data = $request->all();
+            $user = array_diff_key($data, $fields);
+            $student = array_intersect_key($data, $fields);
+            if ($data['user_id'] == NULL) {
+                $users = new User();
+                $user['status'] = 1;
+                $userId = $users->insertRow($user, $data['user_id']);
+                $student['user_id'] = $userId;
+                $id = $this->model->insertRow($student, $request->input('parent_id'));
+            } else {
+                $id = $this->model->insertRow($student, $request->input('parent_id'));
+                $users = new User();
+                $userId = $users->insertRow($user, $data['user_id']);
+            }
 
-        // $rules = $this->validateForm();
-        $rules = [ 
-
-                "last_name" => "required|max:10",
-                "email" => "required|email|unique:Parents",
-                "first_name" => "required",
-
-        ];
-
-$validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
-            $id = $this->model->insertRow($data , $request->input('id'));
-        return response()->json(array(
-            'status'=>'success',
-            'message'=> \Lang::get('core.note_success')
-        ));
-}else {
-
-            $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
             return response()->json(array(
-                'message'   => $message,
-                'status'    => 'error'
+                'status' => 'success',
+                'message' => \Lang::get('core.note_success')
             ));
         }
-
-        
-        // $validator = Validator::make($request->all(), $rules);
-        // if ($validator->passes()) {
-        //     $data = $this->validatePost('sb_invoiceproducts');
-
-        //     $id = $this->model->insertRow($data , $request->input('ProductID'));
-
-        //     return response()->json(array(
-        //         'status'=>'success',
-        //         'message'=> \Lang::get('core.note_success')
-        //     ));
-
-        // } else {
-
-        //     $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
-        //     return Response::json(array(
-        //         'message'	=> $message,
-        //         'status'	=> 'error'
-        //     ));
-        // }
-
+        else
+        {
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'Sorry, This email address already exist.'
+            ));
+        }
     }
 
     public function postDelete( Request $request)
@@ -165,6 +164,8 @@ $validator = Validator::make($request->all(), $rules);
         // delete multipe rows
         if(count($request->input('id')) >=1)
         {
+            $user_id = \DB::table('tb_parent')->where('parent_id', '=', $request->input('id'))->select('user_id')->get();
+            User::where('id', '=', $user_id[0]->user_id)->delete();
             $this->model->destroy($request->input('id'));
 
             return response()->json(array(
@@ -189,19 +190,10 @@ $validator = Validator::make($request->all(), $rules);
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
 
         $row = $this->model->getRow($id);
-        if($row)
-        {
-            $this->data['row'] =  $row;
-        } else {
-            $this->data['row'] = $this->model->getColumnTable('sb_invoiceproducts');
-        }
-
+        $this->data['row'] =  $row;
         $this->data['id'] = $id;
         $this->data['access']		= $this->access;
-
-            // dd($this->data);
-
-        return view('Parent.view',$this->data);
+        return view('parent.view',$this->data);
     }
 
 }
