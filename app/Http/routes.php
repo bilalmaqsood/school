@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::controller('/student', 'StudentController');
     Route::controller('/teacher', 'TeacherController');
     Route::controller('/division', 'DivisionController');
+    Route::controller('/parents', 'ParentController');
     Route::controller('/class', 'ClassController');
     Route::controller('/subject', 'SubjectController');
     Route::controller('/event', 'EventController');

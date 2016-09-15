@@ -51,7 +51,7 @@ class Schooledge extends Model {
 				self::querySelect() .
 				self::queryJoin() .
 				self::queryWhere().
-				" AND ".$table.".".$key." = '{$id}' ". 
+				" AND ".$table.".".$key." = '{$id}' ".
 				self::queryGroup()
 			);	
 		if(count($result) <= 0){
@@ -85,7 +85,8 @@ class Schooledge extends Model {
 			if(isset($data['created_at'])) unset($data['created_at']);
 			if(isset($data['updated_at'])) $data['updated_at'] = date("Y-m-d H:i:s");
 			\DB::table($table)->where($key,$id)->update($data);
-        }    
+        }
+		$data['year_id'] = \Session::get('selected_year');
         return $id;    
 	}			
 

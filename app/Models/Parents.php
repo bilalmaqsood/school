@@ -16,20 +16,22 @@ class Parents extends Schooledge  {
 
     public static function querySelect(  ){
 
-        return "  SELECT tb_parent.* FROM tb_parent  ";
+        return "  SELECT tb_users.*, tb_parent.* FROM tb_parent  ";
+
     }
 
     public static function queryWhere(  ){
 
-        return "  WHERE tb_parent.id IS NOT NULL ";
+        $year_id = \Session::get('selected_year');
+        return "  WHERE tb_parent.id IS NOT NULL AND tb_parent.year_id = '$year_id'";
     }
 
     public static function queryGroup(){
-        return "  ";
+        return "";
     }
 
     public static function queryJoin(){
-        return "";
+        return "JOIN tb_users ON tb_parent.user_id=tb_users.id";
     }
 
 }

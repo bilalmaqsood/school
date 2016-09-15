@@ -45,7 +45,7 @@ class CropAvatarController extends Controller
 
             if ($type) {
                 $extension = image_type_to_extension($type);
-                $src = public_path() . '/upload/' . date('YmdHis') . '.original' . $extension;
+                $src = public_path() . '/upload/temp/' . date('YmdHis') . '.original' . $extension;
 
                 if ($type == IMAGETYPE_GIF || $type == IMAGETYPE_JPEG || $type == IMAGETYPE_PNG) {
 
@@ -75,7 +75,7 @@ class CropAvatarController extends Controller
     }
 
     private function setDst() {
-        $this -> dst = public_path() . '/upload/' . date('YmdHis') . '.png';
+        $this -> dst = public_path() . '/upload/images/' . date('YmdHis') . '.png';
     }
 
     private function crop($src, $dst, $data) {

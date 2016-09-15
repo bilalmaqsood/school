@@ -19,7 +19,7 @@
                 <tr>
                     <th class="text-center">First name</th>
                     <th class="text-center">Last name</th>
-                    <th class="text-center">E-mail</th>
+                    <th class="text-center">Email</th>
                     <th class="text-center">Gender</th>
                     
                     <th class="text-center">Age</th>
@@ -39,17 +39,17 @@
                         <td class="text-center table_td">{{ $row->mobile_number }}</td>
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center table_td">
                             @if($access['is_detail'] == 1)
-                                <a class="btn btn-sm btn-primary" href="{{ URL::to($pageModule.'/show/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
+                                <a class="btn btn-sm btn-primary" href="{{ URL::to($pageModule.'/show/'.$row->student_id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             @endif
                             @if($access['is_edit'] == 1)
-                                <a class="btn btn-sm btn-warning" href="{{ URL::to($pageModule.'/update/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
+                                <a class="btn btn-sm btn-warning" href="{{ URL::to($pageModule.'/update/'.$row->student_id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
                                     <i class="fa fa-edit"></i>
                                 </a>
                             @endif
                             @if($access['is_remove'] == 1)
-                                <a onclick="ajaxRemoveRecord('#{{ $pageModule }}','{{ $pageUrl }}', '{{$row->id}}');" class="btn btn-sm btn-danger" href="javascript://ajax" >
+                                <a onclick="ajaxRemoveRecord('#{{ $pageModule }}','{{ $pageUrl }}', '{{$row->student_id}}');" class="btn btn-sm btn-danger" href="javascript://ajax" >
                                     <i class="fa fa-trash-o"></i>
                                 </a>
                             @endif

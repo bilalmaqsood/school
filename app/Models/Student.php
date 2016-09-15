@@ -7,28 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Schooledge  {
 	
 	protected $table = 'tb_students';
-	protected $primaryKey = 'id';
+	protected $primaryKey = 'student_id';
 
 	public function __construct() {
 		parent::__construct();
 		
 	}
 
-	public static function querySelect(  ){
+	public static function querySelect(){
 
 		return "  SELECT tb_users.*,tb_students.* FROM tb_students  ";
 	}
 
-	public static function queryWhere(  ){
-		
-		return "  WHERE tb_students.id IS NOT NULL ";
+	public static function queryWhere(){
+		$year_id = \Session::get('selected_year');
+		return "  WHERE tb_students.student_id IS NOT NULL AND tb_students.year_id = '$year_id'";
 	}
 	
 	public static function queryGroup(){
 		return "  ";
-	}
-	public function getParent(){
-		 return $this->hasOne( 'App\Models\Parents', 'id', 'parent_id' );
 	}
 
 	public static function queryJoin(){

@@ -196,6 +196,7 @@ function notyMessage(message)
 {
 
 	toastr.success("success", message);
+	/*
 	toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -210,13 +211,14 @@ function notyMessage(message)
 		  "showMethod": "fadeIn",
 		  "hideMethod": "fadeOut"
 
-	}	
+	}*/
 	
 }
 function notyMessageError(message)
 {
 	
 	toastr.error("error", message);
+	/*
 	toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -231,7 +233,7 @@ function notyMessageError(message)
 		  "showMethod": "fadeIn",
 		  "hideMethod": "fadeOut"
 
-	}	
+	}*/
 	
 }
 

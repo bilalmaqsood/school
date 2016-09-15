@@ -3,14 +3,18 @@
 <div class="col-md-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>Personal Details</h2>
+            @if($row['id'] != '')
+                <h2>Edit Student</h2>
+            @else
+                <h2>New Student</h2>
+            @endif
             <a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
             <div class="clearfix"></div>
         </div>
         <div class="container" id="crop-avatar">
             <!-- Current avatar -->
             <div class="avatar-view" title="Change the avatar">
-                <img src="{{ asset('/').$row['avatar'] }}" alt="Select Avatar">
+                {!! SiteHelpers::showUploadedProfileIamge($row['avatar'],'/', 'md-card-head-avatar') !!}
             </div>
 
             <!-- Cropping modal -->
@@ -28,7 +32,7 @@
                              ) !!}
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title" id="avatar-modal-label">Change Avatar</h4>
+                            <h4 class="modal-title" id="avatar-modal-label">Change Image</h4>
                         </div>
                         <div class="modal-body">
                             <div class="avatar-body">
@@ -77,9 +81,10 @@
              'id'=> 'customerFormAjax')
         ) !!}
         <div class="x_content">
-            {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
+            {!! Form::hidden('id', $row['id']) !!}
             {!! Form::hidden('user_id', $row['user_id']) !!}
-            {!! Form::hidden('group_id', 1) !!}
+            {!! Form::hidden('group_id', 6) !!}
+            {!! Form::hidden('student_id', $row['student_id']) !!}
             {!! Form::hidden('status', 1) !!}
             {!! Form::hidden('avatar', $row['avatar'],array('id'=>'avatar','class'=>'form-control', 'placeholder'=>'avatar ','required'=>'required' )) !!}
 
@@ -95,6 +100,7 @@
                 <label>First name *:</label>
                 {!! Form::text('first_name',  $row['first_name'], array('class'=>'form-control', 'placeholder'=>'First Name','required'=>'required' )) !!}
             </div>
+            <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Gender *:</label>
                 <p>
@@ -113,6 +119,7 @@
                 <label>Password *:</label>
                 {!! Form::password('password', array('class'=>'form-control', 'placeholder'=>'Password' )) !!}
             </div>
+            <div class="clearfix"></div>
             <div class=" item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <div class="control-group">
                     <div class="controls">
@@ -131,6 +138,7 @@
                 <label>Country of Origin *:</label>
                 {!! Form::text('county_of_origin',$row['county_of_origin'], array('class'=>'form-control', 'placeholder'=>'Country of Origin','required'=>'required' )) !!}
             </div>
+            <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Nationality *:</label>
                 {!! Form::text('nationality', $row['nationality'], array('class'=>'form-control', 'placeholder'=>'Nationality','required'=>'required' )) !!}
@@ -144,6 +152,7 @@
                 <label>Mobile No *:</label>
                 {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control', 'placeholder'=>'Mobile ','required'=>'required' )) !!}
             </div>
+            <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Phone No *:</label>
                 {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control', 'placeholder'=>'Mobile ','required'=>'required' )) !!}
@@ -153,9 +162,10 @@
                 {!! Form::text('community', $row['community'],array('class'=>'form-control', 'placeholder'=>'Community ','required'=>'required' )) !!}
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                <label>city *:</label>
+                <label>City *:</label>
                 {!! Form::text('city', $row['city'],array('class'=>'form-control', 'placeholder'=>'City ','required'=>'required' )) !!}
             </div>
+            <div class="clearfix"></div>
             <div class=" item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <div class="control-group">
                     <div class="controls">
@@ -167,14 +177,26 @@
                 </div>
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                <label>Class *:</label>
-                @if(!empty($row['class_id']))
-                    {!! Form::select('class_id', $classes,$row['class_id'],array('class'=>'form-control', 'placeholder'=>'Select Class', 'required' => true)) !!}
-                @else
-                    {!! Form::select('class_id', $classes,'',array('class'=>'form-control', 'placeholder'=>'Select Class', 'required' => true)) !!}
-                @endif
+                <label>Parent *:</label>
+                <select name="parent_id" class="form-control" required>
+                    <option value="">Select Parent</option>
+                    @foreach($parents as $parent)
+                        <option value="{{$parent->id}}" @if($parent->id == $row['parent_id']) {{'selected'}} @endif>{{ ucwords($parent->last_name.' '.$parent->first_name) }}</option>
+                    @endforeach
+                </select>
+
             </div>
-            {{-- <div class="ln_solid"></div> --}}
+            <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                <label>Class *:</label>
+                <select name="class_id" class="form-control" required>
+                    <option value="">Select Class</option>
+                    @foreach($classes as $class)
+                        <option value="{{$class->id}}" @if($class->id == $row['class_id']) {{'selected'}} @endif>{{ ucwords($class->name) }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="clearfix"></div>
+            <div class="ln_solid"></div>
             <div class="form-group">
                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                     <a href="javascript:void(0)" class="btn btn-primary" onclick="ajaxViewClose('#{{ $pageModule }}')">Cancel</a>
@@ -230,10 +252,10 @@
             {
                 ajaxViewClose('#{{ $pageModule }}');
                 ajaxFilter('#{{ $pageModule }}','{{ $pageUrl }}/data');
-                //notyMessage(data.message);
+                notyMessage(data.message);
                 $('#sximo-modal').modal('hide');
             } else {
-                //notyMessageError(data.message);
+                notyMessageError(data.message);
                 $('.ajaxLoading').hide();
                 return false;
             }

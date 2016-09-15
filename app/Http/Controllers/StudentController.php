@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Parents;
 use App\Models\Classes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class StudentController extends Controller
     {
         parent::__construct();
         $this->model = new Student();
+        $this->parent_model = new Parents();
         $this->info = $this->model->makeInfo($this->module);
         $this->access = $this->model->validAccess($this->info['id']);
         $this->data = array(
@@ -60,7 +62,6 @@ class StudentController extends Controller
         );
         // Get Query
         $results = $this->model->getRows( $params );
-
         $this->data['rowData']		= $results['rows'];
         // Group users permission
         $this->data['access']		= $this->access;
@@ -82,79 +83,76 @@ class StudentController extends Controller
             if($this->access['is_edit'] ==0 )
                 return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
         }
-
         $row = $this->model->getRow($id);
-
         if($row)
         {
             $this->data['row'] 		= (array)$row;
         } else {
             $userFields =   $this->model->getColumnTable('tb_students');
             $studentFields =   $this->model->getColumnTable('tb_users');
-            $records = array_merge($studentFields,$userFields);
             $this->data['row'] = array_merge($studentFields,$userFields) ;
         }
         $this->data['id'] = $id;
-        $this->data['classes'] = Classes::lists('name','id');
-
+        $this->data['parents'] = \DB::table('tb_parent')->join('tb_users', 'tb_parent.user_id', '=', 'tb_users.id')->select('tb_users.first_name', 'tb_users.last_name', 'tb_parent.id')->where('tb_users.year_id', '=', \Session::get('selected_year'))->get();
+        $this->data['classes'] = \DB::table('tb_class')->select('tb_class.name', 'tb_class.id')->where('tb_class.year_id', '=', \Session::get('selected_year'))->get();
         return view('student.form',$this->data);
     }
 
 
     function postSave( Request $request, $id =0)
     {
-        $fields = $this->model->getColumnTable('tb_students');
-        $data = $request->all();
-        $user = array_diff_key($data,$fields);
-        $student = array_intersect_key($data,$fields);
-
-        if($data['user_id']== NULL){
-            $users = new User();
-            $userId = $users->insertRow($user , $data['user_id']);
-            $student['user_id'] = $userId;
-            $id = $this->model->insertRow($student , $request->input('id'));
-        }
-        else{
-            $id = $this->model->insertRow($student , $request->input('id'));
-            if($user['password'] == NULL ){
-                unset($user['password']);
-            }
-            $users = new User();
-            $userId = $users->insertRow($user , $data['user_id']);
-        }
-
-        return response()->json(array(
-            'status'=>'success',
-            'message'=> \Lang::get('core.note_success')
-        ));
-
-        /* $rules = $this->validateForm();
-        $rules = [
-                "last_name" => "required|min:8",
-                "middle_name" => "required",
-                "first_name" => "required",
-
-        ];
-        
+        $flag = 0;
+        $rules = array(
+            'email'=>'required|email|unique:tb_users'
+        );
         $validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
-            $data = $this->validatePost('sb_invoiceproducts');
-
-            $id = $this->model->insertRow($data , $request->input('ProductID'));
+        if($request->input('student_id') != '')
+        {
+            $flag = 1;
+        }
+        else
+        {
+            if($validator->passes())
+                $flag = 1;
+            else
+                $flag = 0;
+        }
+        if ($flag != 0)
+        {
+            $fields = $this->model->getColumnTable('tb_students');
+            $data = $request->all();
+            $user = array_diff_key($data, $fields);
+            $student = array_intersect_key($data, $fields);
+            if ($data['user_id'] == NULL) {
+                $users = new User();
+                $user['status'] = 1;
+                $user['password'] = bcrypt($user['password']);
+                $userId = $users->insertRow($user, $data['user_id']);
+                $student['user_id'] = $userId;
+                $id = $this->model->insertRow($student, $request->input('student_id'));
+            } else {
+                $id = $this->model->insertRow($student, $request->input('student_id'));
+                if ($user['password'] == NULL) {
+                    unset($user['password']);
+                } else {
+                    $user['password'] = bcrypt($user['password']);
+                }
+                $users = new User();
+                $userId = $users->insertRow($user, $data['user_id']);
+            }
 
             return response()->json(array(
-                'status'=>'success',
-                'message'=> \Lang::get('core.note_success')
+                'status' => 'success',
+                'message' => \Lang::get('core.note_success')
             ));
-
-        } else {
-            $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
-            return Response::json(array(
-                'message'	=> $message,
-                'status'	=> 'error'
+        }
+        else
+        {
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'Sorry, This email address already exist.'
             ));
-        }*/
-
+        }
     }
 
     public function postDelete( Request $request)
@@ -170,6 +168,8 @@ class StudentController extends Controller
         // delete multipe rows
         if(count($request->input('id')) >=1)
         {
+            $user_id = \DB::table('tb_students')->where('student_id', '=', $request->input('id'))->select('user_id')->get();
+            User::where('id', '=', $user_id[0]->user_id)->delete();
             $this->model->destroy($request->input('id'));
 
             return response()->json(array(
@@ -179,7 +179,7 @@ class StudentController extends Controller
         } else {
             return response()->json(array(
                 'status'=>'error',
-                'message'=> 'error in delete'
+                'message'=> 'Error'
             ));
 
         }
@@ -194,19 +194,11 @@ class StudentController extends Controller
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
 
         $row = $this->model->getRow($id);
-        $this->data['row2'] = Student::find($id)->getParent()->first();
-        if($row)
-        {
-            $this->data['row'] =  $row;
-        } else {
-            $this->data['row'] = $this->model->getColumnTable('sb_invoiceproducts');
-        }
-
+        $parent = $this->parent_model->getRow($row->parent_id);
         $this->data['id'] = $id;
+        $this->data['parent']		= $parent;
+        $this->data['row']		= $row;
         $this->data['access']		= $this->access;
-
-            // dd($this->data);
-
         return view('student.view',$this->data);
     }
     function uploadFileThumbnail($file)
@@ -214,7 +206,7 @@ class StudentController extends Controller
         $width=100;
         $height=100;
         if(!empty($file)) {
-            $destinationPath = public_path() . '/upload/';
+            $destinationPath = public_path() . '/upload/images';
 
             $file = str_replace('data:image/png;base64,', '', $file);
             $img = str_replace(' ', '+', $file);
@@ -224,7 +216,7 @@ class StudentController extends Controller
             $success = file_put_contents($file, $data);
 
             // THEN RESIZE IT
-            $returnData = 'upload/' . $filename;
+            $returnData = $filename;
             $image = Image::make(file_get_contents(URL::asset($returnData)));
             $image = $image->resize($width,$height)->save($destinationPath . $filename);
 

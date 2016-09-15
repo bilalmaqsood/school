@@ -11,7 +11,7 @@ class ParentController extends Controller
 {
     protected $layout = "layouts.main";
     protected $data = array();
-    public $module = 'Parents';
+    public $module = 'parents';
     static $per_page	= '10';
 
     public function __construct()

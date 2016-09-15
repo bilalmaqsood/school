@@ -1193,7 +1193,7 @@ class SiteHelpers
 
         } else {
 
-            return '<img src="'.asset("/uploads/images/no-image.png").'" width="'.$width.'" height="'.$height.'" class="'.$class.'"/>';
+            return '<img src="'.asset("/upload/images/no-image.png").'" width="'.$width.'" height="'.$height.'" class="'.$class.'"/>';
 
         }
 
@@ -1592,7 +1592,12 @@ class SiteHelpers
         $from = new DateTime($date_of_birth);
         $to   = new DateTime('today');
         if($from->diff($to)->y != date('Y'))
+        {
+            if($from->diff($to)->y == 0)
+                return '';
             return $from->diff($to)->y;
+        }
+
         return '';
     }
 
