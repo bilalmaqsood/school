@@ -213,6 +213,19 @@ class FinancialController extends Controller
     public function getShow( $id = null)
     {
 
+        $row = $this->model->getRow($id);
+        if(count($row) > 0)
+        {
+            $row->student_id = \SiteHelpers::getUserName($row->student_id);
+            $row->updated_by = \SiteHelpers::getUserName($row->updated_by);
+            $pdf = PDF::loadView('financial.pdf', (array)$row);
+            return $pdf->stream('receipt.pdf');
+        }
+        else
+        {
+            return Redirect::to('receipt')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
+        }
+        /*
         if($this->access['is_detail'] ==0)
             return Redirect::to('dashboard')
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
@@ -227,7 +240,7 @@ class FinancialController extends Controller
 
         $this->data['id'] = $id;
         $this->data['access']		= $this->access;
-        return view('financial.view',$this->data);
+        return view('financial.view',$this->data);*/
     }
 
     public function postChangeStatus(Request $request)
