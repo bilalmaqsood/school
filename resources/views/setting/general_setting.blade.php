@@ -61,6 +61,17 @@
                                 <select name="school_date_format"class="form-control">
                                     <option value="Y-d-m" @if(CNF_DATEFORMAT=='Y-d-m') {{ 'selected' }} @endif>Year-Day-Month</option>
                                     <option value="Y/d/m" @if(CNF_DATEFORMAT=='Y/d/m') {{ 'selected' }} @endif>Year/Day/Month</option>
+                                    <option value="M d,Y" @if(CNF_DATEFORMAT=='M d,Y') {{ 'selected' }} @endif>Month Day,Year </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Time Format<span
+                                        class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="school_time_format"class="form-control">
+                                    <option value="H:i A" @if(CNF_TIMEFORMAT=='H:i A') {{ 'selected' }} @endif>Hour:Min:AM/PM</option>
                                 </select>
                             </div>
                         </div>
