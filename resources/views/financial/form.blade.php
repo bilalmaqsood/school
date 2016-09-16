@@ -17,6 +17,15 @@
             {!! Form::hidden('created_by', $row['created_by']) !!}
             {!! Form::hidden('updated_by', $row['updated_by']) !!}
             <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Class<span
+                            class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <select id="class" name="class_id" class="form-control  col-md-7 col-xs-12" required>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Student<span
                             class="required">*</span>
                 </label>
@@ -72,8 +81,11 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#student").jCombo("{{ URL::to('finance/comboselect?filter=tb_users:id:last_name')}}",
-                    {  selected_value : '{{ $row["student_id"] }}' });
+            $("#class").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_class:id:name') }}",
+                    {selected_value : '{{ $row["class_id"] }}'});
+
+            $("#student").jCombo("{{ URL::to('finance/comboselectstudent?filter=tb_students:student_id:name')}}&parent=class_id:",
+                    { parent: '#class' ,selected_value : '{{ $row["student_id"] }}' });
             $.listen('parsley:field:validate', function () {
                 validateFront();
             });
@@ -113,10 +125,10 @@
             if (data.status == 'success') {
                 ajaxViewClose('#{{ $pageModule }}');
                 ajaxFilter('#{{ $pageModule }}', '{{ $pageUrl }}/data');
-                //notyMessage(data.message);
+                notyMessage(data.message);
                 $('#sximo-modal').modal('hide');
             } else {
-                //notyMessageError(data.message);
+                notyMessageError(data.message);
                 $('.ajaxLoading').hide();
                 return false;
             }

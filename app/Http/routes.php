@@ -41,17 +41,5 @@ Route::group(['middleware' => 'auth'], function()
     Route::controller('/setting', 'GeneralsettingController');
     Route::controller('/finance', 'FinancialController');
     Route::controller('/imagecrop', 'CropAvatarController');
-    /*
-    Route::get('core/elfinder', 'Core\ElfinderController@getIndex');
-    Route::post('core/elfinder', 'Core\ElfinderController@getIndex');
-    Route::controller('/dashboard', 'DashboardController');
-    Route::controllers([
-        'core/users'		=> 'Core\UsersController',
-        'notification'		=> 'NotificationController',
-        'core/logs'			=> 'Core\LogsController',
-        'core/pages' 		=> 'Core\PagesController',
-        'core/groups' 		=> 'Core\GroupsController',
-        'core/template' 	=> 'Core\TemplateController',
-    ]);
-    */
+    
 });

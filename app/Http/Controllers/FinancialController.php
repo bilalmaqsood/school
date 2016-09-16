@@ -128,8 +128,8 @@ class FinancialController extends Controller
         } else {
             $this->data['row'] 		= $this->model->getColumnTable('tb_payment');
         }
-        $this->data['id'] = $id;
 
+        $this->data['id'] = $id;
         return view('financial.form',$this->data);
     }
 

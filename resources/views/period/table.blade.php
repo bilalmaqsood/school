@@ -30,12 +30,6 @@
                         <td class="text-center">{{ $row->start_time }}</td>
                         <td class="text-center">{{ $row->end_time }}</td>
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center">
-                            @if($access['is_detail'] == 1)
-                                <a class="btn btn-xs btn-primary" href="{{ URL::to($pageModule.'/show/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
-                                    <i class="fa fa-folder"></i>
-                                    View
-                                </a>
-                            @endif
                             @if($access['is_edit'] == 1)
                                 <a class="btn btn-xs btn-info" href="{{ URL::to($pageModule.'/update/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
                                     <i class="fa fa-pencil"></i>

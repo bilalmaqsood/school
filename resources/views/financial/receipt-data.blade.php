@@ -20,7 +20,8 @@
                 </thead>
                 <tbody>
                 @foreach($rowData as $row)
-                    <tr>
+                    @if($row->status != 0)
+                        <tr>
                         <td class="text-center ">{{ $row->no }}</td>
                         <td class="text-center ">{{ $row->purpose }}</td>
                         <td class="text-center ">{{ CNF_CURRENCY.' '.$row->amount }}</td>
@@ -42,6 +43,7 @@
                             @endif
                         </td>
                     </tr>
+                    @endif
                 @endforeach
                 </tbody>
             </table>

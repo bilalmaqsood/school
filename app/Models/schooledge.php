@@ -147,19 +147,19 @@ class Schooledge extends Model {
             $condition = $limit[0]." `".$limit[1]."` ".$limit[2]." ".$limit[3]." "; 
             if(count($parent)>=2 )
             {
-            	$row =  \DB::table($table)->where($parent[0],$parent[1])->get();
-            	 $row =  \DB::select( "SELECT * FROM ".$table." ".$condition ." AND ".$parent[0]." = '".$parent[1]."'");
+            	$row =  \DB::table($table)->where($parent[0],$parent[1])->where('year_id', '=', \Session::get('selected_year'))->get();
+            	 $row =  \DB::where('year_id', '=', \Session::get('selected_year'))->select( "SELECT * FROM ".$table." ".$condition ." AND ".$parent[0]." = '".$parent[1]."'");
             } else  {
-	           $row =  \DB::select( "SELECT * FROM ".$table." ".$condition);
+	           $row =  \DB::where('year_id', '=', \Session::get('selected_year'))->select( "SELECT * FROM ".$table." ".$condition);
             }        
         }else{
 
             $table = $params[0]; 
             if(count($parent)>=2 )
             {
-            	$row =  \DB::table($table)->where($parent[0],$parent[1])->get();
+            	$row =  \DB::table($table)->where($parent[0],$parent[1])->where('year_id', '=', \Session::get('selected_year'))->get();
             } else  {
-	            $row =  \DB::table($table)->get();
+	            $row =  \DB::table($table)->where('year_id', '=', \Session::get('selected_year'))->get();
             }	           
         }
 

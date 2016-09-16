@@ -37,8 +37,9 @@ class ScheduleController extends Controller
 
     public function getIndex()
     {
-        $classes = Classes::all();
-        $periods = Period::all();
+        $year_id = \Session::get('selected_year');
+        $classes = Classes::where('year_id', '=', $year_id)->get();
+        $periods = Period::where('year_id', '=', $year_id)->get();
         $monday = array();
         $tuesday = array();
         $wednesday = array();
@@ -51,22 +52,27 @@ class ScheduleController extends Controller
                 $mon = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 1)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $tues = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 2)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $wednes = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 3)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $thurs = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 4)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $fri = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 5)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $monday[$cindex][$pindex]['class_id'] = $class->id;
                 $monday[$cindex][$pindex]['day_of_week'] = 1;
