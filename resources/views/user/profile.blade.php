@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="">
-    {{$row->avatar }}
+
         <div class="page-title">
             <div class="title_left">
                 <h3><small>{{ $pageTitle }}</small></h3>
@@ -213,8 +213,6 @@
  <script>
  $(document).ready(function() {
              $('#submit-btn').on('click', function() {
-              alert("Hello");
-            
                 $('#customerFormAjax').parsley().validate();
                 validateFront();
                 if($('#customerFormAjax').parsley().isValid() == true){
