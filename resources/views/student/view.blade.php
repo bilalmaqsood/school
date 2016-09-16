@@ -14,9 +14,7 @@
                 <!-- end of image cropping -->
                 <div id="crop-avatar">
                     <!-- Current avatar -->
-                    <img class="img-responsive avatar-view" src="{{ asset('/').$row->avatar }}" alt="Avatar" title=""
-                         data-original-title="Change the avatar">
-
+                    {!! SiteHelpers::showUploadedProfileIamge($row->avatar,'/', 'img-responsive avatar-view',150,150) !!}
                     <!-- Loading state -->
                     <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
                 </div>

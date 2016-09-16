@@ -13,12 +13,12 @@ class Teacher extends Schooledge {
 
     public static function querySelect(  ){
 
-        return "  SELECT tb_teachers.* FROM tb_teachers ";
+        return "SELECT tb_users.*,tb_teachers.* FROM tb_teachers";
     }
 
     public static function queryWhere(  ){
-
-        return "  WHERE tb_teachers.id IS NOT NULL";
+        $year_id = \Session::get('selected_year');
+        return " WHERE tb_teachers.id IS NOT NULL";
     }
 
     public static function queryGroup(){
@@ -26,6 +26,6 @@ class Teacher extends Schooledge {
     }
 
     public static function queryJoin(){
-        return "";
+        return " JOIN tb_users ON tb_teachers.user_id=tb_users.id";
     }
 }
