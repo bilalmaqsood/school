@@ -17,10 +17,10 @@ class DashboardController extends Controller
     public function getIndex(Request $request)
     {
         $year_id = \Session::get('selected_year');
-        $total_students = \DB::table('tb_students')->where('year_id', '=', $year_id)->count();
-        $total_teachers = \DB::table('tb_teachers')->where('year_id', '=', $year_id)->count();
-        $total_male_students = \DB::table('tb_students')->where('year_id', '=', $year_id)->where('gender', '=', 1)->count();
-        $total_female_students = \DB::table('tb_students')->where('year_id', '=', $year_id)->where('gender', '=', 2)->count();
+        $total_students = \DB::table('tb_students')->count();
+        $total_teachers = \DB::table('tb_teachers')->count();
+        $total_male_students = \DB::table('tb_students')->where('gender', '=', 1)->count();
+        $total_female_students = \DB::table('tb_students')->where('gender', '=', 2)->count();
         $news = \DB::table('tb_news')->orderBy('id', 'DESC')->where('year_id', '=', $year_id)->get();
         $events = Event::where('year_id', $year_id)->get();
         $event_array = array();
