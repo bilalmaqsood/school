@@ -199,13 +199,13 @@
         this.$img.cropper({
           viewMode: 1,
           dragMode: 'move',
-          autoCropArea: 0.65,
-          restore: false,
-          guides: false,
-          highlight: false,
-          cropBoxMovable: false,
+          //autoCropArea: 0.65,
+          //restore: false,
+          //guides: false,
+         ///highlight: false,
+          //cropBoxMovable: false,
           cropBoxResizable: false,
-          //aspectRatio: 1,
+          aspectRatio: 1,
           preview: this.$avatarPreview.selector,
           crop: function (e) {
             var json = [
