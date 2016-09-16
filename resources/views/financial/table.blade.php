@@ -46,7 +46,7 @@
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center ">
                             @if($access['is_detail'] == 1)
                                 <a class="btn btn-xs btn-primary" href="{{ URL::to($pageModule.'/show/'.$row->id) }}"
-                                   onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
+                                   target="_blank">
                                     <i class="fa fa-folder"></i>
                                     View
                                 </a>
