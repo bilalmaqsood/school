@@ -14,7 +14,7 @@
         <div class="container" id="crop-avatar">
             <!-- Current avatar -->
             <div class="avatar-view" title="Change the avatar">
-                {!! SiteHelpers::showUploadedProfileIamge($row['avatar'],'/', 'md-card-head-avatar') !!}
+                {!! SiteHelpers::showUploadedProfileIamge($row['avatar'],'/', 'md-card-head-avatar',150,150) !!}
             </div>
 
             <!-- Cropping modal -->
