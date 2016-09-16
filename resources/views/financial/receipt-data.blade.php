@@ -36,8 +36,9 @@
                         </td>
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center ">
                             @if($access['is_detail'] == 1)
-                                <a class="btn btn-xs btn-primary" href="javascript://ajax">
-                                <i class="fa fa-download"></i>
+                                <a class="btn btn-xs btn-info" href="{{ URL::to($pageModule.'/download/'.$row->id) }}"
+                                target="_blank">
+                                    <i class="fa fa-download"></i>
                                     Download
                                 </a>
                             @endif

@@ -9,7 +9,18 @@ function reloadData( id,url   )
 	});
 
 }
+function ajaxDownload(id ,url)
+{
+	var datas = {'id':id};
+	$.post( url ,datas,function( data ) {
+		if(data.status =='success')
+		{
 
+		} else {
+
+		}
+	});
+}
 
 function ajaxDoSearch( id ,url )
 {

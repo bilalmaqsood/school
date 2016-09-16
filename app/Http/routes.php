@@ -41,5 +41,5 @@ Route::group(['middleware' => 'auth'], function()
     Route::controller('/setting', 'GeneralsettingController');
     Route::controller('/finance', 'FinancialController');
     Route::controller('/imagecrop', 'CropAvatarController');
-    
+
 });

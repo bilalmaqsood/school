@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ;
+use PDF;
 
 class FinancialController extends Controller
 {
@@ -191,6 +192,22 @@ class FinancialController extends Controller
 
         }
 
+    }
+
+    public function getDownload( Request $request, $id = '')
+    {
+        $row = $this->model->getRow($id);
+        if(count($row) > 0)
+        {
+            $row->student_id = \SiteHelpers::getUserName($row->student_id);
+            $row->updated_by = \SiteHelpers::getUserName($row->updated_by);
+            $pdf = PDF::loadView('financial.pdf', (array)$row);
+            return $pdf->download('receipt.pdf');
+        }
+        else
+        {
+            return Redirect::to('receipt')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
+        }
     }
 
     public function getShow( $id = null)
