@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Teacher;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -82,12 +83,14 @@ class TeacherController extends Controller
                 return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
         }
 
-        $row = $this->model->find($id);
+        $row = $this->model->getRow($id);
         if($row)
         {
-            $this->data['row'] 		=  $row;
+            $this->data['row'] 		=  (array)$row;
         } else {
-            $this->data['row'] 		= $this->model->getColumnTable('tb_teachers');
+            $teacherFields =   $this->model->getColumnTable('tb_teachers');
+            $userFields =   $this->model->getColumnTable('tb_users');
+            $this->data['row'] = array_merge($teacherFields,$userFields) ;
         }
         $this->data['id'] = $id;
 
@@ -97,35 +100,58 @@ class TeacherController extends Controller
 
     function postSave( Request $request, $id =0)
     {
-        $data = $request->all();
-        $id = $this->model->insertRow($data , $request->input('id'));
-
-        return response()->json(array(
-            'status'=>'success',
-            'message'=> \Lang::get('core.note_success')
-        ));
-
-        $rules = $this->validateForm();
+        $flag = 0;
+        $rules = array(
+            'email'=>'required|email|unique:tb_users,email,'.$request->input('user_id')
+        );
         $validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
-            $data = $this->validatePost('sb_invoiceproducts');
-
-            $id = $this->model->insertRow($data , $request->input('ProductID'));
+        if($request->input('teacher_id') != '')
+        {
+            $flag = 1;
+        }
+        else
+        {
+            if($validator->passes())
+                $flag = 1;
+            else
+                $flag = 0;
+        }
+        if ($flag != 0)
+        {
+            $fields = $this->model->getColumnTable('tb_teachers');
+            $data = $request->all();
+            $user = array_diff_key($data, $fields);
+            $teacher = array_intersect_key($data, $fields);
+            if ($data['user_id'] == NULL) {
+                $users = new User();
+                $user['status'] = 1;
+                $user['password'] = bcrypt($user['password']);
+                $userId = $users->insertRow($user, $data['user_id']);
+                $teacher['user_id'] = $userId;
+                $id = $this->model->insertRow($teacher, $request->input('id'));
+            } else {
+                $id = $this->model->insertRow($teacher, $request->input('id'));
+                if ($user['password'] == NULL) {
+                    unset($user['password']);
+                } else {
+                    $user['password'] = bcrypt($user['password']);
+                }
+                $users = new User();
+                $userId = $users->insertRow($user, $data['user_id']);
+            }
 
             return response()->json(array(
-                'status'=>'success',
-                'message'=> \Lang::get('core.note_success')
-            ));
-
-        } else {
-
-            $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
-            return Response::json(array(
-                'message'	=> $message,
-                'status'	=> 'error'
+                'status' => 'success',
+                'message' => \Lang::get('core.note_success')
             ));
         }
-
+        else
+        {
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'Sorry, This email address already exist.'
+            ));
+        }
     }
 
     public function postDelete( Request $request)
@@ -141,12 +167,16 @@ class TeacherController extends Controller
         // delete multipe rows
         if(count($request->input('id')) >=1)
         {
+            $user_id = \DB::table('tb_teachers')->where('id', '=', $request->input('id'))->select('user_id')->get();
+            User::where('id', '=', $user_id[0]->user_id)->delete();
             $this->model->destroy($request->input('id'));
 
             return response()->json(array(
                 'status'=>'success',
                 'message'=> 'delete successfully'
             ));
+            $this->model->destroy($request->input('id'));
+
         } else {
             return response()->json(array(
                 'status'=>'error',

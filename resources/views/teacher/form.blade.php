@@ -1,15 +1,87 @@
+<link href="{{ asset('crop/main.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ asset('crop/main.js') }}"></script>
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>New Teacher</h2>
+            @if($row['id'] != '')
+                <h2>Edit Teacher</h2>
+            @else
+                <h2>New Teacher</h2>
+            @endif
             <li><a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
             </li>
             <div class="clearfix"></div>
         </div>
+
+        <div class="container" id="crop-avatar">
+            <!-- Current avatar -->
+            <div class="avatar-view" title="Change the avatar">
+                {!! SiteHelpers::showUploadedProfileIamge($row['avatar'],'/', 'md-card-head-avatar',150,150) !!}
+            </div>
+
+            <!-- Cropping modal -->
+            <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        {!! Form::open(
+                            array(
+                            'url'=>'imagecrop',
+                            'method' => 'post',
+                             'class'=>'avatar-form',
+                             'files' => true ,
+                             'parsley-validate'=>true,
+                             'novalidate'=>' ',)
+                             ) !!}
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" id="avatar-modal-label">Change Image</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="avatar-body">
+
+                                <!-- Upload image and data -->
+                                <div class="avatar-upload">
+                                    <input type="hidden" class="avatar-src" name="avatar_src">
+                                    <input type="hidden" class="avatar-data" name="avatar_data">
+                                    <label for="avatarInput">Local upload</label>
+                                    <input type="file" class="avatar-input" id="avatarInput" name="avatar_file">
+                                </div>
+
+                                <!-- Crop and preview -->
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="avatar-wrapper"></div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="avatar-preview preview-lg"></div>
+                                        <div class="avatar-preview preview-md"></div>
+                                        <div class="avatar-preview preview-sm"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row avatar-btns">
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-primary btn-block avatar-save">Done</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div><!-- /.modal -->
+        </div>
+        <hr/>
         <div class="x_content">
             <br />
             {!! Form::open(array('url'=>'teacher/save/'.SiteHelpers::encryptID($row['id']), 'class'=>'form-horizontal form-label-left', 'data-parsley-validate'=>true,'id'=> 'demo-form2')) !!}
-            {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
+
+            {!! Form::hidden('user_id', $row['user_id']) !!}
+            {!! Form::hidden('group_id', 5) !!}
+            {!! Form::hidden('id', $row['id']) !!}
+            {!! Form::hidden('status', 1) !!}
+            {!! Form::hidden('avatar', $row['avatar'],array('id'=>'avatar','class'=>'form-control', 'placeholder'=>'avatar ','required'=>'required' )) !!}
+
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Last Name * :</label>
                 {!! Form::text('last_name', $row['last_name'],array('class'=>'form-control', 'placeholder'=>'Last Name', 'required' => true)) !!}
@@ -28,7 +100,7 @@
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Password * :</label>
-                {!! Form::text('password', $row['password'],array('class'=>'form-control', 'placeholder'=>'Password')) !!}
+                {!! Form::password('password', array('class'=>'form-control', 'placeholder'=>'Password')) !!}
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Nationality * :</label>
@@ -70,9 +142,8 @@
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                       <label>Gender *:</label>
                     <p>
-                      M:
-                      <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
-                      <input type="radio" class="flat" name="gender" id="genderF" value="F" />
+                      Male: <input type="radio" class="flat" name="gender" id="genderM" value="1" @if($row['gender'] == 1) {{ 'checked=""' }} @endif required />
+					  Female: <input type="radio" class="flat" name="gender" id="genderF" value="2" @if($row['gender'] == 2) {{ 'checked=""' }} @endif />
                     </p>
 
                     </div>
@@ -134,6 +205,20 @@
                     $('.bs-callout-warning').removeClass('hidden');
                 }
             };
+			$('#date_of_birth').daterangepicker({
+				singleDatePicker: true,
+				calender_style: "picker_1",
+				format: 'YYYY-MM-DD',
+			  }, function(start, end, label) {
+				console.log(start.toISOString(), end.toISOString(), label);
+			});
+			$('#hire_date').daterangepicker({
+				singleDatePicker: true,
+				calender_style: "picker_1",
+				format: 'YYYY-MM-DD',
+			  }, function(start, end, label) {
+				console.log(start.toISOString(), end.toISOString(), label);
+			});
         });
 
 
@@ -155,24 +240,6 @@
                 return false;
             }
         }
-          $(document).ready(function() {
-
-      $('#date_of_birth').daterangepicker({
-        singleDatePicker: true,
-        calender_style: "picker_1"
-      }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-      });
-            $('#hire_date').daterangepicker({
-        singleDatePicker: true,
-        calender_style: "picker_1"
-      }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-      });
-
-
-    });
-
     </script>
 </div>
 
