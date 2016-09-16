@@ -142,7 +142,10 @@ class UserController extends Controller
             'phone_number' => $phone_number,
         ];
     $responce = \DB::table('tb_users')->where("id","=",$id)->update($data);
-        return view('user.profile');
+     return response()->json(array(
+                'status' => 'success',
+                'message' => \Lang::get('core.note_success')
+            ));
     }
 
     public function getLogout() {
