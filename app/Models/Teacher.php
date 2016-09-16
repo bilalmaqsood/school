@@ -17,7 +17,6 @@ class Teacher extends Schooledge {
     }
 
     public static function queryWhere(  ){
-        $year_id = \Session::get('selected_year');
         return " WHERE tb_teachers.id IS NOT NULL";
     }
 
