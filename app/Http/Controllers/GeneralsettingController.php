@@ -302,6 +302,7 @@ class GeneralsettingController extends Controller
             $val .= "define('CNF_APPNO','" . $request->input('school_no') . "');\n";
             $val .= "define('CNF_FRONT','true');\n";
             $val .= "define('CNF_DATEFORMAT','" . $request->input('school_date_format') . "');\n";
+            $val .= "define('CNF_TIMEFORMAT','" . $request->input('school_time_format') . "');\n";
             $val .= "define('CNF_CURRENCY','" . $request->input('school_currency_format') . "');\n";
             $val .= "?>";
             $filename = base_path() . '/public/setting.php';

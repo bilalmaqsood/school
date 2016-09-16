@@ -31,8 +31,10 @@
                         <td class="text-center ">{{ $row->title }}</td>
                         <td class="text-center ">{{ \SiteHelpers::breakString($row->body) }}</td>
                         <td class="text-center ">{{ $row->venue }}</td>
-                        <td class="text-center ">{{ $row->start_datetime }}</td>
-                        <td class="text-center ">{{ $row->end_datetime }}</td>
+                        <td class="text-center ">{{ date(CNF_DATEFORMAT,strtotime($row->start_datetime)) }}  {{date(CNF_TIMEFORMAT,strtotime($row->start_datetime))}}</td>
+                        <td class="text-center ">
+                        {{ date(CNF_DATEFORMAT,strtotime($row->end_datetime)) }}  {{date(CNF_TIMEFORMAT,strtotime($row->end_datetime))}}
+                        </td>
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center ">
                             @if($access['is_detail'] == 1)
                                 <a class="btn btn-xs btn-primary" href="{{ URL::to($pageModule.'/show/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
