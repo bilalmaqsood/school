@@ -93,7 +93,7 @@ class ClassController extends Controller
             $this->data['row'] 		= $this->model->getColumnTable('tb_class');
         }
         $this->data['id'] = $id;
-        $this->data['divisions'] = Division::where('year_id', '=', \Session::get('selected_year'))->lists('name','id');
+        $this->data['divisions'] = Division::lists('name','id');
         return view('class.form',$this->data);
     }
 
@@ -107,27 +107,6 @@ class ClassController extends Controller
             'status'=>'success',
             'message'=> \Lang::get('core.note_success')
         ));
-
-        $rules = $this->validateForm();
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
-            $data = $this->validatePost('sb_invoiceproducts');
-
-            $id = $this->model->insertRow($data , $request->input('ProductID'));
-
-            return response()->json(array(
-                'status'=>'success',
-                'message'=> \Lang::get('core.note_success')
-            ));
-
-        } else {
-
-            $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
-            return Response::json(array(
-                'message'	=> $message,
-                'status'	=> 'error'
-            ));
-        }
 
     }
 
