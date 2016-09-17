@@ -17,8 +17,7 @@ class Division extends Schooledge {
     }
 
     public static function queryWhere(  ){
-        $year_id = \Session::get('selected_year');
-        return "  WHERE tb_division.id IS NOT NULL AND tb_division.year_id = '$year_id'";
+        return "  WHERE tb_division.id IS NOT NULL";
     }
 
     public static function queryGroup(){
