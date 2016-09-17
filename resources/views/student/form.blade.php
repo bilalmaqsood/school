@@ -112,7 +112,11 @@
             </div>
             <div class=" col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Email *:</label>
+                 @if($row['email']!="")
+                {!! Form::email('email',  $row['email'], array('class'=>'form-control', 'placeholder'=>'Email','disabled'=>'disabled' )) !!}
+                @else
                 {!! Form::email('email',  $row['email'], array('class'=>'form-control', 'placeholder'=>'Email','required'=>'required' )) !!}
+                @endif
 
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
