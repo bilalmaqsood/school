@@ -13,7 +13,7 @@ class Subject extends Schooledge {
 
     public static function querySelect(  ){
 
-        return "SELECT tb_subject.*,tb_class.name As class_name,tb_users.first_name as teacher_name FROM tb_subject";
+        return "SELECT tb_subject.*,tb_class.name As class_name, concat(tb_users.last_name, ' ',tb_users.first_name) as teacher_name FROM tb_subject";
     }
 
     public static function queryWhere(  ){
