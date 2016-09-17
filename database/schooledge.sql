@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:8889
--- Generation Time: Sep 16, 2016 at 12:12 PM
+-- Generation Time: Sep 17, 2016 at 10:08 AM
 -- Server version: 5.5.42
 -- PHP Version: 5.6.10
 
@@ -35,14 +35,33 @@ CREATE TABLE `tb_class` (
   `updated_by` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_class`
 --
 
 INSERT INTO `tb_class` (`id`, `name`, `division_id`, `year_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(10, 'Grade 1', 7, 2, 1, 0, '2016-09-15 17:41:12', '0000-00-00 00:00:00');
+(10, 'Grade 1', 7, 2, 1, 0, '2016-09-15 17:41:12', '0000-00-00 00:00:00'),
+(11, 'Grade 1', 8, 1, 1, 0, '2016-09-16 15:11:31', '0000-00-00 00:00:00'),
+(12, 'Grade 2', 8, 1, 1, 0, '2016-09-16 15:13:43', '0000-00-00 00:00:00'),
+(13, 'Grade 2', 7, 2, 1, 0, '2016-09-16 15:16:09', '0000-00-00 00:00:00'),
+(14, 'K-1', 12, 2, 1, 0, '2016-09-17 04:46:07', '0000-00-00 00:00:00'),
+(15, 'K-2', 12, 2, 1, 0, '2016-09-17 04:46:32', '0000-00-00 00:00:00'),
+(16, 'Nursery', 12, 2, 1, 0, '2016-09-17 04:46:51', '0000-00-00 00:00:00'),
+(17, 'Pre-1', 12, 2, 1, 0, '2016-09-17 04:47:03', '0000-00-00 00:00:00'),
+(18, 'Grade 1', 11, 2, 1, 0, '2016-09-17 04:47:17', '0000-00-00 00:00:00'),
+(19, 'Grade 2', 11, 2, 1, 0, '2016-09-17 04:47:39', '0000-00-00 00:00:00'),
+(20, 'Grade 4', 11, 2, 1, 1, '2016-09-17 04:47:49', '0000-00-00 00:00:00'),
+(21, 'Grade 3', 11, 2, 1, 0, '2016-09-17 04:47:58', '0000-00-00 00:00:00'),
+(22, 'Grade 5', 11, 2, 1, 0, '2016-09-17 04:48:43', '0000-00-00 00:00:00'),
+(23, 'Grade 6', 11, 2, 1, 0, '2016-09-17 04:49:06', '0000-00-00 00:00:00'),
+(24, 'Grade 7', 10, 2, 1, 0, '2016-09-17 04:49:38', '0000-00-00 00:00:00'),
+(25, 'Grade 8', 10, 2, 1, 1, '2016-09-17 04:49:47', '0000-00-00 00:00:00'),
+(26, 'Grade 9', 11, 2, 1, 0, '2016-09-17 04:52:27', '0000-00-00 00:00:00'),
+(27, 'Grade 10', 9, 2, 1, 1, '2016-09-17 04:56:03', '0000-00-00 00:00:00'),
+(28, 'Grade 11', 9, 2, 1, 0, '2016-09-17 04:57:45', '0000-00-00 00:00:00'),
+(29, 'Grade 12', 9, 2, 1, 0, '2016-09-17 04:58:01', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -61,7 +80,7 @@ CREATE TABLE `tb_classes_schedule` (
   `updated_by` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_classes_schedule`
@@ -72,7 +91,9 @@ INSERT INTO `tb_classes_schedule` (`id`, `day_of_week`, `subject_id`, `class_id`
 (2, 'monday', 1, 0, 2, 0, 1, 0, '2016-08-23 17:10:56', '2016-08-23 17:01:21'),
 (3, 'wednesday', 2, 0, 1, 0, 1, 1, '2016-08-23 17:12:50', '2016-08-23 17:01:21'),
 (4, '1', 3, 10, 3, 2, 1, 0, '2016-09-15 19:39:28', '0000-00-00 00:00:00'),
-(5, '2', 3, 10, 3, 2, 1, 0, '2016-09-15 19:50:45', '0000-00-00 00:00:00');
+(5, '2', 3, 10, 3, 2, 1, 0, '2016-09-15 19:50:45', '0000-00-00 00:00:00'),
+(6, '1', 4, 10, 5, 2, 1, 0, '2016-09-16 15:16:22', '0000-00-00 00:00:00'),
+(7, '5', 3, 10, 3, 2, 1, 0, '2016-09-16 15:16:42', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -88,7 +109,7 @@ CREATE TABLE `tb_division` (
   `updated_by` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_division`
@@ -100,8 +121,11 @@ INSERT INTO `tb_division` (`id`, `name`, `year_id`, `created_by`, `updated_by`, 
 (4, 'Junior High', 0, 1, 0, '2016-08-23 17:00:31', '2016-08-23 17:00:31'),
 (5, 'Senior High', 0, 1, 0, '2016-08-23 17:00:43', '2016-08-23 17:00:43'),
 (6, 'Alumni', 0, 1, 0, '2016-08-23 17:00:55', '2016-08-23 17:00:55'),
-(7, 'Division 1', 2, 1, 0, '2016-09-15 16:32:21', '0000-00-00 00:00:00'),
-(8, 'Division 2', 1, 1, 0, '2016-09-15 16:32:35', '0000-00-00 00:00:00');
+(8, 'Division 2', 1, 1, 0, '2016-09-15 16:32:35', '0000-00-00 00:00:00'),
+(9, 'Senior High', 2, 1, 0, '2016-09-17 04:43:57', '0000-00-00 00:00:00'),
+(10, 'Junior High', 2, 1, 0, '2016-09-17 04:44:15', '0000-00-00 00:00:00'),
+(11, 'Elementary', 2, 1, 0, '2016-09-17 04:44:42', '0000-00-00 00:00:00'),
+(12, 'Kingergarten', 2, 1, 0, '2016-09-17 04:45:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -165,7 +189,7 @@ CREATE TABLE `tb_grade` (
 --
 
 INSERT INTO `tb_grade` (`id`, `subject_id`, `student_id`, `first_term`, `second_term`, `third_term`, `first_exam`, `first_avg`, `four_term`, `fifth_term`, `sixth_term`, `second_exam`, `second_avg`, `final`, `year_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 2, 10, 90, 80, 85, 90, 80, 85, 80, 90, 95, 0, 89, 1, 1, 1, '2016-08-31 06:54:51', '2016-08-31 06:54:51');
+(1, 2, 10, 90, 80, 85, 90, 80, 85, 80, 90, 95, 0, 89, 2, 1, 1, '2016-08-31 06:54:51', '2016-08-31 06:54:51');
 
 -- --------------------------------------------------------
 
@@ -321,19 +345,19 @@ CREATE TABLE `tb_parent` (
   `nationality` varchar(50) NOT NULL,
   `relation` varchar(50) NOT NULL,
   `occupcation` varchar(250) NOT NULL,
-  `year_id` int(11) NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_parent`
 --
 
-INSERT INTO `tb_parent` (`parent_id`, `user_id`, `gender`, `community`, `city`, `country`, `nationality`, `relation`, `occupcation`, `year_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(5, 14, 2, 'Muslim', 'London', 'UK', 'UK', 'Father', 'Business', 1, 1, 1, '2016-09-15 18:14:03', '0000-00-00 00:00:00');
+INSERT INTO `tb_parent` (`parent_id`, `user_id`, `gender`, `community`, `city`, `country`, `nationality`, `relation`, `occupcation`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(5, 14, 2, 'Muslim', 'London', 'UK', 'UK', 'Father', 'Business', 1, 1, '2016-09-15 18:14:03', '0000-00-00 00:00:00'),
+(6, 15, 1, 'Lahore', 'Lahore', 'Pakistan', 'Pakistan', 'Brother', 'Business', 1, 0, '2016-09-16 13:13:35', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -351,20 +375,20 @@ CREATE TABLE `tb_payment` (
   `amount_in_words` varchar(255) NOT NULL,
   `purpose` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `year_id` int(11) NOT NULL,
   `received_date` datetime DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_payment`
 --
 
-INSERT INTO `tb_payment` (`id`, `no`, `student_id`, `class_id`, `amount`, `due`, `amount_in_words`, `purpose`, `status`, `year_id`, `received_date`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '707357', 10, 10, 2000, 0, 'Two thousand', '200', 1, 2, '2016-09-16 04:15:15', 1, 1, '2016-09-16 04:03:48', '2016-09-16 04:08:15');
+INSERT INTO `tb_payment` (`id`, `no`, `student_id`, `class_id`, `amount`, `due`, `amount_in_words`, `purpose`, `status`, `received_date`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, '707357', 10, 10, 2000, 0, 'Two thousand', '200', 1, '2016-09-16 04:15:15', 1, 1, '2016-09-16 04:03:48', '2016-09-16 04:08:15'),
+(2, '139381', 10, 10, 200, 0, 'Two Hundard', 'March Month Fees', 1, '2016-09-16 15:18:46', 1, 1, '2016-09-16 15:18:14', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -382,7 +406,7 @@ CREATE TABLE `tb_period` (
   `updated_by` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_period`
@@ -392,7 +416,8 @@ INSERT INTO `tb_period` (`id`, `name`, `start_time`, `end_time`, `year_id`, `cre
 (1, 'Period 1', '03:18:33', '09:43:50', 0, 1, 1, '2016-08-23 11:23:30', '2016-08-23 11:23:30'),
 (2, 'Period 2', '03:18:29', '09:43:50', 0, 1, 0, '2016-08-23 11:40:34', '2016-08-23 11:40:34'),
 (3, 'Period 1', '10:30:00', '10:45:00', 2, 1, 0, '2016-09-15 17:16:39', '0000-00-00 00:00:00'),
-(4, 'Period 2', '10:30:00', '10:30:00', 1, 1, 0, '2016-09-15 17:17:11', '0000-00-00 00:00:00');
+(4, 'Period 2', '10:30:00', '10:30:00', 1, 1, 0, '2016-09-15 17:17:11', '0000-00-00 00:00:00'),
+(5, 'Period 2', '09:00:00', '09:30:00', 2, 1, 0, '2016-09-16 15:15:39', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -455,20 +480,20 @@ CREATE TABLE `tb_students` (
   `date_of_birth` date DEFAULT NULL,
   `nationality` varchar(50) NOT NULL,
   `county_of_origin` varchar(50) NOT NULL,
-  `register_date` date NOT NULL,
   `year_id` int(11) NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_students`
 --
 
-INSERT INTO `tb_students` (`student_id`, `parent_id`, `class_id`, `user_id`, `status`, `gender`, `community`, `religion`, `city`, `country`, `date_of_birth`, `nationality`, `county_of_origin`, `register_date`, `year_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(4, 1, 10, 10, 1, 1, 'muslim', 'dkhdhk', 'sshkkh', 'jdjdqh', '2016-09-16', 'hkdhkkdh', 'hdkdhkd', '2016-09-15', 2, 1, 1, '2016-09-15 10:10:31', '0000-00-00 00:00:00');
+INSERT INTO `tb_students` (`student_id`, `parent_id`, `class_id`, `user_id`, `status`, `gender`, `community`, `religion`, `city`, `country`, `date_of_birth`, `nationality`, `county_of_origin`, `year_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(4, 6, 10, 10, 1, 1, 'muslim', 'dkhdhk', 'sshkkh', 'jdjdqh', '2016-09-16', 'hkdhkkdh', 'hdkdhkd', 2, 1, 1, '2016-09-15 10:10:31', '0000-00-00 00:00:00'),
+(5, 5, 11, 17, 1, 1, 'Lahore', 'Islam', 'Lahore', 'lahore', '2016-09-16', 'Musliam', 'Pakistan', 1, 1, 0, '2016-09-16 15:13:05', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -509,15 +534,14 @@ CREATE TABLE `tb_subject` (
   `updated_by` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_subject`
 --
 
 INSERT INTO `tb_subject` (`id`, `name`, `class_id`, `teacher_id`, `status`, `year_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(2, 'Math', 2, 3, 0, 0, 0, 0, '2016-08-20 10:49:17', '0000-00-00 00:00:00'),
-(3, 'English', 10, 10, 2, 2, 1, 0, '2016-09-15 18:03:10', '0000-00-00 00:00:00');
+(2, 'Math', 2, 3, 0, 0, 0, 0, '2016-08-20 10:49:17', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -526,7 +550,7 @@ INSERT INTO `tb_subject` (`id`, `name`, `class_id`, `teacher_id`, `status`, `yea
 --
 
 CREATE TABLE `tb_teachers` (
-  `teacher_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `gender` tinyint(1) NOT NULL,
@@ -537,13 +561,19 @@ CREATE TABLE `tb_teachers` (
   `date_of_birth` date DEFAULT NULL,
   `nationality` varchar(50) NOT NULL,
   `county_of_origin` varchar(50) NOT NULL,
-  `year_id` int(11) NOT NULL,
-  `register_date` date NOT NULL,
+  `hire_date` date NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_teachers`
+--
+
+INSERT INTO `tb_teachers` (`id`, `user_id`, `status`, `gender`, `community`, `religion`, `city`, `country`, `date_of_birth`, `nationality`, `county_of_origin`, `hire_date`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 16, 1, 2, 'muslim', '', 'Lahore', 'Pakistan', '2016-09-14', 'Pakistan', '', '2016-09-14', 1, 0, '2016-09-16 14:11:09', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -564,26 +594,28 @@ CREATE TABLE `tb_users` (
   `phone_number` varchar(25) NOT NULL,
   `avatar` varchar(100) NOT NULL,
   `remember_token` varchar(100) NOT NULL,
-  `year_id` int(11) NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) NOT NULL,
   `last_login` datetime NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_users`
 --
 
-INSERT INTO `tb_users` (`id`, `group_id`, `first_name`, `middle_name`, `last_name`, `email`, `password`, `status`, `mobile_number`, `phone_number`, `avatar`, `remember_token`, `year_id`, `created_by`, `updated_by`, `last_login`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Mario', '', 'John', 'admin@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '03245643214', '0423452671', 'test', 'SiF4hrZbjr8PbzuVit466R5HK0uXljZ2Sap90mXCM0ehdD229hFg587BpfKk', 0, 0, 1, '2016-09-16 02:28:20', '2016-08-14 04:09:21', '2016-09-15 21:28:16'),
-(3, 1, 'test', 'test', 'test', 'test@schooledge.com', '123456', 0, '+923354886493', '3354886493', '', '', 1, 1, 0, '0000-00-00 00:00:00', '2016-09-15 04:53:23', '0000-00-00 00:00:00'),
-(4, 2, 'Sam', '', 'Cern', 'principal@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '03241234567', '0423733883', 'Principle', 'XGfEXHXM6OVi2q0JQR1zcgqyAeqLTuu47SZUciMTwIeOWa19oqBBiZZRmDUJ', 0, 0, 1, '2016-09-14 19:37:08', '2016-08-14 04:09:21', '2016-09-14 14:46:48'),
-(5, 3, 'katrine', '', 'Ram', 'registrar@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '03214567890', '0423733883', 'Registrar', 'catiKvewQty4szi1ibVg2D0AzwIGoHJOJU89unR8uOjL0m92k4U8ocuCfHJm', 0, 0, 1, '2016-09-14 19:36:09', '2016-08-14 04:09:21', '2016-09-14 14:36:14'),
-(6, 4, 'Rambo', '', 'russ', 'finance@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '0321454689', '0423736543', 'Finance', 'L6flA97pysguuV76I4ym8dEnSkck71cw94Cms0HcoqGKUjcXDflFUMRncQOi', 0, 0, 1, '2016-09-14 19:35:39', '2016-08-14 04:09:21', '2016-09-14 14:35:50'),
-(10, 5, 'test', 'test', 'test 123', 'student@schooledge.com', '$2y$10$4JnYUL3WhktC/tp3LPWhqeMlcWNF2eTHCONvmNBUQpPycA6eFwNlS', 1, 'kdd', 'kdkd', 'upload/images/20160915101236.png', '', 2, 1, 1, '0000-00-00 00:00:00', '2016-09-15 10:10:31', '0000-00-00 00:00:00'),
-(14, 7, 'con', 'john ', 'lipsa', 'parent@schooledge.com', '', 1, '268283663', '2689277927', '', '', 1, 1, 1, '0000-00-00 00:00:00', '2016-09-15 18:14:03', '0000-00-00 00:00:00');
+INSERT INTO `tb_users` (`id`, `group_id`, `first_name`, `middle_name`, `last_name`, `email`, `password`, `status`, `mobile_number`, `phone_number`, `avatar`, `remember_token`, `created_by`, `updated_by`, `last_login`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Hafiz', 'Junaid', 'Shahid', 'admin@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '+923354886493', '3354886493', 'test', 'adDHkHxfC0VLsFn4RuLMOuwYv04oLiv2ky7XtaTbGXAyammUzVLtLltgTJyj', 0, 1, '2016-09-16 15:06:53', '2016-08-14 04:09:21', '2016-09-16 10:06:35'),
+(3, 1, 'test', 'test', 'test', 'test@schooledge.com', '123456', 0, '+923354886493', '3354886493', '', '', 1, 0, '0000-00-00 00:00:00', '2016-09-15 04:53:23', '0000-00-00 00:00:00'),
+(4, 2, 'Sam', '', 'Cern', 'principal@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '03241234567', '0423733883', 'Principle', 'XGfEXHXM6OVi2q0JQR1zcgqyAeqLTuu47SZUciMTwIeOWa19oqBBiZZRmDUJ', 0, 1, '2016-09-14 19:37:08', '2016-08-14 04:09:21', '2016-09-14 14:46:48'),
+(5, 3, 'katrine', '', 'Ram', 'registrar@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '03214567890', '0423733883', 'Registrar', 'catiKvewQty4szi1ibVg2D0AzwIGoHJOJU89unR8uOjL0m92k4U8ocuCfHJm', 0, 1, '2016-09-14 19:36:09', '2016-08-14 04:09:21', '2016-09-14 14:36:14'),
+(6, 4, 'Rambo', '', 'russ', 'finance@schooledge.com', '$2y$10$JGFXoabQMJbeGz6PNF1MoOsgNSIj07PH.LKvUFhxiqBkgwc7I2HgC', 1, '0321454689', '0423736543', 'Finance', 'L6flA97pysguuV76I4ym8dEnSkck71cw94Cms0HcoqGKUjcXDflFUMRncQOi', 0, 1, '2016-09-14 19:35:39', '2016-08-14 04:09:21', '2016-09-14 14:35:50'),
+(10, 6, 'test', 'test', 'test 123', 'student@schooledge.com', '$2y$10$4JnYUL3WhktC/tp3LPWhqeMlcWNF2eTHCONvmNBUQpPycA6eFwNlS', 1, 'kdd', 'kdkd', 'upload/images/20160915101236.png', 'dlRuIiZy0zRuRL8W8NqoqrHXQEG3HT9h6jpJmNypWCKoDqT2y9V1baE3MPEk', 1, 1, '2016-09-16 14:12:44', '2016-09-15 10:10:31', '2016-09-16 09:12:59'),
+(14, 7, 'con', 'john ', 'lipsa', 'parent@schooledge.com', '', 1, '268283663', '2689277927', '', '', 1, 1, '0000-00-00 00:00:00', '2016-09-15 18:14:03', '0000-00-00 00:00:00'),
+(15, 7, 'Muhamamnd', 'Hassan', 'Ali', 'parent1@schooledge.com', '', 1, '+923354886493', '3354886493', '', '', 1, 0, '0000-00-00 00:00:00', '2016-09-16 13:13:35', '0000-00-00 00:00:00'),
+(16, 5, 'majeed', 'anwer', 'saba', 'teacher1@schooledge.com', '$2y$10$jKghnRARPwkAy6qx4JYOZeaxlttTLgIEn5PDKk2oqfNe2y6ZUejsC', 1, '+923354886493', '3354886493', 'upload/images/20160916140907.png', 'YEU3WSrluAa7Od4dE4ZA7uN1O7j89QbiLJNxgNaTCkbKsXU0J3V7PhavrGU9', 1, 0, '2016-09-16 14:11:45', '2016-09-16 14:11:09', '2016-09-16 09:12:06'),
+(17, 6, 'Hafiz', 'Junaid', 'Bilal', 'student10@schooledge.com', '$2y$10$eUaGiDEwnGaXNo5wOY4EeeoqpzoWPLT0EUhzfZXaG8vkYuhPelWom', 1, '+923354886493', '3354886493', 'upload/images/20160916151155.png', '', 1, 0, '0000-00-00 00:00:00', '2016-09-16 15:13:05', '0000-00-00 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -695,7 +727,7 @@ ALTER TABLE `tb_subject`
 -- Indexes for table `tb_teachers`
 --
 ALTER TABLE `tb_teachers`
-  ADD PRIMARY KEY (`teacher_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tb_users`
@@ -711,17 +743,17 @@ ALTER TABLE `tb_users`
 -- AUTO_INCREMENT for table `tb_class`
 --
 ALTER TABLE `tb_class`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `tb_classes_schedule`
 --
 ALTER TABLE `tb_classes_schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '11',AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '11',AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tb_division`
 --
 ALTER TABLE `tb_division`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `tb_event`
 --
@@ -761,17 +793,17 @@ ALTER TABLE `tb_news`
 -- AUTO_INCREMENT for table `tb_parent`
 --
 ALTER TABLE `tb_parent`
-  MODIFY `parent_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `parent_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tb_payment`
 --
 ALTER TABLE `tb_payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_period`
 --
 ALTER TABLE `tb_period`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_school`
 --
@@ -781,7 +813,7 @@ ALTER TABLE `tb_school`
 -- AUTO_INCREMENT for table `tb_students`
 --
 ALTER TABLE `tb_students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_student_class`
 --
@@ -791,12 +823,17 @@ ALTER TABLE `tb_student_class`
 -- AUTO_INCREMENT for table `tb_subject`
 --
 ALTER TABLE `tb_subject`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `tb_teachers`
+--
+ALTER TABLE `tb_teachers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
