@@ -9,7 +9,9 @@
         <!-- menu prile quick info -->
         <div class="profile">
             <div class="profile_pic">
-                <img src="{{ asset('images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                <!--<img src="{{ asset('images/img.jpg') }}" alt="..." class="img-circle profile_img">-->
+
+                {!! SiteHelpers::showUploadedProfileIamge(\Session::get('favatar'),'/', 'img-circle profile_img',80,60) !!}
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>

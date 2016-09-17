@@ -34,14 +34,9 @@
                             class="fa fa-edit m-right-xs"></i>Edit Profile</a>
             @endif
             <div class="clearfix"></div>
-
         </div>
-
-
         <div class="col-md-9 col-sm-9 col-xs-12">
             <div class="x_content">
-
-
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
                     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab"

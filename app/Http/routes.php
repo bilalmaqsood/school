@@ -26,6 +26,7 @@ Route::controller('/user', 'UserController');
 Route::group(['middleware' => 'auth'], function()
 {
     Route::controller('/dashboard', 'DashboardController');
+    Route::controller('/profile', 'ProfileController');
     Route::controller('/student', 'StudentController');
     Route::controller('/teacher', 'TeacherController');
     Route::controller('/division', 'DivisionController');
