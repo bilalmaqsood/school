@@ -123,6 +123,7 @@ class StudentController extends Controller
             $data = $request->all();
             $user = array_diff_key($data, $fields);
             $student = array_intersect_key($data, $fields);
+            $year_id = \Session::get('selected_year');
             if ($data['user_id'] == NULL) {
                 $users = new User();
                 $user['status'] = 1;
@@ -130,6 +131,7 @@ class StudentController extends Controller
                 $userId = $users->insertRow($user, $data['user_id']);
                 $student['user_id'] = $userId;
                 $id = $this->model->insertRow($student, $request->input('student_id'));
+                \DB::table('tb_student_class')->insert(array('student_id'=>$id, 'class_id'=>$student['class_id'],'year_id'=>$year_id));
             } else {
                 $id = $this->model->insertRow($student, $request->input('student_id'));
                 if ($user['password'] == NULL) {
@@ -139,6 +141,7 @@ class StudentController extends Controller
                 }
                 $users = new User();
                 $userId = $users->insertRow($user, $data['user_id']);
+                \DB::table('tb_student_class')->insert(array('student_id'=>$id, 'class_id'=>$student['class_id'],'year_id'=>$year_id));
             }
 
             return response()->json(array(

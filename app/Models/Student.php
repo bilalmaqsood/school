@@ -28,6 +28,6 @@ class Student extends Schooledge  {
 	}
 
 	public static function queryJoin(){
-		return " JOIN tb_class ON tb_students.class_id=tb_class.id JOIN tb_users ON tb_students.user_id=tb_users.id";
+		return " LEFT JOIN tb_class ON tb_students.class_id=tb_class.id JOIN tb_users ON tb_students.user_id=tb_users.id";
 	}
 }
