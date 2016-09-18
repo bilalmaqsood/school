@@ -154,12 +154,12 @@
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Mobile No *:</label>
-                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'Mobile ','required'=>'required','data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$' )) !!}
+                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'333-4444-5555 ','required'=>'required','data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$' )) !!}
             </div>
             <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Phone No *:</label>
-                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'Mobile ','required'=>'required', 'data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$')) !!}
+                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'333-4444-5555 ','required'=>'required', 'data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$')) !!}
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Community*:</label>

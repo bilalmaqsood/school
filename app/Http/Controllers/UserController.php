@@ -99,7 +99,7 @@ class UserController extends Controller
         }
     }
 
-    public function getProfile() {
+    /*public function getProfile() {
 
         if(!\Auth::check()) return redirect('user/login');
 
@@ -146,7 +146,7 @@ class UserController extends Controller
                 'status' => 'success',
                 'message' => \Lang::get('core.note_success')
             ));
-    }
+    }*/
 
     public function getLogout() {
         \Auth::logout();

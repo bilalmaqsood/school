@@ -22,6 +22,7 @@ class Controller extends BaseController
         $this->dbhost       = $database[$driver]['host'];
         if(\Auth::check() == true)
         {
+            \Session::put('favatar', \Auth::user()->avatar);
             if(!\Session::get('gid'))
             {
                 \Session::put('uid', \Auth::user()->id);
