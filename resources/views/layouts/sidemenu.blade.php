@@ -104,6 +104,10 @@
                         <li>
                             <a><i class="fa fa-book"></i> Grading System <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu" style="display: none">
+                                <li><a href="{{ URL::to('generate') }}">Generate Grade Sheet</a>
+                                </li>
+                                <li><a href="{{ URL::to('promote') }}">Promote Students</a>
+                                </li>
                                 <li><a href="{{ URL::to('gradebook/manage-marks') }}">Manage Marks</a>
                                 </li>
                                 <li><a href="{{ URL::to('gradebook') }}">Master Grade Book</a>
