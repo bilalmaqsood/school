@@ -24,8 +24,8 @@ class StudentController extends Controller
         $this->info = $this->model->makeInfo($this->module);
         $this->access = $this->model->validAccess($this->info['id']);
         $this->data = array(
-            'pageTitle'			=> 	'Student',
-            'pageNote'			=>  'Student',
+            'pageTitle'			=> 	'Students List',
+            'pageNote'			=>  'View all student',
             'pageModule'		=> 'student',
             'pageUrl'			=>  url('student'),
             'return' 			=> 	self::returnUrl()

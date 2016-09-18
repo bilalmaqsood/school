@@ -192,7 +192,7 @@
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Class *:</label>
-                <select name="class_id" class="form-control" required>
+                <select name="class_id" class="form-control" required @if($row['class_id'] != '') {{ 'disabled' }} @endif>
                     <option value="">Select Class</option>
                     @foreach($classes as $class)
                         <option value="{{$class->id}}" @if($class->id == $row['class_id']) {{'selected'}} @endif>{{ ucwords($class->name) }}</option>

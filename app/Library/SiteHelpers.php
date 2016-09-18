@@ -1644,12 +1644,20 @@ class SiteHelpers
 
     static function getTeacherName($id)
     {
-        $result = DB::select("Select first_name, last_name from tb_users where id = $id");
+
+        $result = DB::select("SELECT concat(tb_users.last_name, ' ', tb_users.first_name) as teacher_name from tb_teachers JOIN tb_users on tb_teachers.user_id = tb_users.id where tb_teachers.id = $id");
         if(count($result) > 0)
-            return ucwords($result[0]->last_name.' '.$result[0]->first_name);
+            return ucwords($result[0]->teacher_name);
         return '';
     }
 
+    static function getTeacherNameWithRespectToSubject($id)
+    {
+        $result = DB::select("SELECT concat(tb_users.last_name, ' ', tb_users.first_name) as teacher_name from tb_subject JOIN tb_teachers on tb_subject.teacher_id = tb_teachers.id JOIN tb_users on tb_teachers.user_id = tb_users.id where tb_subject.id = $id");
+        if(count($result) > 0)
+            return ucwords($result[0]->teacher_name);
+        return '';
+    }
     static function getSemester($status)
     {
         if($status >=0 && $status < 5)

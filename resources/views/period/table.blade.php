@@ -17,6 +17,7 @@
             <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+                    <th class="text-center">ID</th>
                     <th class="text-center">Name</th>
                     <th class="text-center">Start Time</th>
                     <th class="text-center">End Time</th>
@@ -24,11 +25,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($rowData as $row)
+                @foreach($rowData as $index => $row)
                     <tr>
+                        <td class="text-center">{{ ++$index }}</td>
                         <td class="text-center">{{ $row->name }}</td>
-                        <td class="text-center">{{ $row->start_time }}</td>
-                        <td class="text-center">{{ $row->end_time }}</td>
+                        <td class="text-center">@if($row->start_time != '00:00:00'){{date(CNF_TIMEFORMAT,strtotime($row->start_time))}} @endif</td>
+                        <td class="text-center">@if($row->start_time != '00:00:00'){{date(CNF_TIMEFORMAT,strtotime($row->end_time))}} @endif</td>
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center">
                             @if($access['is_edit'] == 1)
                                 <a class="btn btn-xs btn-info" href="{{ URL::to($pageModule.'/update/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">

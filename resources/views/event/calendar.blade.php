@@ -116,7 +116,6 @@
                     $('#title').val(calEvent.title);
                     categoryClass = $("#event_type").val();
                     $("#CalenderModalView #title").text(calEvent.title);
-                    console.log(calEvent.body);
                     $("#CalenderModalView #description").text(calEvent.body);
                     $("#CalenderModalView #venue").text(calEvent.venue);
                     $("#CalenderModalView #start_date").text(calEvent.start);

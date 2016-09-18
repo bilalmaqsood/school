@@ -23,6 +23,15 @@
             </div>
 
             <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Break<span
+                            class="required"></span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 7px;">
+                        <input name="break" type="checkbox" value="1" @if($row['break'] == 1) {{ 'checked' }} @endif>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Start Time<span
                             class="required">*</span>
                 </label>

@@ -98,7 +98,7 @@ class SubjectController extends Controller
 
         $this->data['id'] = $id;
         $this->data['classes'] = Classes::lists('name','id');
-        $this->data['teacher'] = User::where('group_id', '=', '5')->select('id' ,\DB::raw('concat(last_name, " ",first_name) as name'))->lists('name','id');
+        $this->data['teacher'] = Teacher::join('tb_users', 'tb_teachers.user_id', '=' ,'tb_users.id')->select('tb_teachers.id' ,\DB::raw('concat(tb_users.last_name, " ",tb_users.first_name) as name'))->lists('name','id');
 
         return view('subject.form',$this->data);
     }

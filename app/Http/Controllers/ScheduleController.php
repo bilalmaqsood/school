@@ -38,8 +38,8 @@ class ScheduleController extends Controller
     public function getIndex()
     {
         $year_id = \Session::get('selected_year');
-        $classes = Classes::where('year_id', '=', $year_id)->get();
-        $periods = Period::where('year_id', '=', $year_id)->get();
+        $classes = Classes::all();
+        $periods = Period::all();
         $monday = array();
         $tuesday = array();
         $wednesday = array();
@@ -291,11 +291,14 @@ class ScheduleController extends Controller
 
     public function getPopup(Request $request)
     {
+        $year_id = \Session::get('selected_year');
         $data = $request->all();
         $this->data['subject_id'] = $data['subject_id'];
         $this->data['class_id'] = $data['class_id'];
         $this->data['day_of_week'] = $data['day_of_week'];
         $this->data['period_id'] = $data['period_id'];
+        $subjects = \DB::table('tb_subject')->where('year_id', '=', $year_id)->where('class_id', '=', $data['class_id'])->select('id', 'name')->get();
+        $this->data['subjects'] = $subjects;
         return view('schedule.popup', $this->data);
     }
 

@@ -22,8 +22,7 @@ class Period extends Schooledge {
     }
 
     public static function queryWhere(  ){
-        $year_id = \Session::get('selected_year');
-        return "  WHERE tb_period.id IS NOT NULL AND tb_period.year_id = '$year_id'";
+        return "  WHERE tb_period.id IS NOT NULL";
     }
 
     public static function queryGroup(){

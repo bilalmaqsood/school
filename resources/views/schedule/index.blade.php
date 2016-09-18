@@ -57,7 +57,11 @@
                                                         <tr>
                                                             <th></th>
                                                             @foreach($periods as $period)
-                                                                <th>{{ ucwords($period->name) }}</br>{{$period->start_time.' - '.$period->end_time}}</th>
+                                                                @if($period->start_time != '00:00:00')
+                                                                    <th>{{ ucwords($period->name) }}</br>{{ date(CNF_TIMEFORMAT,strtotime($period->start_time)).' - '.date(CNF_TIMEFORMAT,strtotime($period->end_time)) }}</th>
+                                                                @else
+                                                                    <th>{{ ucwords($period->name) }} </th>
+                                                                @endif
                                                             @endforeach
                                                         </tr>
                                                         </thead>
@@ -73,7 +77,7 @@
                                                                         <input type="hidden" name="subject_id" value="{{ $monday[$cindex][$dindex]['subject_id'] }}"/>
                                                                         <input type="hidden" name="id" value="{{ $monday[$cindex][$dindex]['id'] }}"/>
                                                                         @if($monday[$cindex][$dindex]['subject_id'] != '')
-                                                                            <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($monday[$cindex][$dindex]['subject_id']) }}</span>
+                                                                            <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($monday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($monday[$cindex][$dindex]['subject_id']) }}</span>
                                                                         @else
                                                                             <span class="selectedSpan"></span>
                                                                         @endif
@@ -93,7 +97,11 @@
                                                 <tr>
                                                     <th></th>
                                                     @foreach($periods as $period)
-                                                        <th>{{ ucwords($period->name) }}</br>{{$period->start_time.' - '.$period->end_time}}</th>
+                                                        @if($period->start_time != '00:00:00')
+                                                            <th>{{ ucwords($period->name) }}</br>{{ date(CNF_TIMEFORMAT,strtotime($period->start_time)).' - '.date(CNF_TIMEFORMAT,strtotime($period->end_time)) }}</th>
+                                                        @else
+                                                            <th>{{ ucwords($period->name) }} </th>
+                                                        @endif
                                                     @endforeach
                                                 </tr>
                                                 </thead>
@@ -109,7 +117,7 @@
                                                                 <input type="hidden" name="subject_id" value="{{ $tuesday[$cindex][$dindex]['subject_id'] }}"/>
                                                                 <input type="hidden" name="id" value="{{ $tuesday[$cindex][$dindex]['id'] }}"/>
                                                                 @if($tuesday[$cindex][$dindex]['subject_id'] != '')
-                                                                    <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($tuesday[$cindex][$dindex]['subject_id']) }}</span>
+                                                                    <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($tuesday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($tuesday[$cindex][$dindex]['subject_id']) }}</span>
                                                                 @else
                                                                     <span class="selectedSpan"></span>
                                                                 @endif
@@ -129,7 +137,11 @@
                                                 <tr>
                                                     <th></th>
                                                     @foreach($periods as $period)
-                                                        <th>{{ ucwords($period->name) }}</br>{{$period->start_time.' - '.$period->end_time}}</th>
+                                                        @if($period->start_time != '00:00:00')
+                                                            <th>{{ ucwords($period->name) }}</br>{{ date(CNF_TIMEFORMAT,strtotime($period->start_time)).' - '.date(CNF_TIMEFORMAT,strtotime($period->end_time)) }}</th>
+                                                        @else
+                                                            <th>{{ ucwords($period->name) }} </th>
+                                                        @endif
                                                     @endforeach
                                                 </tr>
                                                 </thead>
@@ -145,7 +157,7 @@
                                                                 <input type="hidden" name="subject_id" value="{{ $wednesday[$cindex][$dindex]['subject_id'] }}"/>
                                                                 <input type="hidden" name="id" value="{{ $wednesday[$cindex][$dindex]['id'] }}"/>
                                                                 @if($wednesday[$cindex][$dindex]['subject_id'] != '')
-                                                                    <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($wednesday[$cindex][$dindex]['subject_id']) }}</span>
+                                                                    <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($wednesday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($wednesday[$cindex][$dindex]['subject_id']) }}</span>
                                                                 @else
                                                                     <span class="selectedSpan"></span>
                                                                 @endif
@@ -165,7 +177,11 @@
                                                 <tr>
                                                     <th></th>
                                                     @foreach($periods as $period)
-                                                        <th>{{ ucwords($period->name) }}</br>{{$period->start_time.' - '.$period->end_time}}</th>
+                                                        @if($period->start_time != '00:00:00')
+                                                            <th>{{ ucwords($period->name) }}</br>{{ date(CNF_TIMEFORMAT,strtotime($period->start_time)).' - '.date(CNF_TIMEFORMAT,strtotime($period->end_time)) }}</th>
+                                                        @else
+                                                            <th>{{ ucwords($period->name) }} </th>
+                                                        @endif
                                                     @endforeach
                                                 </tr>
                                                 </thead>
@@ -181,7 +197,7 @@
                                                                 <input type="hidden" name="subject_id" value="{{ $thursday[$cindex][$dindex]['subject_id'] }}"/>
                                                                 <input type="hidden" name="id" value="{{ $thursday[$cindex][$dindex]['id'] }}"/>
                                                                 @if($thursday[$cindex][$dindex]['subject_id'] != '')
-                                                                    <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($thursday[$cindex][$dindex]['subject_id']) }}</span>
+                                                                    <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($thursday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($thursday[$cindex][$dindex]['subject_id']) }}</span>
                                                                 @else
                                                                     <span class="selectedSpan"></span>
                                                                 @endif
@@ -201,7 +217,11 @@
                                                 <tr>
                                                     <th></th>
                                                     @foreach($periods as $period)
-                                                        <th>{{ ucwords($period->name) }}</br>{{$period->start_time.' - '.$period->end_time}}</th>
+                                                        @if($period->start_time != '00:00:00')
+                                                            <th>{{ ucwords($period->name) }}</br>{{ date(CNF_TIMEFORMAT,strtotime($period->start_time)).' - '.date(CNF_TIMEFORMAT,strtotime($period->end_time)) }}</th>
+                                                        @else
+                                                            <th>{{ ucwords($period->name) }} </th>
+                                                        @endif
                                                     @endforeach
                                                 </tr>
                                                 </thead>
@@ -217,7 +237,7 @@
                                                                 <input type="hidden" name="subject_id" value="{{ $friday[$cindex][$dindex]['subject_id'] }}"/>
                                                                 <input type="hidden" name="id" value="{{ $friday[$cindex][$dindex]['id'] }}"/>
                                                                 @if($friday[$cindex][$dindex]['subject_id'] != '')
-                                                                    <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($friday[$cindex][$dindex]['subject_id']) }}</span>
+                                                                    <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($friday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($friday[$cindex][$dindex]['subject_id']) }}</span>
                                                                 @else
                                                                     <span class="selectedSpan"></span>
                                                                 @endif
