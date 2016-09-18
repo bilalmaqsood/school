@@ -103,41 +103,6 @@ class Schooledge extends Model {
 			'id' => $row[0]->id
 		);
 		return $data;
-		/*
-		$data = array();
-		foreach($row as $r)
-		{
-			$langs = (json_decode($r->module_lang,true));
-			$data['id']		= $r->module_id; 
-			$data['title'] 	= \SiteHelpers::infoLang($r->module_title,$langs,'title'); 
-			$data['note'] 	= \SiteHelpers::infoLang($r->module_note,$langs,'note'); 
-			$data['table'] 	= $r->module_db; 
-			$data['key'] 	= $r->module_db_key;
-			$data['config'] = \SiteHelpers::CF_decode_json($r->module_config);
-			$field = array();	
-			foreach($data['config']['grid'] as $fs)
-			{
-				foreach($fs as $f)
-					$field[] = $fs['field']; 	
-									
-			}
-			$data['field'] = $field;	
-			$data['setting'] = array(
-				'gridtype'		=> (isset($data['config']['setting']['gridtype']) ? $data['config']['setting']['gridtype'] : 'native'  ),
-				'orderby'		=> (isset($data['config']['setting']['orderby']) ? $data['config']['setting']['orderby'] : $r->module_db_key),
-				'ordertype'		=> (isset($data['config']['setting']['ordertype']) ? $data['config']['setting']['ordertype'] : 'asc'  ),
-				'perpage'		=> (isset($data['config']['setting']['perpage']) ? $data['config']['setting']['perpage'] : '10'  ),
-				'frozen'		=> (isset($data['config']['setting']['frozen']) ? $data['config']['setting']['frozen'] : 'false'  ),
-	            'form-method'   => (isset($data['config']['setting']['form-method'])  ? $data['config']['setting']['form-method'] : 'native'  ),
-	            'view-method'   => (isset($data['config']['setting']['view-method'])  ? $data['config']['setting']['view-method'] : 'native'  ),
-	            'inline'        => (isset($data['config']['setting']['inline'])  ? $data['config']['setting']['inline'] : 'false'  ),				
-				
-			);			
-					
-		}
-		return $data;
-		*/
-	
 	} 
 
     static function getComboselect( $params , $limit =null, $parent = null)
@@ -151,20 +116,38 @@ class Schooledge extends Model {
             $condition = $limit[0]." `".$limit[1]."` ".$limit[2]." ".$limit[3]." "; 
             if(count($parent)>=2 )
             {
-            	$row =  \DB::table($table)->where($parent[0],$parent[1])->where('year_id', '=', \Session::get('selected_year'))->get();
-            	 $row =  \DB::where('year_id', '=', \Session::get('selected_year'))->select( "SELECT * FROM ".$table." ".$condition ." AND ".$parent[0]." = '".$parent[1]."'");
+				if($table!='tb_class')
+				{
+					$row =  \DB::table($table)->where($parent[0],$parent[1])->where('year_id', '=', \Session::get('selected_year'))->get();
+					$row =  \DB::where('year_id', '=', \Session::get('selected_year'))->select( "SELECT * FROM ".$table." ".$condition ." AND ".$parent[0]." = '".$parent[1]."'");
+				}
+				else
+				{
+					$row =  \DB::table($table)->where($parent[0],$parent[1])->get();
+					$row =  \DB::select( "SELECT * FROM ".$table." ".$condition ." AND ".$parent[0]." = '".$parent[1]."'");
+				}
+
             } else  {
-	           $row =  \DB::where('year_id', '=', \Session::get('selected_year'))->select( "SELECT * FROM ".$table." ".$condition);
-            }        
+				if($table!='tb_class')
+	            	$row =  \DB::where('year_id', '=', \Session::get('selected_year'))->select( "SELECT * FROM ".$table." ".$condition);
+				else
+	            	$row =  \DB::select( "SELECT * FROM ".$table." ".$condition);
+            }
         }else{
 
             $table = $params[0]; 
             if(count($parent)>=2 )
             {
-            	$row =  \DB::table($table)->where($parent[0],$parent[1])->where('year_id', '=', \Session::get('selected_year'))->get();
+				if($table!='tb_class')
+            		$row =  \DB::table($table)->where($parent[0],$parent[1])->where('year_id', '=', \Session::get('selected_year'))->get();
+				else
+					$row =  \DB::table($table)->where($parent[0],$parent[1])->get();
             } else  {
-	            $row =  \DB::table($table)->where('year_id', '=', \Session::get('selected_year'))->get();
-            }	           
+				if($table!='tb_class')
+	            	$row =  \DB::table($table)->where('year_id', '=', \Session::get('selected_year'))->get();
+				else
+	            	$row =  \DB::table($table)->get();
+            }
         }
 
         return $row;

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Financial;
+use App\Models\Classes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -129,7 +130,7 @@ class FinancialController extends Controller
         } else {
             $this->data['row'] 		= $this->model->getColumnTable('tb_payment');
         }
-
+        $this->data['classes'] = Classes::lists('name','id');
         $this->data['id'] = $id;
         return view('financial.form',$this->data);
     }

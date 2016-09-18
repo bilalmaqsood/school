@@ -182,7 +182,7 @@ class Controller extends BaseController
             $parent = (!is_null($request->input('parent')) ? $request->input('parent') : null);
             $parent = explode(':',$parent);
             $table = $param[0];
-            $rows =  \DB::table($table)->join('tb_users', "$table.user_id", '=','tb_users.id')->where($parent[0],$parent[1])->where("$table.year_id", '=', \Session::get('selected_year'))->select("tb_users.id as student_id", \DB::raw('concat(tb_users.last_name, " ",tb_users.first_name) as name'))->get();
+            $rows =  \DB::table($table)->join('tb_users', "$table.user_id", '=','tb_users.id')->where($parent[0],$parent[1])->select("tb_users.id as student_id", \DB::raw('concat(tb_users.last_name, " ",tb_users.first_name) as name'))->get();
             $items = array();
             $fields = explode("|",$param[2]);
                 foreach($rows as $row)
