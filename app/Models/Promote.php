@@ -13,7 +13,7 @@ class Promote extends Schooledge {
 
     public static function querySelect(  ){
 
-        return "SELECT concat(tb_users.last_name, ' ',tb_users.first_name) as student_name, tb_student_class.id, tb_student_class.student_id, tb_student_class.status, tb_class.name as class_name from tb_student_class";
+        return "SELECT concat(tb_users.last_name, ' ',tb_users.first_name) as student_name, tb_student_class.id, tb_student_class.student_id, tb_student_class.class_id, tb_student_class.status, tb_class.name as class_name from tb_student_class";
     }
 
     public static function queryWhere(  ){

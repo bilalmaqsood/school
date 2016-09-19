@@ -90,4 +90,61 @@ class PromoteStudentController extends Controller
             ));
         }
     }
+
+    public function postPromoteStudent(Request $request)
+    {
+        if($request->input('id') != '') {
+            $selected_year = \Session::get('selected_year');
+            $data = $request->all();
+            if($data['class_id'] == 20)
+            {
+                return response()->json(array(
+                    'status' => 'success',
+                    'message' => 'Congrats, That student will be pass out'
+                ));
+            }
+            elseif($data['class_id'] < 20 && $data['status'] == 1)
+            {
+                return response()->json(array(
+                    'status' => 'success',
+                    'message' => 'Successfully promote to next class in same year'
+                ));
+            }
+            else
+            {
+                $next_year = \DB::table('tb_school')->orderBy('id', 'desc')->first();
+                if($next_year->id != $selected_year)
+                {
+                    if($data['status'] == 2)
+                    {
+                        return response()->json(array(
+                            'status' => 'success',
+                            'message' => 'Successfully promote to next class & year'
+                        ));
+                    }
+                    elseif($data['status'] == 3)
+                    {
+                        return response()->json(array(
+                            'status' => 'success',
+                            'message' => 'Successfully promote to same class in next year'
+                        ));
+                    }
+                }
+                else
+                {
+                    return response()->json(array(
+                        'status' => 'error',
+                        'message' => 'Sorry no new year exist'
+                    ));
+
+                }
+            }
+        }
+        else{
+            return response()->json(array(
+                'status'=>'error',
+                'message'=> 'Record Not Found'
+            ));
+        }
+    }
 }

@@ -204,6 +204,24 @@ function ajaxGeneric( id , url )
 
 }
 
+function ajaxPromote(url, id, rowId, classID,status)
+{
+	var datas = {'id':rowId, 'status': status , 'class_id': classID};
+	$('.ajaxLoading').show();
+	$.post(url, datas,function( data ) {
+		if(data.status == 'success' )
+		{
+			$('.ajaxLoading').hide();
+			notyMessage(data.message);
+			ajaxFilter( id ,url+'/data' );
+		} else {
+			$('.ajaxLoading').hide();
+			notyMessageError(data.message);
+		}
+	});
+
+}
+
 function ajaxViewClose( id )
 {
 	$( id +'View' ).html('');	
