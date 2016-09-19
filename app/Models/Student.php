@@ -20,8 +20,7 @@ class Student extends Schooledge  {
 	}
 
 	public static function queryWhere(){
-		$year_id = \Session::get('selected_year');
-		return "  WHERE tb_students.student_id IS NOT NULL AND tb_students.year_id = '$year_id'";
+		return "  WHERE tb_students.student_id IS NOT NULL";
 	}
 	
 	public static function queryGroup(){
@@ -29,6 +28,6 @@ class Student extends Schooledge  {
 	}
 
 	public static function queryJoin(){
-		return " JOIN tb_class ON tb_students.class_id=tb_class.id JOIN tb_users ON tb_students.user_id=tb_users.id";
+		return " LEFT JOIN tb_class ON tb_students.class_id=tb_class.id JOIN tb_users ON tb_students.user_id=tb_users.id";
 	}
 }

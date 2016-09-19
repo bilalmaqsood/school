@@ -13,12 +13,12 @@ class Subject extends Schooledge {
 
     public static function querySelect(  ){
 
-        return "SELECT tb_subject.*,tb_class.name As class_name,tb_users.first_name as teacher_name FROM tb_subject";
+        return "SELECT tb_subject.*,tb_class.name As class_name, concat(tb_users.last_name, ' ',tb_users.first_name) as teacher_name FROM tb_subject";
     }
 
     public static function queryWhere(  ){
-
-        return "  WHERE tb_subject.id IS NOT NULL";
+        $year_id = \Session::get('selected_year');
+        return "  WHERE tb_subject.id IS NOT NULL  AND tb_subject.year_id = '$year_id'";
     }
 
     public static function queryGroup(){
@@ -27,6 +27,7 @@ class Subject extends Schooledge {
 
     public static function queryJoin(){
 
-        return " JOIN tb_class ON tb_subject.class_id=tb_class.id JOIN tb_users ON tb_subject.teacher_id=tb_users.id";
+        return " JOIN tb_class ON tb_subject.class_id=tb_class.id JOIN tb_teachers on tb_subject.teacher_id = tb_teachers.id JOIN tb_users ON tb_teachers.user_id=tb_users.id";
     }
+    
 }

@@ -112,7 +112,11 @@
             </div>
             <div class=" col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Email *:</label>
+                 @if($row['email']!="")
+                {!! Form::email('email',  $row['email'], array('class'=>'form-control', 'placeholder'=>'Email','disabled'=>'disabled' )) !!}
+                @else
                 {!! Form::email('email',  $row['email'], array('class'=>'form-control', 'placeholder'=>'Email','required'=>'required' )) !!}
+                @endif
 
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
@@ -150,12 +154,12 @@
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Mobile No *:</label>
-                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control', 'placeholder'=>'Mobile ','required'=>'required' )) !!}
+                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'333-4444-5555 ','required'=>'required','data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$' )) !!}
             </div>
             <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Phone No *:</label>
-                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control', 'placeholder'=>'Mobile ','required'=>'required' )) !!}
+                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'333-4444-5555 ','required'=>'required', 'data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$')) !!}
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Community*:</label>
@@ -188,7 +192,7 @@
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Class *:</label>
-                <select name="class_id" class="form-control" required>
+                <select name="class_id" class="form-control" required @if($row['class_id'] != '') {{ 'disabled' }} @endif>
                     <option value="">Select Class</option>
                     @foreach($classes as $class)
                         <option value="{{$class->id}}" @if($class->id == $row['class_id']) {{'selected'}} @endif>{{ ucwords($class->name) }}</option>
@@ -274,6 +278,11 @@
                 format: 'YYYY-MM-DD',
             }, function(start, end, label) {
             });
+
+            $(".contact").on('change', function(e) {
+            $(this).parsley().validate() ;
+        });
+
         });
     </script>
 

@@ -21,9 +21,7 @@ class Parents extends Schooledge  {
     }
 
     public static function queryWhere(  ){
-
-        $year_id = \Session::get('selected_year');
-        return "  WHERE tb_parent.parent_id IS NOT NULL AND tb_parent.year_id = '$year_id'";
+        return "  WHERE tb_parent.parent_id IS NOT NULL";
     }
 
     public static function queryGroup(){

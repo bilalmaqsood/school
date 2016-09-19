@@ -88,6 +88,9 @@ class GeneralsettingController extends Controller
         if ($validator->passes()) {
             $data = $request->all();
             $id = $this->model->insertRow($data , $request->input('id'));
+            $school_year = \DB::table('tb_school')->select('id', 'year')->orderBy('id', 'desc')->get();
+            \Session::put('selected_year', $school_year[0]->id);
+            \Session::put('school_year', $school_year);
             return response()->json(array(
                 'status'=>'success',
                 'message'=> \Lang::get('core.note_success')
@@ -302,6 +305,7 @@ class GeneralsettingController extends Controller
             $val .= "define('CNF_APPNO','" . $request->input('school_no') . "');\n";
             $val .= "define('CNF_FRONT','true');\n";
             $val .= "define('CNF_DATEFORMAT','" . $request->input('school_date_format') . "');\n";
+            $val .= "define('CNF_TIMEFORMAT','" . $request->input('school_time_format') . "');\n";
             $val .= "define('CNF_CURRENCY','" . $request->input('school_currency_format') . "');\n";
             $val .= "?>";
             $filename = base_path() . '/public/setting.php';

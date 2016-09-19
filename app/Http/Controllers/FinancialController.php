@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Financial;
+use App\Models\Classes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ;
+use PDF;
 
 class FinancialController extends Controller
 {
@@ -128,8 +130,8 @@ class FinancialController extends Controller
         } else {
             $this->data['row'] 		= $this->model->getColumnTable('tb_payment');
         }
+        $this->data['classes'] = Classes::lists('name','id');
         $this->data['id'] = $id;
-
         return view('financial.form',$this->data);
     }
 
@@ -193,9 +195,38 @@ class FinancialController extends Controller
 
     }
 
+    public function getDownload( Request $request, $id = '')
+    {
+        $row = $this->model->getRow($id);
+        if(count($row) > 0)
+        {
+            $row->student_id = \SiteHelpers::getUserName($row->student_id);
+            $row->updated_by = \SiteHelpers::getUserName($row->updated_by);
+            $pdf = PDF::loadView('financial.pdf', (array)$row);
+            return $pdf->download('receipt.pdf');
+        }
+        else
+        {
+            return Redirect::to('receipt')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
+        }
+    }
+
     public function getShow( $id = null)
     {
 
+        $row = $this->model->getRow($id);
+        if(count($row) > 0)
+        {
+            $row->student_id = \SiteHelpers::getUserName($row->student_id);
+            $row->updated_by = \SiteHelpers::getUserName($row->updated_by);
+            $pdf = PDF::loadView('financial.pdf', (array)$row);
+            return $pdf->stream('receipt.pdf');
+        }
+        else
+        {
+            return Redirect::to('receipt')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
+        }
+        /*
         if($this->access['is_detail'] ==0)
             return Redirect::to('dashboard')
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
@@ -210,7 +241,7 @@ class FinancialController extends Controller
 
         $this->data['id'] = $id;
         $this->data['access']		= $this->access;
-        return view('financial.view',$this->data);
+        return view('financial.view',$this->data);*/
     }
 
     public function postChangeStatus(Request $request)

@@ -52,13 +52,7 @@ class GradeController extends Controller
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
 
         $row = $this->model->gradeSheet($id);
-        if($row)
-        {
-            $this->data['rowData'] =  $row;
-        } else {
-            $this->data['row'] = $this->model->getColumnTable('tb_grade');
-        }
-
+        $this->data['rowData'] =  $row;
         $this->data['id'] = $id;
         $this->data['access']		= $this->access;
         return view('grade.view',$this->data);

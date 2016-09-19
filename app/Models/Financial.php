@@ -17,8 +17,8 @@ class Financial extends Schooledge {
     }
 
     public static function queryWhere(  ){
-
-        return "  WHERE tb_payment.id IS NOT NULL";
+        $year_id = \Session::get('selected_year');
+        return "  WHERE tb_payment.id IS NOT NULL AND tb_payment.year_id = '$year_id'";
     }
 
     public static function queryGroup(){

@@ -9,7 +9,9 @@
         <!-- menu prile quick info -->
         <div class="profile">
             <div class="profile_pic">
-                <img src="{{ asset('images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                <!--<img src="{{ asset('images/img.jpg') }}" alt="..." class="img-circle profile_img">-->
+
+                {!! SiteHelpers::showUploadedProfileIamge(\Session::get('favatar'),'/', 'img-circle profile_img',80,60) !!}
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>
@@ -54,7 +56,7 @@
                     @endif
                     @if(\Session::get('sidemenu')[3] == 1)
                         <li>
-                            <a href="{{ URL::to('') }}"><i class="fa fa-users"></i>Parents</a>
+                            <a href="{{ URL::to('parents') }}"><i class="fa fa-users"></i>Parents</a>
                         </li>
                     @endif
                     @if(\Session::get('sidemenu')[4] == 1)
@@ -80,8 +82,6 @@
                                 </li>
                                 <li><a href="{{ URL::to('schedule') }}">Classes Schedule</a>
                                 </li>
-                                <li><a href="{{ URL::to('schedule') }}">Classes Schedule List</a>
-                                </li>
                             </ul>
                         </li>
                     @endif
@@ -104,6 +104,10 @@
                         <li>
                             <a><i class="fa fa-book"></i> Grading System <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu" style="display: none">
+                                <li><a href="{{ URL::to('generate') }}">Generate Grade Sheet</a>
+                                </li>
+                                <li><a href="{{ URL::to('promote') }}">Promote Students</a>
+                                </li>
                                 <li><a href="{{ URL::to('gradebook/manage-marks') }}">Manage Marks</a>
                                 </li>
                                 <li><a href="{{ URL::to('gradebook') }}">Master Grade Book</a>

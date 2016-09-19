@@ -22,7 +22,6 @@ class Period extends Schooledge {
     }
 
     public static function queryWhere(  ){
-
         return "  WHERE tb_period.id IS NOT NULL";
     }
 

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subject;
 use App\Models\Classes;
+use App\Models\User;
 use App\Models\Teacher;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -97,7 +98,7 @@ class SubjectController extends Controller
 
         $this->data['id'] = $id;
         $this->data['classes'] = Classes::lists('name','id');
-        $this->data['teacher'] = Teacher::lists('first_name','id');
+        $this->data['teacher'] = Teacher::join('tb_users', 'tb_teachers.user_id', '=' ,'tb_users.id')->select('tb_teachers.id' ,\DB::raw('concat(tb_users.last_name, " ",tb_users.first_name) as name'))->lists('name','id');
 
         return view('subject.form',$this->data);
     }

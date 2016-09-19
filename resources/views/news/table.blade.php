@@ -29,7 +29,7 @@
                         <td class="text-center ">{{ $row->title }}</td>
                         <td class="text-center ">{{ \SiteHelpers::breakString($row->body) }}</td>
                         <td class="text-center ">{{ $row->category }}</td>
-                        <td>{{ \SiteHelpers::getUserName($row->created_by) }}</td>
+                        <td class="text-center ">{{ \SiteHelpers::getUserName($row->created_by) }}</td>
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center ">
                             @if($access['is_detail'] == 1)
                                 <a class="btn btn-xs btn-primary" href="{{ URL::to($pageModule.'/show/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">

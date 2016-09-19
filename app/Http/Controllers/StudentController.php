@@ -24,8 +24,8 @@ class StudentController extends Controller
         $this->info = $this->model->makeInfo($this->module);
         $this->access = $this->model->validAccess($this->info['id']);
         $this->data = array(
-            'pageTitle'			=> 	'Student',
-            'pageNote'			=>  'Student',
+            'pageTitle'			=> 	'Students List',
+            'pageNote'			=>  'View all student',
             'pageModule'		=> 'student',
             'pageUrl'			=>  url('student'),
             'return' 			=> 	self::returnUrl()
@@ -93,8 +93,8 @@ class StudentController extends Controller
             $this->data['row'] = array_merge($studentFields,$userFields) ;
         }
         $this->data['id'] = $id;
-        $this->data['parents'] = \DB::table('tb_parent')->join('tb_users', 'tb_parent.user_id', '=', 'tb_users.id')->select('tb_users.first_name', 'tb_users.last_name', 'tb_parent.parent_id as id')->where('tb_users.year_id', '=', \Session::get('selected_year'))->get();
-        $this->data['classes'] = \DB::table('tb_class')->select('tb_class.name', 'tb_class.id')->where('tb_class.year_id', '=', \Session::get('selected_year'))->get();
+        $this->data['parents'] = \DB::table('tb_parent')->join('tb_users', 'tb_parent.user_id', '=', 'tb_users.id')->select('tb_users.first_name', 'tb_users.last_name', 'tb_parent.parent_id as id')->get();
+        $this->data['classes'] = \DB::table('tb_class')->select('tb_class.name', 'tb_class.id')->get();
         return view('student.form',$this->data);
     }
 
@@ -123,6 +123,7 @@ class StudentController extends Controller
             $data = $request->all();
             $user = array_diff_key($data, $fields);
             $student = array_intersect_key($data, $fields);
+            $year_id = \Session::get('selected_year');
             if ($data['user_id'] == NULL) {
                 $users = new User();
                 $user['status'] = 1;
@@ -130,6 +131,7 @@ class StudentController extends Controller
                 $userId = $users->insertRow($user, $data['user_id']);
                 $student['user_id'] = $userId;
                 $id = $this->model->insertRow($student, $request->input('student_id'));
+                \DB::table('tb_student_class')->insert(array('student_id'=>$id, 'class_id'=>$student['class_id'],'year_id'=>$year_id));
             } else {
                 $id = $this->model->insertRow($student, $request->input('student_id'));
                 if ($user['password'] == NULL) {
@@ -139,6 +141,7 @@ class StudentController extends Controller
                 }
                 $users = new User();
                 $userId = $users->insertRow($user, $data['user_id']);
+                \DB::table('tb_student_class')->insert(array('student_id'=>$id, 'class_id'=>$student['class_id'],'year_id'=>$year_id));
             }
 
             return response()->json(array(

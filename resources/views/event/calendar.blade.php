@@ -93,8 +93,6 @@
     <script>
         $(window).load(function() {
             var event="{{$events}}";
-            //console.log(event);
-            //console.log();
             var date = new Date();
             var d = date.getDate();
             var m = date.getMonth();
@@ -118,7 +116,6 @@
                     $('#title').val(calEvent.title);
                     categoryClass = $("#event_type").val();
                     $("#CalenderModalView #title").text(calEvent.title);
-                    console.log(calEvent.body);
                     $("#CalenderModalView #description").text(calEvent.body);
                     $("#CalenderModalView #venue").text(calEvent.venue);
                     $("#CalenderModalView #start_date").text(calEvent.start);

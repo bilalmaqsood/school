@@ -17,7 +17,6 @@ class Division extends Schooledge {
     }
 
     public static function queryWhere(  ){
-
         return "  WHERE tb_division.id IS NOT NULL";
     }
 

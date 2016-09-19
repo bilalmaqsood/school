@@ -9,7 +9,18 @@ function reloadData( id,url   )
 	});
 
 }
+function ajaxDownload(id ,url)
+{
+	var datas = {'id':id};
+	$.post( url ,datas,function( data ) {
+		if(data.status =='success')
+		{
 
+		} else {
+
+		}
+	});
+}
 
 function ajaxDoSearch( id ,url )
 {
@@ -153,10 +164,10 @@ function ajaxUpdateStatus( id, url, rowId, status)
 		$.post( url+'/change-status' ,datas,function( data ) {
 			if(data.status == 'success' )
 			{
-				//notyMessage(data.message);
+				notyMessage(data.message);
 				ajaxFilter( id ,url+'/data' );
 			} else {
-				//notyMessageError(data.message);
+				notyMessageError(data.message);
 			}
 		});
 
@@ -174,6 +185,41 @@ function ajaxViewDetail( id , url )
 		//$('.ajaxLoading').hide();
 	});
 		
+}
+
+function ajaxGeneric( id , url )
+{
+	var datas = {'id':id};
+	$('.ajaxLoading').show();
+	$.post(url, datas,function( data ) {
+		if(data.status == 'success' )
+		{
+			$('.ajaxLoading').hide();
+			notyMessage(data.message);
+		} else {
+			$('.ajaxLoading').hide();
+			notyMessageError(data.message);
+		}
+	});
+
+}
+
+function ajaxPromote(url, id, rowId, classID,status)
+{
+	var datas = {'id':rowId, 'status': status , 'class_id': classID};
+	$('.ajaxLoading').show();
+	$.post(url, datas,function( data ) {
+		if(data.status == 'success' )
+		{
+			$('.ajaxLoading').hide();
+			notyMessage(data.message);
+			ajaxFilter( id ,url+'/data' );
+		} else {
+			$('.ajaxLoading').hide();
+			notyMessageError(data.message);
+		}
+	});
+
 }
 
 function ajaxViewClose( id )

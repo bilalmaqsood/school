@@ -30,11 +30,6 @@
                         <td class="text-center table_td">{{ $row->class_name }}</td>
                         <td class="text-center table_td">{{ $row->teacher_name }}</td>
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center table_td">
-                            @if($access['is_detail'] == 1)
-                                <a class="btn btn-sm btn-primary" href="{{ URL::to($pageModule.'/show/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                            @endif
                             @if($access['is_edit'] == 1)
                                 <a class="btn btn-sm btn-warning" href="{{ URL::to($pageModule.'/update/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
                                     <i class="fa fa-edit"></i>

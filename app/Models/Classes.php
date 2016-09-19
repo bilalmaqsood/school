@@ -22,7 +22,6 @@ class Classes extends Schooledge {
     }
 
     public static function queryWhere(  ){
-
         return "  WHERE tb_class.id IS NOT NULL";
     }
 
@@ -31,7 +30,6 @@ class Classes extends Schooledge {
     }
 
     public static function queryJoin(){
-
         return " JOIN tb_division ON tb_class.division_id=tb_division.id";
     }
 }

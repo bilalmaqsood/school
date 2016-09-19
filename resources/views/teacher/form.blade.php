@@ -96,7 +96,11 @@
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Email * :</label>
-                {!! Form::email('email', $row['email'],array('class'=>'form-control', 'placeholder'=>'Email', 'required' => true)) !!}
+                 @if($row['email']!="")
+                {!! Form::email('email',  $row['email'], array('class'=>'form-control', 'placeholder'=>'Email','disabled'=>'disabled' )) !!}
+                @else
+                {!! Form::email('email',  $row['email'], array('class'=>'form-control', 'placeholder'=>'Email','required'=>'required' )) !!}
+                @endif
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Password * :</label>
@@ -120,47 +124,47 @@
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Phone Number * :</label>
-                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control', 'placeholder'=>'Phone Number', 'required' => true)) !!}
+                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'333-4444-5555', 'required' => true,'data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$')) !!}
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Mobile Number * :</label>
-                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control', 'placeholder'=>'Mobile Number', 'required' => true)) !!}
+                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'333-4444-5555', 'required' => true,'data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$')) !!}
             </div>
 
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-            <div class="control-group">
-            <div class="controls">
-                <label for="fullname">Date of Birth * :</label>
-                <div class=" xdisplay_inputx form-group has-feedback">
-                {!! Form::text('date_of_birth', $row['date_of_birth'],array('id'=>'date_of_birth','class'=>'form-control has-feedback-left', 'aria-describedby' => 'inputSuccess2Status','placeholder'=>'Date of Birth', 'required' => true)) !!}
-                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
-            </div>
-            </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <label for="fullname">Date of Birth * :</label>
+                        <div class=" xdisplay_inputx form-group has-feedback">
+                            {!! Form::text('date_of_birth', $row['date_of_birth'],array('id'=>'date_of_birth','class'=>'form-control has-feedback-left', 'aria-describedby' => 'inputSuccess2Status','placeholder'=>'Date of Birth', 'required' => true)) !!}
+                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
+                        </div>
                     </div>
-                    </div>
+                </div>
+            </div>
 
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                      <label>Gender *:</label>
-                    <p>
-                      Male: <input type="radio" class="flat" name="gender" id="genderM" value="1" @if($row['gender'] == 1) {{ 'checked=""' }} @endif required />
-					  Female: <input type="radio" class="flat" name="gender" id="genderF" value="2" @if($row['gender'] == 2) {{ 'checked=""' }} @endif />
-                    </p>
+                <label>Gender *:</label>
+                <p>
+                    Male: <input type="radio" class="flat" name="gender" id="genderM" value="1" @if($row['gender'] == 1) {{ 'checked=""' }} @endif required />
+                    Female: <input type="radio" class="flat" name="gender" id="genderF" value="2" @if($row['gender'] == 2) {{ 'checked=""' }} @endif />
+                </p>
 
-                    </div>
+            </div>
 
-                  
+
 
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-            <div class="control-group">
-            <div class="controls">
-                <label for="fullname">Hire Date * :</label>
-                <div class=" xdisplay_inputx form-group has-feedback">
-                {!! Form::text('hire_date', $row['hire_date'],array('id' =>'hire_date', 'class'=>'form-control has-feedback-left', 'aria-describedby' => 'inputSuccess2Status', 'placeholder'=>'Hire Date', 'required' => true)) !!}
-            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
-            </div>
-            </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <label for="fullname">Hire Date * :</label>
+                        <div class=" xdisplay_inputx form-group has-feedback">
+                            {!! Form::text('hire_date', $row['hire_date'],array('id' =>'hire_date', 'class'=>'form-control has-feedback-left', 'aria-describedby' => 'inputSuccess2Status', 'placeholder'=>'Hire Date', 'required' => true)) !!}
+                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span><span id="inputSuccess2Status" class="sr-only">(success)</span>
+                        </div>
                     </div>
-                    </div>
+                </div>
+            </div>
 
             <div class="clearfix"></div>
             <div class="ln_solid"></div>
@@ -205,20 +209,25 @@
                     $('.bs-callout-warning').removeClass('hidden');
                 }
             };
-			$('#date_of_birth').daterangepicker({
-				singleDatePicker: true,
-				calender_style: "picker_1",
-				format: 'YYYY-MM-DD',
-			  }, function(start, end, label) {
-				console.log(start.toISOString(), end.toISOString(), label);
-			});
-			$('#hire_date').daterangepicker({
-				singleDatePicker: true,
-				calender_style: "picker_1",
-				format: 'YYYY-MM-DD',
-			  }, function(start, end, label) {
-				console.log(start.toISOString(), end.toISOString(), label);
-			});
+            $('#date_of_birth').daterangepicker({
+                singleDatePicker: true,
+                calender_style: "picker_1",
+                format: 'YYYY-MM-DD',
+            }, function(start, end, label) {
+                console.log(start.toISOString(), end.toISOString(), label);
+            });
+            $('#hire_date').daterangepicker({
+                singleDatePicker: true,
+                calender_style: "picker_1",
+                format: 'YYYY-MM-DD',
+            }, function(start, end, label) {
+                console.log(start.toISOString(), end.toISOString(), label);
+            });
+
+            $(".contact").on('change', function(e) {
+            $(this).parsley().validate() ;
+        });
+
         });
 
 
@@ -232,10 +241,10 @@
             {
                 ajaxViewClose('#{{ $pageModule }}');
                 ajaxFilter('#{{ $pageModule }}','{{ $pageUrl }}/data');
-                //notyMessage(data.message);
+                notyMessage(data.message);
                 $('#sximo-modal').modal('hide');
             } else {
-                //notyMessageError(data.message);
+                notyMessageError(data.message);
                 $('.ajaxLoading').hide();
                 return false;
             }

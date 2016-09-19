@@ -89,20 +89,10 @@ class MastergradebookController extends Controller
             return Redirect::to('dashboard')
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
         $data = $request->all();
-        /*
-        $rows = \DB::table('tb_student_class')
-            ->join('tb_subject', 'tb_subject.class_id', '=', 'tb_student_class.class_id')
-            ->join('tb_grade', 'tb_grade.subject_id', '=', 'tb_subject.id')
-            ->select('tb_grade.*', 'tb_subject.class_id')
-            ->where('tb_student_class.student_id', $data['student'])
-            ->orderBy('tb_subject.class_id', 'asc')
-            ->get();
-        */
-
         $student_subjects = \DB::table('tb_student_class')
             ->join('tb_subject', 'tb_subject.class_id', '=', 'tb_student_class.class_id')
             ->select('tb_subject.id', 'tb_subject.name')
-            ->where('tb_student_class.student_id', 1)
+            ->where('tb_student_class.student_id', $data['student'])
             ->orderBy('tb_subject.class_id', 'asc')
             ->get();
         $student_previous_classes = \DB::table('tb_student_class')->select('tb_student_class.*')->where('student_id', 1)->get();

@@ -34,7 +34,11 @@
             <div class="clearfix"></div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Email * :</label>
-                {!! Form::email('email', $row['email'],array('class'=>'form-control', 'placeholder'=>'Email', 'required' => true)) !!}
+                @if($row['email']!="")
+                {!! Form::email('email',  $row['email'], array('class'=>'form-control', 'placeholder'=>'Email','disabled'=>'disabled' )) !!}
+                @else
+                {!! Form::email('email',  $row['email'], array('class'=>'form-control', 'placeholder'=>'Email','required'=>'required' )) !!}
+                @endif
             </div>
 
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
@@ -54,8 +58,8 @@
                 <label for="fullname">City * :</label>
                 {!! Form::text('city', $row['city'],array('class'=>'form-control', 'placeholder'=>'city', 'required' => true)) !!}
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">'
-                <label for="fullname">County * :</label>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                <label for="fullname">Country * :</label>
                 {!! Form::text('country', $row['country'],array('class'=>'form-control', 'placeholder'=>'country', 'required' => true)) !!}
             </div>
             <div class="clearfix"></div>
@@ -65,11 +69,11 @@
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Phone Number * :</label>
-                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control', 'placeholder'=>'Phone Number', 'required' => true)) !!}
+                {!! Form::text('phone_number', $row['phone_number'],array('id'=>'phone_number','class'=>'form-control contact', 'placeholder'=>'333-4444-5555', 'required' => true,'data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$')) !!}
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Mobile Number * :</label>
-                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control', 'placeholder'=>'Mobile Number', 'required' => true)) !!}
+                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'333-4444-5555', 'required' => true,'data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$')) !!}
             </div>
             <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
@@ -154,6 +158,10 @@
                 console.log(start.toISOString(), end.toISOString(), label);
             });
 
+
+            $(".contact").on('change', function(e) {
+            $(this).parsley().validate() ;
+        });
 
         });
 

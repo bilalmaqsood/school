@@ -22,6 +22,7 @@ class Controller extends BaseController
         $this->dbhost       = $database[$driver]['host'];
         if(\Auth::check() == true)
         {
+            \Session::put('favatar', \Auth::user()->avatar);
             if(!\Session::get('gid'))
             {
                 \Session::put('uid', \Auth::user()->id);
@@ -31,8 +32,9 @@ class Controller extends BaseController
                 \Session::put('fid', \Auth::user()->first_name.' '. \Auth::user()->last_name);
                 $sidemenu = \DB::table('tb_group')->select('tb_group.data_access', 'tb_group.name')->where('id', \Auth::user()->group_id)->get();
                 \Session::put('sidemenu', json_decode($sidemenu[0]->data_access));
-                \Session::put('selected_year',  \Auth::user()->selected_id);
-                \Session::put('school_year',  \Auth::user()->school_year);
+                $school_year = \DB::table('tb_school')->select('id', 'year')->orderBy('id', 'desc')->get();
+                \Session::put('selected_year', $school_year[0]->id);
+                \Session::put('school_year', $school_year);
             }
         }
 
@@ -170,6 +172,35 @@ class Controller extends BaseController
     public function changeDateTimeFormat($date)
     {
         return date("Y-m-d H:i:s", strtotime($date));
+    }
+
+    public function getComboselectstudent(Request $request)
+    {
+        if($request->ajax() == true && \Auth::check() == true)
+        {
+            $param = explode(':',$request->input('filter'));
+            $parent = (!is_null($request->input('parent')) ? $request->input('parent') : null);
+            $parent = explode(':',$parent);
+            $table = $param[0];
+            $rows =  \DB::table($table)->join('tb_users', "$table.user_id", '=','tb_users.id')->where($parent[0],$parent[1])->select("tb_users.id as student_id", \DB::raw('concat(tb_users.last_name, " ",tb_users.first_name) as name'))->get();
+            $items = array();
+            $fields = explode("|",$param[2]);
+                foreach($rows as $row)
+                {
+                    $value = "";
+                    foreach($fields as $item=>$val)
+                    {
+                        if($val != "") $value .= $row->$val." ";
+                    }
+                    $items[] = array($row->$param['1'] , $value);
+
+                }
+
+
+            return json_encode($items);
+        } else {
+            return json_encode(array('OMG'=>" Ops .. Cant access the page !"));
+        }
     }
 
     public function getComboselect( Request $request)

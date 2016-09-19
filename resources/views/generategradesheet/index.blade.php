@@ -25,7 +25,3 @@
         });
     </script>
 @endsection
-
-@section('js_section')
-
-@stop

@@ -1644,12 +1644,20 @@ class SiteHelpers
 
     static function getTeacherName($id)
     {
-        $result = DB::select("Select first_name, last_name from tb_users where id = $id");
+
+        $result = DB::select("SELECT concat(tb_users.last_name, ' ', tb_users.first_name) as teacher_name from tb_teachers JOIN tb_users on tb_teachers.user_id = tb_users.id where tb_teachers.id = $id");
         if(count($result) > 0)
-            return ucwords($result[0]->last_name.' '.$result[0]->first_name);
+            return ucwords($result[0]->teacher_name);
         return '';
     }
 
+    static function getTeacherNameWithRespectToSubject($id)
+    {
+        $result = DB::select("SELECT concat(tb_users.last_name, ' ', tb_users.first_name) as teacher_name from tb_subject JOIN tb_teachers on tb_subject.teacher_id = tb_teachers.id JOIN tb_users on tb_teachers.user_id = tb_users.id where tb_subject.id = $id");
+        if(count($result) > 0)
+            return ucwords($result[0]->teacher_name);
+        return '';
+    }
     static function getSemester($status)
     {
         if($status >=0 && $status < 5)
@@ -1700,5 +1708,49 @@ class SiteHelpers
     static public function changeDateTimeFormat($date)
     {
         return date(CNF_DATEFORMAT, strtotime($date));
+    }
+
+    static function time_elapsed_string($datetime, $full = false) {
+        $now = new DateTime;
+        $ago = new DateTime($datetime);
+        $diff = $now->diff($ago);
+
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+
+        $string = array(
+            'y' => 'year',
+            'm' => 'month',
+            'w' => 'week',
+            'd' => 'day',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second',
+        );
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+
+        if (!$full) $string = array_slice($string, 0, 1);
+        return $string ? implode(', ', $string) . ' ago' : 'just now';
+    }
+
+    static public function total_subjects($class_id){
+        $year_id = \Session::get('selected_year');
+        $count =  \DB::select("Select count(tb_subject.id) as total_subjects from tb_subject where tb_subject.class_id = $class_id AND tb_subject.year_id = $year_id");
+        return $count[0]->total_subjects;
+
+    }
+
+
+    static public function getGrades($student_id)
+    {
+        $year_id = \Session::get('selected_year');
+        $result =  \DB::select("SELECT CAST(AVG(first_avg) as UNSIGNED) as semester_one, AVG(second_avg) as semester_two, AVG(final) as final from tb_grade WHERE tb_grade.student_id = $student_id AND tb_grade.year_id = $year_id");
+        return $result;
     }
 }

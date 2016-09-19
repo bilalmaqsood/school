@@ -176,7 +176,8 @@ class EventController extends Controller
 
     public function getShowCalendar()
     {
-        $events = Event::all();
+        $year_id = \Session::get('selected_year');
+        $events = Event::where('year_id', $year_id)->get();
         $data = array();
         foreach($events as $event)
         {

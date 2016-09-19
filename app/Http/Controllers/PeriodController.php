@@ -40,7 +40,7 @@ class PeriodController extends Controller
 
     public function postData( Request $request)
     {
-        $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'desc');
+        $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'asc');
         $order = (!is_null($request->input('order')) ? $request->input('order') : '');
         // End Filter sort and order for query
         // Filter Search for query
@@ -98,33 +98,22 @@ class PeriodController extends Controller
     function postSave( Request $request, $id =0)
     {
         $data = $request->all();
+        if(isset($data['break']))
+        {
+            $data['start_time'] = '';
+            $data['end_time'] = '';
+            $data['break'] = 1;
+        }
+        else
+        {
+            $data['break'] = 0;
+        }
         $id = $this->model->insertRow($data , $request->input('id'));
 
         return response()->json(array(
             'status'=>'success',
             'message'=> \Lang::get('core.note_success')
         ));
-
-        $rules = $this->validateForm();
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
-            $data = $this->validatePost('sb_invoiceproducts');
-
-            $id = $this->model->insertRow($data , $request->input('ProductID'));
-
-            return response()->json(array(
-                'status'=>'success',
-                'message'=> \Lang::get('core.note_success')
-            ));
-
-        } else {
-
-            $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
-            return Response::json(array(
-                'message'	=> $message,
-                'status'	=> 'error'
-            ));
-        }
 
     }
 

@@ -105,27 +105,6 @@ class DivisionController extends Controller
             'message'=> \Lang::get('core.note_success')
         ));
 
-        $rules = $this->validateForm();
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
-            $data = $this->validatePost('sb_invoiceproducts');
-
-            $id = $this->model->insertRow($data , $request->input('ProductID'));
-
-            return response()->json(array(
-                'status'=>'success',
-                'message'=> \Lang::get('core.note_success')
-            ));
-
-        } else {
-
-            $message = $this->validateListError(  $validator->getMessageBag()->toArray() );
-            return Response::json(array(
-                'message'	=> $message,
-                'status'	=> 'error'
-            ));
-        }
-
     }
 
     public function postDelete( Request $request)

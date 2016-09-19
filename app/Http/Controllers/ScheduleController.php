@@ -37,6 +37,7 @@ class ScheduleController extends Controller
 
     public function getIndex()
     {
+        $year_id = \Session::get('selected_year');
         $classes = Classes::all();
         $periods = Period::all();
         $monday = array();
@@ -51,22 +52,27 @@ class ScheduleController extends Controller
                 $mon = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 1)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $tues = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 2)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $wednes = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 3)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $thurs = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 4)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $fri = \DB::table('tb_classes_schedule')->where('class_id', '=', $class->id)
                     ->where('period_id', '=', $period->id)
                     ->where('day_of_week', '=', 5)
+                    ->where('year_id', '=', $year_id)
                     ->get();
                 $monday[$cindex][$pindex]['class_id'] = $class->id;
                 $monday[$cindex][$pindex]['day_of_week'] = 1;
@@ -285,11 +291,14 @@ class ScheduleController extends Controller
 
     public function getPopup(Request $request)
     {
+        $year_id = \Session::get('selected_year');
         $data = $request->all();
         $this->data['subject_id'] = $data['subject_id'];
         $this->data['class_id'] = $data['class_id'];
         $this->data['day_of_week'] = $data['day_of_week'];
         $this->data['period_id'] = $data['period_id'];
+        $subjects = \DB::table('tb_subject')->where('year_id', '=', $year_id)->where('class_id', '=', $data['class_id'])->select('id', 'name')->get();
+        $this->data['subjects'] = $subjects;
         return view('schedule.popup', $this->data);
     }
 
