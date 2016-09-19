@@ -21,7 +21,7 @@
                 <!-- end of image cropping -->
 
             </div>
-            <h3>{{ ucwords($row->last_name.' '.$row->first_name)}} </h3>
+            <h3>{{ ucwords($row->first_name.' '.$row->last_name)}} </h3>
 
             <ul class="list-unstyled user_data">
                 <li><i class="fa fa-map-marker user-profile-icon"></i> {{$row->city}}, {{$row->country}}
