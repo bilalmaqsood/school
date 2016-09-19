@@ -46,8 +46,8 @@
                 {!! Form::text('nationality', $row['nationality'],array('class'=>'form-control', 'placeholder'=>'Nationality', 'required' => true)) !!}
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                <label for="fullname">Occupcation * :</label>
-                {!! Form::text('occupcation', $row['occupcation'],array('class'=>'form-control', 'placeholder'=>'Occupcation', 'required' => true)) !!}
+                <label for="fullname">Occupation * :</label>
+                {!! Form::text('occupcation', $row['occupcation'],array('class'=>'form-control', 'placeholder'=>'Occupation')) !!}
             </div>
             <div class="clearfix"></div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
@@ -69,11 +69,11 @@
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Phone Number * :</label>
-                {!! Form::text('phone_number', $row['phone_number'],array('id'=>'phone_number','class'=>'form-control contact', 'placeholder'=>'333-4444-5555', 'required' => true,'data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$')) !!}
+                {!! Form::text('phone_number', $row['phone_number'],array('id'=>'phone_number','class'=>'form-control contact', 'placeholder'=>'0111-123456','data-parsley-pattern'=>'^\d{10}$')) !!}
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Mobile Number * :</label>
-                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'333-4444-5555', 'required' => true,'data-parsley-pattern'=>'^\d{3}-\d{4}-\d{4}$')) !!}
+                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'333-4444-5555', 'required' => true,'data-parsley-pattern'=>'^\d{10}$')) !!}
             </div>
             <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
