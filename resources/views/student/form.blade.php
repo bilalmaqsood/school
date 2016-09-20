@@ -135,13 +135,13 @@
                 </div>
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                <label>Country*:</label>
+                <label>Country/State *:</label>
                 {!! Form::text('country',$row['country'], array('class'=>'form-control', 'placeholder'=>'Country','required'=>'required' )) !!}
             </div>
-            <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+            <!--<div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Country of Origin *:</label>
                 {!! Form::text('county_of_origin',$row['county_of_origin'], array('class'=>'form-control', 'placeholder'=>'Country of Origin','required'=>'required' )) !!}
-            </div>
+            </div>-->
             <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Nationality *:</label>
@@ -192,6 +192,9 @@
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Class *:</label>
+                @if($row['class_id'] != '')
+                    <input type="hidden" name="class_id" value="{{  $row['class_id'] }}">
+                @endif
                 <select name="class_id" class="form-control" required @if($row['class_id'] != '') {{ 'disabled' }} @endif>
                     <option value="">Select Class</option>
                     @foreach($classes as $class)

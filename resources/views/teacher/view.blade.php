@@ -1,7 +1,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>Student Profile</h2>
+            <h2>Teacher Profile</h2>
             <a href="javascript:void(0)" class="pull-right close-link"
                onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
             <div class="clearfix"></div>
@@ -21,7 +21,7 @@
                 <!-- end of image cropping -->
 
             </div>
-            <h3>{{ ucwords($row->last_name.' '.$row->first_name)}} </h3>
+            <h3>{{ ucwords($row->first_name.' '.$row->last_name)}} </h3>
 
             <ul class="list-unstyled user_data">
                 <li><i class="fa fa-map-marker user-profile-icon"></i> {{$row->city}}, {{$row->country}}
@@ -53,7 +53,7 @@
                                 <tr>
                                     <td><label>Middle Name </label></td>
                                     <td>{{ucwords($row->middle_name)}}</td>
-                                    <td><label>Country </label></td>
+                                    <td><label>Country/State </label></td>
                                     <td>{{ucwords($row->country)}}</td>
                                 </tr>
                                 <tr>
@@ -63,8 +63,8 @@
                                     <td>{{$row->phone_number}}</td>
                                 </tr>
                                 <tr>
-                                    <td><label></label></td>
-                                    <td></td>
+                                    <td><label>Gender</label></td>
+                                    <td>{{ \SiteHelpers::getGender($row->gender) }}</td>
                                     <td><label>Mobile No</label></td>
                                     <td>{{$row->mobile_number}}</td>
                                 </tr>
@@ -75,15 +75,8 @@
                                     <td>{{$row->email}}</td>
                                 </tr>
                                 <tr>
-                                    <td><label>Religion</label></td>
-                                    <td>{{ ucwords($row->religion) }}</td>
                                     <td><label>Nationality</label></td>
                                     <td>{{ ucwords($row->nationality) }}</td>
-                                </tr>
-                                <tr>
-                                    <td><label>Gender</label></td>
-                                    <td>{{ \SiteHelpers::getGender($row->gender) }}</td>
-
                                 </tr>
 
                             </table>

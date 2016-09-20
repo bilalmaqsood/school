@@ -122,7 +122,7 @@ function ajaxCopy(  id , url )
 function ajaxRemove( id, url )
 {
 	var datas = $( id +'Table :input').serialize();
-	if(confirm('Are u sure deleting selected row(s)?')) {
+	if(confirm('are you sure?')) {
 		$.post( url+'/delete' ,datas,function( data ) {
 			if(data.status =='success')
 			{
@@ -139,7 +139,7 @@ function ajaxRemove( id, url )
 function ajaxRemoveRecord( id, url, rowId)
 {
 	var datas = {'id':rowId};
-	if(confirm('Are u sure remove selected row?')) {
+	if(confirm('Are you sure?')) {
 		$.post( url+'/delete' ,datas,function( data ) {
 			if(data.status == 'success' )
 			{
@@ -287,7 +287,7 @@ function notyConfirm(id, url)
 {
 	
 	var n = noty({				
-		text: 'Are u sure deleting selected row(s)?',
+		text: 'are you sure?',
 		type: 'Confirm',
 		timeout : 50,
 		layout: 'topCenter',

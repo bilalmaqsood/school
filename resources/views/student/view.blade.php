@@ -63,7 +63,7 @@
                                 <tr>
                                     <td><label>Middle Name </label></td>
                                     <td>{{ucwords($row->middle_name)}}</td>
-                                    <td><label>Country </label></td>
+                                    <td><label>Country/State </label></td>
                                     <td>{{ucwords($row->country)}}</td>
                                 </tr>
                                 <tr>
@@ -93,7 +93,10 @@
                                 <tr>
                                     <td><label>Gender</label></td>
                                     <td>{{ \SiteHelpers::getGender($row->gender) }}</td>
-
+                                </tr>
+                                <tr>
+                                    <td><label>Admission Date</label></td>
+                                    <td>{{ ($row->register_date) }}</td>
                                 </tr>
 
                             </table>
@@ -113,7 +116,7 @@
                                 <tr>
                                     <td><label>Middle Name </label></td>
                                     <td>{{ ucwords($parent->middle_name) }}</td>
-                                    <td><label>Country </label></td>
+                                    <td><label>Country/State </label></td>
                                     <td>{{ ucwords($parent->country) }}</td>
                                 </tr>
                                 <tr>
@@ -130,7 +133,7 @@
                                 </tr>
                                 <tr>
                                     <td><label>Occupation</label></td>
-                                    <td>abc</td>
+                                    <td>{{ $parent->occupcation }}</td>
                                     <td><label>Email Address</label></td>
                                     <td>{{ $parent->email }}</td>
                                 </tr>
