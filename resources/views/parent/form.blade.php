@@ -59,7 +59,7 @@
                 {!! Form::text('city', $row['city'],array('class'=>'form-control', 'placeholder'=>'city', 'required' => true)) !!}
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                <label for="fullname">Country * :</label>
+                <label for="fullname">Country/State * :</label>
                 {!! Form::text('country', $row['country'],array('class'=>'form-control', 'placeholder'=>'country', 'required' => true)) !!}
             </div>
             <div class="clearfix"></div>

@@ -93,8 +93,6 @@
                                 <tr>
                                     <td><label>Gender</label></td>
                                     <td>{{ \SiteHelpers::getGender($row->gender) }}</td>
-                                </tr>
-                                <tr>
                                     <td><label>Admission Date</label></td>
                                     <td>{{ ($row->register_date) }}</td>
                                 </tr>

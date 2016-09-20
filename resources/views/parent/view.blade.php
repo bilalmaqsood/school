@@ -20,7 +20,7 @@
                     <tr>
                         <td><label>Middle Name </label></td>
                         <td>{{ucwords($row->middle_name)}}</td>
-                        <td><label>Country </label></td>
+                        <td><label>Country/State </label></td>
                         <td>{{ucwords($row->country)}}</td>
                     </tr>
                     <tr>
