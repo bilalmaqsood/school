@@ -182,7 +182,7 @@
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Parent *:</label>
-                <select name="parent_id" class="form-control" required>
+                <select name="parent_id" class="select2_single form-control" required>
                     <option value="">Select Parent</option>
                     @foreach($parents as $parent)
                         <option value="{{$parent->id}}" @if($parent->id == $row['parent_id']) {{'selected'}} @endif>{{ ucwords($parent->last_name.' '.$parent->first_name) }}</option>
@@ -268,6 +268,10 @@
             }
         }
         $(document).ready(function() {
+            $(".select2_single").select2({
+                placeholder: "Select Parent",
+                allowClear: true
+            });
             $('#date_of_birth').daterangepicker({
                 singleDatePicker: true,
                 calender_style: "picker_1",

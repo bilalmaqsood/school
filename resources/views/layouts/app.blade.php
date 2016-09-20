@@ -33,7 +33,8 @@
     <link href="{{ asset('js/toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{ asset('crop/cropper.min.css') }}" rel="stylesheet" type="text/css" />
-    <!--<link href="{{ asset('crop/main.css') }}" rel="stylesheet" type="text/css" />-->
+    <!-- Autocomplete Dropdown -->
+    <link href="{{ asset('css/select/select2.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- calender -->
     <link href="{{ asset('css/calendar/fullcalendar.css') }}" rel="stylesheet">
@@ -113,6 +114,7 @@
 <script src="{{ asset('js/calendar/fullcalendar.min.js') }}"></script>
 <script src="{{ asset('js/datetimepicker.min.js') }}"></script>
 <script src="{{ asset('js/jquery.jCombo.min.js') }}"></script>
+<script src="{{ asset('js/select/select2.full.js') }}"></script>
 <!-- pace -->
 <script src="{{ asset('js/pace/pace.min.js') }}"></script>
 <!-- skycons -->
