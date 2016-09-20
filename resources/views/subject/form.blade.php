@@ -33,9 +33,9 @@
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-6">
                     @if(!empty($row['class_id']))
-                        {!! Form::select('class_id', $classes,$row['class_id'],array('class'=>'form-control', 'placeholder'=>'Select Class', 'required' => true)) !!}
+                        {!! Form::select('class_id', $classes,$row['class_id'],array('class'=>'select2_single form-control', 'placeholder'=>'Select Class', 'required' => true)) !!}
                     @else
-                        {!! Form::select('class_id', $classes,'',array('class'=>'form-control', 'placeholder'=>'Select Class', 'required' => true)) !!}
+                        {!! Form::select('class_id', $classes,'',array('class'=>'form-control', 'id'=>'class-autocomplete' ,'placeholder'=>'select2_single Select Class', 'required' => true)) !!}
                     @endif
                 </div>
             </div>
@@ -116,7 +116,10 @@
             }
         }
     $(document).ready(function() {
-
+        $("#class-autocomplete").select2({
+            placeholder: "Select Class",
+            allowClear: true
+        });
       $('#date_of_birth').daterangepicker({
         singleDatePicker: true,
         calender_style: "picker_1",

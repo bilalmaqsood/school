@@ -182,7 +182,7 @@
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Parent *:</label>
-                <select name="parent_id" class="select2_single form-control" required>
+                <select name="parent_id" id="parent-autocomplete" class="select2_single form-control" required>
                     <option value="">Select Parent</option>
                     @foreach($parents as $parent)
                         <option value="{{$parent->id}}" @if($parent->id == $row['parent_id']) {{'selected'}} @endif>{{ ucwords($parent->last_name.' '.$parent->first_name) }}</option>
@@ -195,8 +195,8 @@
                 @if($row['class_id'] != '')
                     <input type="hidden" name="class_id" value="{{  $row['class_id'] }}">
                 @endif
-                <select name="class_id" class="form-control" required @if($row['class_id'] != '') {{ 'disabled' }} @endif>
-                    <option value="">Select Class</option>
+                <select name="class_id" id="class-autocomplete" class="select2_single form-control" required @if($row['class_id'] != '') {{ 'disabled' }} @endif>
+                    <!--<option value="">Select Class</option>-->
                     @foreach($classes as $class)
                         <option value="{{$class->id}}" @if($class->id == $row['class_id']) {{'selected'}} @endif>{{ ucwords($class->name) }}</option>
                     @endforeach
@@ -268,8 +268,12 @@
             }
         }
         $(document).ready(function() {
-            $(".select2_single").select2({
+            $("#parent-autocomplete").select2({
                 placeholder: "Select Parent",
+                allowClear: true
+            });
+            $("#class-autocomplete").select2({
+                placeholder: "Select Class",
                 allowClear: true
             });
             $('#date_of_birth').daterangepicker({
