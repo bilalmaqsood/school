@@ -18,7 +18,7 @@
                 </thead>
                 <tbody>
                 @foreach($rowData as $row)
-                    <?php $marks = \SiteHelpers::getGrades($row->student_id);    ?>
+                    <?php $marks = \SiteHelpers::getGrades($row->student_id, $row->class_id );    ?>
                     <tr>
                         <td class="text-center table_td">{{ $row->class_name }}</td>
                         <td class="text-center">{{ $row->student_name }}</td>
@@ -29,7 +29,7 @@
                             @if(\Session::get('gid') == 1 && $row->status == 0)
                                 @if($marks[0]->semester_one != 0 && $marks[0]->final > 50 && $row->class_name == 20)
                                 <a class="btn btn-xs btn-success" href="{{ URL::to($pageModule.'/promote-student/') }}"
-                                   onclick="ajaxPromote(this.href, '#{{ $pageModule }}', '{{$row->id}}', '{{ $row->class_id }}', '4'); return false">
+                                   onclick="ajaxPromote(this.href, '#{{ $pageModule }}', '{{$row->id}}', '{{ $row->class_id }}', '-1'); return false">
                                     <i class="fa fa-refresh"></i>
                                     Pass out
                                 </a>
@@ -53,7 +53,7 @@
                                     </a>
                                 @endif
                             @endif
-                            @if(\Session::get('gid') == 1 && $row->status == 2)
+                            @if(\Session::get('gid') == 1 && $row->status == -1)
                                     <a class="btn btn-xs btn-info" href="{{ URL::to($pageModule.'/create-grade-sheet/') }}"
                                        onclick="ajaxGeneric('{{$row->id}}',this.href); return false">
                                         <i class="fa fa-refresh"></i>

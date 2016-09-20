@@ -108,9 +108,9 @@
                                 </li>
                                 <li><a href="{{ URL::to('promote') }}">Promote Students</a>
                                 </li>
-                                <li><a href="{{ URL::to('gradebook/manage-marks') }}">Manage Marks</a>
+                                <li><a href="{{ URL::to('gradebook') }}">Manage Marks</a>
                                 </li>
-                                <li><a href="{{ URL::to('gradebook') }}">Master Grade Book</a>
+                                <li><a href="{{ URL::to('gradebook/show') }}">Master Grade Book</a>
                                 </li>
                                 <li><a href="{{ URL::to('gradesheet') }}">Grade Sheet</a>
                                 </li>
@@ -130,12 +130,14 @@
                             </ul>
                         </li>
                     @endif
-                    @if(\Session::get('sidemenu')[13] == 1 && \Session::get('gid') == 1)
+                    @if(\Session::get('sidemenu')[13] == 1)
                         <li>
                             <a><i class="fa fa-asterisk"></i>Administrator Task <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu" style="display: none">
-                                <li><a href="{{ URL::to('setting') }}">Manage School</a>
-                                </li>
+                                @if(\Session::get('gid') == 1)
+                                    <li><a href="{{ URL::to('setting') }}">Manage School</a>
+                                    </li>
+                                @endif
                                 <li><a href="{{ URL::to('setting/general') }}">General Setting</a>
                                 </li>
                                 <li><a href="{{ URL::to('setting/moduleaccess') }}">User Role</a>

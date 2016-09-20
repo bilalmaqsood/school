@@ -96,8 +96,11 @@ class PromoteStudentController extends Controller
         if($request->input('id') != '') {
             $selected_year = \Session::get('selected_year');
             $data = $request->all();
+            $student_class = \DB::table('tb_student_class')->where('id', $data['id'])->first();
             if($data['class_id'] == 20)
             {
+                $id = \DB::table('tb_students')->where('student_id', $student_class->student_id)->update(array('class_id'=> -1));
+                $id =  \DB::table('tb_student_class')->where('id', $student_class->id)->update(array('status' => -1));
                 return response()->json(array(
                     'status' => 'success',
                     'message' => 'Congrats, That student will be pass out'
@@ -105,6 +108,10 @@ class PromoteStudentController extends Controller
             }
             elseif($data['class_id'] < 20 && $data['status'] == 1)
             {
+                $new_class = $student_class->class_id + 1;
+                $id = \DB::table('tb_students')->where('student_id', $student_class->student_id)->update(array('class_id'=>$new_class));
+                $id =  \DB::table('tb_student_class')->where('id', $student_class->id)->update(array('status' => 1));
+                $id =  \DB::table('tb_student_class')->insert(array('student_id'=>$student_class->student_id, 'class_id'=> $new_class,'year_id'=>$selected_year, 'status'=> 0));
                 return response()->json(array(
                     'status' => 'success',
                     'message' => 'Successfully promote to next class in same year'
@@ -117,6 +124,10 @@ class PromoteStudentController extends Controller
                 {
                     if($data['status'] == 2)
                     {
+                        $new_class = $student_class->class_id + 1;
+                        $id = \DB::table('tb_students')->where('student_id', $student_class->student_id)->update(array('class_id'=>$new_class));
+                        $id =  \DB::table('tb_student_class')->where('id', $student_class->id)->update(array('status' => 1));
+                        $id =  \DB::table('tb_student_class')->insert(array('student_id'=>$student_class->student_id, 'class_id'=> $new_class,'year_id'=>$next_year->id, 'status'=> 0));
                         return response()->json(array(
                             'status' => 'success',
                             'message' => 'Successfully promote to next class & year'
@@ -124,6 +135,10 @@ class PromoteStudentController extends Controller
                     }
                     elseif($data['status'] == 3)
                     {
+                        $same_class = $student_class->class_id;
+                        $id = \DB::table('tb_students')->where('student_id', $student_class->student_id)->update(array('class_id'=>$same_class));
+                        $id =  \DB::table('tb_student_class')->where('id', $student_class->id)->update(array('status' => 1));
+                        $id =  \DB::table('tb_student_class')->insert(array('student_id'=>$student_class->student_id, 'class_id'=> $same_class,'year_id'=>$next_year->id, 'status'=> 0));
                         return response()->json(array(
                             'status' => 'success',
                             'message' => 'Successfully promote to same class in next year'

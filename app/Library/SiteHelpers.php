@@ -1747,10 +1747,10 @@ class SiteHelpers
     }
 
 
-    static public function getGrades($student_id)
+    static public function getGrades($student_id, $class_id)
     {
         $year_id = \Session::get('selected_year');
-        $result =  \DB::select("SELECT CAST(AVG(first_avg) as UNSIGNED) as semester_one, AVG(second_avg) as semester_two, AVG(final) as final from tb_grade WHERE tb_grade.student_id = $student_id AND tb_grade.year_id = $year_id");
+        $result =  \DB::select("SELECT CAST(AVG(first_avg) as UNSIGNED) as semester_one, AVG(second_avg) as semester_two, AVG(final) as final from tb_grade WHERE tb_grade.student_id = $student_id AND tb_grade.class_id = $class_id AND tb_grade.year_id = $year_id");
         return $result;
     }
 }
