@@ -57,44 +57,48 @@
                                 <tr>
                                     <td><label>Last Name</label></td>
                                     <td>{{ucwords($row->last_name)}}</td>
-                                    <td><label>City</label></td>
-                                    <td>{{ucwords($row->city)}}</td>
+                                    <td><label>Country </label></td>
+                                    <td>{{ucwords($row->country)}}</td>
                                 </tr>
                                 <tr>
                                     <td><label>Middle Name </label></td>
                                     <td>{{ucwords($row->middle_name)}}</td>
-                                    <td><label>Country/State </label></td>
-                                    <td>{{ucwords($row->country)}}</td>
+                                    <td><label>State </label></td>
+                                    <td>{{ucwords($row->county_of_origin)}}</td>
                                 </tr>
                                 <tr>
                                     <td><label>First Name</label></td>
                                     <td>{{ucwords($row->first_name)}}</td>
-                                    <td><label>Phone No</label></td>
-                                    <td>{{$row->phone_number}}</td>
+                                    <td><label>City</label></td>
+                                    <td>{{ucwords($row->city)}}</td>
                                 </tr>
                                 <tr>
                                     <td><label>Class</label></td>
                                     <td>{{ \SiteHelpers::getClassName($row->class_id) }}</td>
-                                    <td><label>Mobile No</label></td>
-                                    <td>{{$row->mobile_number}}</td>
+                                    <td><label>Phone No</label></td>
+                                    <td>{{$row->phone_number}}</td>
                                 </tr>
                                 <tr>
                                     <td><label>Date of Birth</label></td>
                                     <td>{{$row->date_of_birth}}</td>
-                                    <td><label>Email Address</label></td>
-                                    <td>{{$row->email}}</td>
+                                    <td><label>Mobile No</label></td>
+                                    <td>{{$row->mobile_number}}</td>
                                 </tr>
                                 <tr>
                                     <td><label>Religion</label></td>
                                     <td>{{ ucwords($row->religion) }}</td>
-                                    <td><label>Nationality</label></td>
-                                    <td>{{ ucwords($row->nationality) }}</td>
+                                    <td><label>Email Address</label></td>
+                                    <td>{{$row->email}}</td>
                                 </tr>
                                 <tr>
                                     <td><label>Gender</label></td>
                                     <td>{{ \SiteHelpers::getGender($row->gender) }}</td>
                                     <td><label>Admission Date</label></td>
                                     <td>{{ ($row->register_date) }}</td>
+                                </tr>
+                                <tr>
+                                    <td><label>Nationality</label></td>
+                                    <td>{{ ucwords($row->nationality) }}</td>
                                 </tr>
 
                             </table>

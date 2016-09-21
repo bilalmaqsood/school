@@ -135,13 +135,13 @@
                 </div>
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                <label>Country/State *:</label>
+                <label>Country *:</label>
                 {!! Form::text('country',$row['country'], array('class'=>'form-control', 'placeholder'=>'Country','required'=>'required' )) !!}
             </div>
-            <!--<div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                <label>Country of Origin *:</label>
-                {!! Form::text('county_of_origin',$row['county_of_origin'], array('class'=>'form-control', 'placeholder'=>'Country of Origin','required'=>'required' )) !!}
-            </div>-->
+            <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                <label>State *:</label>
+                {!! Form::text('county_of_origin',$row['county_of_origin'], array('class'=>'form-control', 'placeholder'=>'State','required'=>'required' )) !!}
+            </div>
             <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Nationality *:</label>
@@ -154,11 +154,11 @@
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Mobile No *:</label>
-                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456','required'=>'required','data-parsley-pattern'=>'^\d{10}$' )) !!}
+                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456','required'=>'required','data-parsley-pattern'=>'^(\d{4})[-]*(\d{6,7})$' )) !!}
             </div>
             <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                <label>Phone No *:</label>
+                <label>Phone No :</label>
                 {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456', 'data-parsley-pattern'=>'^\d{10}$')) !!}
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
