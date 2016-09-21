@@ -84,6 +84,7 @@
             {!! Form::hidden('id', $row['id']) !!}
             {!! Form::hidden('user_id', $row['user_id']) !!}
             {!! Form::hidden('group_id', 6) !!}
+            {!! Form::hidden('id', $row['id']) !!}
             {!! Form::hidden('student_id', $row['student_id']) !!}
             {!! Form::hidden('status', 1) !!}
             {!! Form::hidden('avatar', $row['avatar'],array('id'=>'avatar','class'=>'form-control', 'placeholder'=>'avatar ','required'=>'required' )) !!}
@@ -159,7 +160,7 @@
             <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Phone No :</label>
-                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456', 'data-parsley-pattern'=>'^\d{10}$')) !!}
+                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456', 'data-parsley-pattern'=>'^(\d{4})[-]*(\d{6,7})$')) !!}
             </div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Community*:</label>
@@ -183,7 +184,7 @@
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Parent *:</label>
                 <select name="parent_id" id="parent-autocomplete" class="select2_single form-control" required>
-                    <option value="">Select Parent</option>
+                    <!--<option value="">Select Parent</option>-->
                     @foreach($parents as $parent)
                         <option value="{{$parent->id}}" @if($parent->id == $row['parent_id']) {{'selected'}} @endif>{{ ucwords($parent->last_name.' '.$parent->first_name) }}</option>
                     @endforeach
@@ -196,7 +197,7 @@
                     <input type="hidden" name="class_id" value="{{  $row['class_id'] }}">
                 @endif
                 <select name="class_id" id="class-autocomplete" class="select2_single form-control" required @if($row['class_id'] != '') {{ 'disabled' }} @endif>
-                    <!--<option value="">Select Class</option>-->
+                    <!-- <option value="">Select Class</option>-->
                     @foreach($classes as $class)
                         <option value="{{$class->id}}" @if($class->id == $row['class_id']) {{'selected'}} @endif>{{ ucwords($class->name) }}</option>
                     @endforeach
@@ -289,10 +290,10 @@
                 format: 'YYYY-MM-DD',
             }, function(start, end, label) {
             });
-
+            /*
             $(".contact").on('change', function(e) {
             $(this).parsley().validate() ;
-        });
+        });*/
 
         });
     </script>

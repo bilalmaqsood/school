@@ -78,7 +78,7 @@
 
             {!! Form::hidden('user_id', $row['user_id']) !!}
             {!! Form::hidden('group_id', 5) !!}
-            {!! Form::hidden('id', $row['id']) !!}
+            {!! Form::hidden('teacher_id', $row['teacher_id']) !!}
             {!! Form::hidden('status', 1) !!}
             {!! Form::hidden('avatar', $row['avatar'],array('id'=>'avatar','class'=>'form-control', 'placeholder'=>'avatar ','required'=>'required' )) !!}
 
@@ -116,7 +116,7 @@
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">City * :</label>
-                {!! Form::text('city', $row['city'],array('class'=>'form-control', 'placeholder'=>'city', 'required' => true)) !!}
+                {!! Form::text('city', $row['city'],array('class'=>'form-control', 'placeholder'=>'City', 'required' => true)) !!}
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">'
                 <label for="fullname">Country/State * :</label>
@@ -124,11 +124,11 @@
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Phone Number * :</label>
-                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456', 'data-parsley-pattern'=>'^\d{10}$')) !!}
+                {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456', 'data-parsley-pattern'=>'^(\d{4})[-]*(\d{6,7})$')) !!}
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Mobile Number * :</label>
-                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456', 'required' => true,'data-parsley-pattern'=>'^\d{10}$')) !!}
+                {!! Form::text('mobile_number', $row['mobile_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456', 'required' => true, 'data-parsley-pattern'=>'^(\d{4})[-]*(\d{6,7})$')) !!}
             </div>
 
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
@@ -223,10 +223,10 @@
             }, function(start, end, label) {
                 console.log(start.toISOString(), end.toISOString(), label);
             });
-
+            /*
             $(".contact").on('change', function(e) {
             $(this).parsley().validate() ;
-        });
+        });*/
 
         });
 

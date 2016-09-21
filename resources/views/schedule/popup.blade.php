@@ -31,7 +31,7 @@
             <div class="modal-footer">
                 <input type="hidden" name="schedule_id" id="scheduleId" value="{{ $schedule_id }}">
                 @if($schedule_id != '')
-                    <input type="button" class="btn btn-success" id="remove-subject" value="Remove">
+                    <input type="button" class="btn btn-danger" id="remove-subject" value="Remove">
                 @endif
                 <button type="submit" class="btn btn-success" id="save-subject">Save</button>
             </div>

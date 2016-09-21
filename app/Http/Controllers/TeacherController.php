@@ -89,11 +89,12 @@ class TeacherController extends Controller
             $this->data['row'] 		=  (array)$row;
         } else {
             $teacherFields =   $this->model->getColumnTable('tb_teachers');
+            unset($teacherFields['id']);
+            $teacherFields["teacher_id"] = "";
             $userFields =   $this->model->getColumnTable('tb_users');
             $this->data['row'] = array_merge($teacherFields,$userFields) ;
         }
         $this->data['id'] = $id;
-
         return view('teacher.form',$this->data);
     }
 
@@ -104,6 +105,7 @@ class TeacherController extends Controller
         $rules = array(
             'email'=>'required|email|unique:tb_users,email,'.$request->input('user_id')
         );
+        $data = $request->all();
         $validator = Validator::make($request->all(), $rules);
         if($request->input('teacher_id') != '')
         {
@@ -121,16 +123,18 @@ class TeacherController extends Controller
             $fields = $this->model->getColumnTable('tb_teachers');
             $data = $request->all();
             $user = array_diff_key($data, $fields);
+            unset($user['teacher_id']);
             $teacher = array_intersect_key($data, $fields);
+            $teacher['id'] = $request->input('teacher_id');
             if ($data['user_id'] == NULL) {
                 $users = new User();
                 $user['status'] = 1;
                 $user['password'] = bcrypt($user['password']);
                 $userId = $users->insertRow($user, $data['user_id']);
                 $teacher['user_id'] = $userId;
-                $id = $this->model->insertRow($teacher, $request->input('id'));
+                $id = $this->model->insertRow($teacher, $request->input('teacher_id'));
             } else {
-                $id = $this->model->insertRow($teacher, $request->input('id'));
+                $id = $this->model->insertRow($teacher, $request->input('teacher_id'));
                 if ($user['password'] == NULL) {
                     unset($user['password']);
                 } else {

@@ -13,7 +13,7 @@ class Teacher extends Schooledge {
 
     public static function querySelect(  ){
 
-        return "SELECT tb_users.*,tb_teachers.* FROM tb_teachers";
+        return "SELECT tb_users.*, tb_teachers.id as teacher_id,  tb_teachers.* FROM tb_teachers";
     }
 
     public static function queryWhere(  ){

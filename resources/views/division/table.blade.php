@@ -3,14 +3,12 @@
         <div class="x_title">
             <h2>List of Divisions</h2>
             <ul class="nav navbar-right panel_toolbox">
-                <!--
                 <li>
                     @if($access['is_add'] ==1)
                         <?php $onclick = " onclick=\"ajaxViewDetail('#".$pageModule."',this.href); return false; \"" ; ?>
                         <a href="{{URL::to($pageModule.'/update') }}" class="btn btn-default btn-teacher " <?php echo $onclick; ?> >Create</a>
                     @endif
                 </li>
-                -->
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -37,13 +35,11 @@
                                     <i class="fa fa-edit"></i>
                                 </a>
                             @endif
-                            <!--
                             @if($access['is_remove'] == 1)
                                 <a onclick="ajaxRemoveRecord('#{{ $pageModule }}','{{ $pageUrl }}', '{{$row->id}}');" class="btn btn-sm btn-danger" href="javascript://ajax" >
                                     <i class="fa fa-trash-o"></i>
                                 </a>
                             @endif
-                            -->
                         </td>
                     </tr>
                 @endforeach
