@@ -262,30 +262,11 @@ class ScheduleController extends Controller
 
     public function postDelete( Request $request)
     {
-        if($this->access['is_remove'] ==0) {
-            return response()->json(array(
-                'status'=>'error',
-                'message'=> \Lang::get('core.note_restric')
-            ));
-            die;
-
-        }
-        // delete multipe rows
-        if(count($request->input('id')) >=1)
-        {
-            $this->model->destroy($request->input('id'));
-
-            return response()->json(array(
-                'status'=>'success',
-                'message'=> 'delete successfully'
-            ));
-        } else {
-            return response()->json(array(
-                'status'=>'error',
-                'message'=> 'error in delete'
-            ));
-
-        }
+        $this->model->destroy($request->input('id'));
+        return response()->json(array(
+            'status'=>'success',
+            'message'=> 'delete successfully'
+        ));
 
     }
 
@@ -293,6 +274,7 @@ class ScheduleController extends Controller
     {
         $year_id = \Session::get('selected_year');
         $data = $request->all();
+        $this->data['schedule_id'] = $data['id'];
         $this->data['subject_id'] = $data['subject_id'];
         $this->data['class_id'] = $data['class_id'];
         $this->data['day_of_week'] = $data['day_of_week'];
@@ -312,7 +294,8 @@ class ScheduleController extends Controller
             'day_of_week' => $data['day_of_week'],
             'period_id' => $data['period_id']
         );
-        $id = $this->model->insertRow($data , $request->input('id'));
+        $id = $this->model->insertRow($data , $request->input('schedule_id'));
+
         return response()->json(array(
             'status'=>'success',
             'subject_title' => \SiteHelpers::getSubjectName($data['subject_id']),

@@ -29,7 +29,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Save</button>
+                <input type="hidden" name="schedule_id" id="scheduleId" value="{{ $schedule_id }}">
+                @if($schedule_id != '')
+                    <input type="button" class="btn btn-success" id="remove-subject" value="Remove">
+                @endif
+                <button type="submit" class="btn btn-success" id="save-subject">Save</button>
             </div>
             {!! Form::close() !!}
         @else
@@ -40,6 +44,11 @@
         @endif
     </div>
 </div>
+<style>
+    .btn{
+        margin-bottom: 0px !important;
+    }
+</style>
 
 
 <script type="application/javascript">
@@ -51,7 +60,16 @@
         $.listen('parsley:field:validate', function () {
             validateFront();
         });
-        $('#schedule-form .btn').on('click', function () {
+        $("#remove-subject").on('click',function(){
+            var id = {
+                id: $('#scheduleId').val(),
+            };
+
+            $.post( 'schedule/delete', id, function( data ) {
+                window.location.reload();
+            });
+        });
+        $('#schedule-form #save-subject').on('click', function () {
             $('#schedule-form').parsley().validate();
             validateFront();
             if ($('#schedule-form').parsley().isValid() == true) {

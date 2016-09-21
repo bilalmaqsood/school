@@ -75,7 +75,7 @@
                                                                         <input type="hidden" name="class_id" value="{{ $monday[$cindex][$dindex]['class_id'] }}"/>
                                                                         <input type="hidden" name="period_id" value="{{ $monday[$cindex][$dindex]['period_id'] }}"/>
                                                                         <input type="hidden" name="subject_id" value="{{ $monday[$cindex][$dindex]['subject_id'] }}"/>
-                                                                        <input type="hidden" name="id" value="{{ $monday[$cindex][$dindex]['id'] }}"/>
+                                                                        <input type="hidden" name="schedule_id" value="{{ $monday[$cindex][$dindex]['id'] }}"/>
                                                                         @if($monday[$cindex][$dindex]['subject_id'] != '')
                                                                             <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($monday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($monday[$cindex][$dindex]['subject_id']) }}</span>
                                                                         @else
@@ -115,7 +115,7 @@
                                                                 <input type="hidden" name="class_id" value="{{ $tuesday[$cindex][$dindex]['class_id'] }}"/>
                                                                 <input type="hidden" name="period_id" value="{{ $tuesday[$cindex][$dindex]['period_id'] }}"/>
                                                                 <input type="hidden" name="subject_id" value="{{ $tuesday[$cindex][$dindex]['subject_id'] }}"/>
-                                                                <input type="hidden" name="id" value="{{ $tuesday[$cindex][$dindex]['id'] }}"/>
+                                                                <input type="hidden" name="schedule_id" value="{{ $tuesday[$cindex][$dindex]['id'] }}"/>
                                                                 @if($tuesday[$cindex][$dindex]['subject_id'] != '')
                                                                     <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($tuesday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($tuesday[$cindex][$dindex]['subject_id']) }}</span>
                                                                 @else
@@ -155,7 +155,7 @@
                                                                 <input type="hidden" name="class_id" value="{{ $wednesday[$cindex][$dindex]['class_id'] }}"/>
                                                                 <input type="hidden" name="period_id" value="{{ $wednesday[$cindex][$dindex]['period_id'] }}"/>
                                                                 <input type="hidden" name="subject_id" value="{{ $wednesday[$cindex][$dindex]['subject_id'] }}"/>
-                                                                <input type="hidden" name="id" value="{{ $wednesday[$cindex][$dindex]['id'] }}"/>
+                                                                <input type="hidden" name="schedule_id" value="{{ $wednesday[$cindex][$dindex]['id'] }}"/>
                                                                 @if($wednesday[$cindex][$dindex]['subject_id'] != '')
                                                                     <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($wednesday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($wednesday[$cindex][$dindex]['subject_id']) }}</span>
                                                                 @else
@@ -195,7 +195,7 @@
                                                                 <input type="hidden" name="class_id" value="{{ $thursday[$cindex][$dindex]['class_id'] }}"/>
                                                                 <input type="hidden" name="period_id" value="{{ $thursday[$cindex][$dindex]['period_id'] }}"/>
                                                                 <input type="hidden" name="subject_id" value="{{ $thursday[$cindex][$dindex]['subject_id'] }}"/>
-                                                                <input type="hidden" name="id" value="{{ $thursday[$cindex][$dindex]['id'] }}"/>
+                                                                <input type="hidden" name="schedule_id" value="{{ $thursday[$cindex][$dindex]['id'] }}"/>
                                                                 @if($thursday[$cindex][$dindex]['subject_id'] != '')
                                                                     <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($thursday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($thursday[$cindex][$dindex]['subject_id']) }}</span>
                                                                 @else
@@ -235,7 +235,7 @@
                                                                 <input type="hidden" name="class_id" value="{{ $friday[$cindex][$dindex]['class_id'] }}"/>
                                                                 <input type="hidden" name="period_id" value="{{ $friday[$cindex][$dindex]['period_id'] }}"/>
                                                                 <input type="hidden" name="subject_id" value="{{ $friday[$cindex][$dindex]['subject_id'] }}"/>
-                                                                <input type="hidden" name="id" value="{{ $friday[$cindex][$dindex]['id'] }}"/>
+                                                                <input type="hidden" name="schedule_id" value="{{ $friday[$cindex][$dindex]['id'] }}"/>
                                                                 @if($friday[$cindex][$dindex]['subject_id'] != '')
                                                                     <span class="selectedSpan">{{ \SiteHelpers::getSubjectName($friday[$cindex][$dindex]['subject_id']) }} <br> {{ \SiteHelpers::getTeacherNameWithRespectToSubject($friday[$cindex][$dindex]['subject_id']) }}</span>
                                                                 @else
@@ -264,13 +264,12 @@
     <script type="application/javascript">
         $(document).ready(function(){
             $('.add_class').on('click', function () {
-
                 var datas = {
+                    id: $(this).find('input[name*="schedule_id"]').val(),
                     day_of_week: $(this).find('input[name*="day_of_week"]').val(),
                     class_id: $(this).find('input[name*="class_id"]').val(),
                     period_id: $(this).find('input[name*="period_id"]').val(),
                     subject_id: $(this).find('input[name*="subject_id"]').val(),
-                    id: $(this).find('input[name*="id"]').val(),
                 };
 
                 $.get( 'schedule/popup', datas, function( data ) {
