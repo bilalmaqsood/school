@@ -107,10 +107,10 @@
             {
                 ajaxViewClose('#{{ $pageModule }}');
                 ajaxFilter('#{{ $pageModule }}','{{ $pageUrl }}/data');
-                //notyMessage(data.message);
+                notyMessage(data.message);
                 $('#sximo-modal').modal('hide');
             } else {
-                //notyMessageError(data.message);
+                notyMessageError(data.message);
                 $('.ajaxLoading').hide();
                 return false;
             }
