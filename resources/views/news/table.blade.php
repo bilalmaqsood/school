@@ -33,20 +33,17 @@
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center ">
                             @if($access['is_detail'] == 1)
                                 <a class="btn btn-xs btn-primary" href="{{ URL::to($pageModule.'/show/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
-                                    <i class="fa fa-folder"></i>
-                                    View
+                                    <i class="fa fa-eye"></i>
                                 </a>
                             @endif
                             @if($access['is_edit'] == 1)
-                                <a class="btn btn-xs btn-info" href="{{ URL::to($pageModule.'/update/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
-                                    <i class="fa fa-pencil"></i>
-                                    Edit
+                                <a class="btn btn-xs btn-warning" href="{{ URL::to($pageModule.'/update/'.$row->id) }}" onclick="ajaxViewDetail('#{{ $pageModule }}',this.href); return false">
+                                    <i class="fa fa-edit"></i>
                                 </a>
                             @endif
                             @if($access['is_remove'] == 1)
                                 <a onclick="ajaxRemoveRecord('#{{ $pageModule }}','{{ $pageUrl }}', '{{$row->id}}');" class="btn btn-xs btn-danger" href="javascript://ajax" >
                                     <i class="fa fa-trash-o"></i>
-                                    Delete
                                 </a>
                             @endif
                         </td>
