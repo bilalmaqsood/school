@@ -94,6 +94,7 @@
                 <label for="fullname">First Name * :</label>
                 {!! Form::text('first_name', $row['first_name'],array('class'=>'form-control', 'placeholder'=>'First Name', 'required' => true)) !!}
             </div>
+            <div class="clearfix"></div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Email * :</label>
                  @if($row['email']!="")
@@ -110,6 +111,7 @@
                 <label for="fullname">Nationality * :</label>
                 {!! Form::text('nationality', $row['nationality'],array('class'=>'form-control', 'placeholder'=>'Nationality', 'required' => true)) !!}
             </div>
+            <div class="clearfix"></div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Community * :</label>
                 {!! Form::text('community', $row['community'],array('class'=>'form-control', 'placeholder'=>'Community', 'required' => true)) !!}
@@ -122,6 +124,7 @@
                 <label for="fullname">Country/State * :</label>
                 {!! Form::text('country', $row['country'],array('class'=>'form-control', 'placeholder'=>'County', 'required' => true)) !!}
             </div>
+            <div class="clearfix"></div>
             <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
                 <label for="fullname">Phone Number * :</label>
                 {!! Form::text('phone_number', $row['phone_number'],array('class'=>'form-control contact', 'placeholder'=>'0111-123456', 'data-parsley-pattern'=>'^(\d{4})[-]*(\d{6,7})$')) !!}
@@ -142,7 +145,7 @@
                     </div>
                 </div>
             </div>
-
+            <div class="clearfix"></div>
             <div class="item col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                 <label>Gender *:</label>
                 <p>
