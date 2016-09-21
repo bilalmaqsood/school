@@ -101,6 +101,10 @@ class ClassController extends Controller
     function postSave( Request $request, $id =0)
     {
         $data = $request->all();
+        if(isset($data['status']))
+            $data['status'] = 1;
+        else
+            $data['status'] = 0;
         $id = $this->model->insertRow($data , $request->input('id'));
 
         return response()->json(array(

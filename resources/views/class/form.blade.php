@@ -26,7 +26,7 @@
                     {!! Form::text('name', $row['name'],array('class'=>'form-control', 'placeholder'=>'Name', 'required' => true)) !!}
                 </div>
             </div>
-
+            <div class="clearfix"></div>
             <div class="form-group">
                 <div class="col-md-2 col-sm-4 col-xs-6 col-md-offset-2">
                     <label for="name">Division * :</label>
@@ -34,6 +34,15 @@
                 <div class="col-md-4 col-sm-4 col-xs-6">
                     {!! Form::select('division_id', $divisions,$row['division_id'],array('class'=>'form-control', 'placeholder'=>'Select Division', 'required' => true)) !!}
 
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <div class="col-md-2 col-sm-4 col-xs-6 col-md-offset-2">
+                    <label for="name">Last Class:</label>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6">
+                    <input name="status" type="checkbox" value="1" @if($row['status'] == 1) {{ 'checked' }} @endif>
                 </div>
             </div>
 
