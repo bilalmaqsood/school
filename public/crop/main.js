@@ -143,11 +143,9 @@
               URLWebkit.revokeObjectURL(this.url); // Revoke the old one
             }
             if ( window.webkitURL ) {
-              console.log('here in webkiturl');
               this.url = window.webkitURL.createObjectURL(file);
             }
             else{
-              console.log('here in url for firefox');
               var URL = window.URL;
               this.url = URL.createObjectURL(file);
             }
