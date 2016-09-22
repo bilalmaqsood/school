@@ -42,12 +42,12 @@
 
     support: {
       fileList: !!$('<input type="file">').prop('files'),
-      blobURLs: !!window.URL && webkitURL.createObjectURL,
+      //blobURLs: !!window.URL && webkitURL.createObjectURL,
       formData: !!window.FormData
     },
 
     init: function () {
-      this.support.datauri = this.support.fileList && this.support.blobURLs;
+      this.support.datauri = this.support.fileList;
       if (!this.support.formData) {
         this.initIframe();
       }
@@ -136,15 +136,21 @@
         files = this.$avatarInput.prop('files');
 
         if (files.length > 0) {
-          console.log('file length > 0');
           file = files[0];
 
           if (this.isImageFile(file)) {
             if (this.url) {
-              webkitURL.revokeObjectURL(this.url); // Revoke the old one
+              URLWebkit.revokeObjectURL(this.url); // Revoke the old one
             }
-
-            this.url = webkitURL.createObjectURL(file);
+            if ( window.webkitURL ) {
+              console.log('here in webkiturl');
+              this.url = window.webkitURL.createObjectURL(file);
+            }
+            else{
+              console.log('here in url for firefox');
+              var URL = window.URL;
+              this.url = URL.createObjectURL(file);
+            }
             this.startCropper();
           }
         }
