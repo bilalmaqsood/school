@@ -3,7 +3,7 @@
     <div class="x_panel">
         @if(count($rowData) > 0)
             <div class="x_title">
-                <h2>{{ ucwords($rowData[0]->student_name) }} GradeSheet</h2>
+                <h2>GradeSheet: {{ ucwords($rowData[0]->student_name) }}</h2>
                 <a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
 
                 <div class="clearfix"></div>
@@ -12,13 +12,12 @@
                 <div id="apDiv1">
                     <center>
                         <p align="center">&nbsp;</p>
-                        <p align="center"><strong>ST. MARY CATHOLIC SCHOOL</strong><br>
-                            DUALA, BUSHROD ISLAND<br>
-                            MONROVIA, LIBERIA</p>
+                        <p align="center"><strong>{{ CNF_APPNAME }}</strong><br>
+                            {!! nl2br(CNF_APPADDRESS) !!}</p>
                         <p align="center"><strong><u> MASTER GRADE SHEET</u></strong></p>
                         <p>&nbsp;
                         <center>
-                            Name: {{ ucwords($rowData[0]->student_name) }} Grade: {{ $rowData[0]->class_name }} Year:
+                            Name: {{ ucwords($rowData[0]->student_name) }} Grade: {{ $rowData[0]->class_name }} Year: {{ \SiteHelpers::getYearName() }}
                         </center>
                         </p>
                         <table id="datatable-responsive" class="table table-bordered dt-responsive nowrap" cellspacing="0" width="100%">

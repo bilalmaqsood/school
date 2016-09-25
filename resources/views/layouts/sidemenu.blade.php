@@ -41,7 +41,7 @@
                     </li>
                     @if(\Session::get('sidemenu')[0] == 1)
                         <li>
-                            <a href="dashboard"><i class="fa fa-home"></i>Dashboard</a>
+                            <a href="{{ URL::to('dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
                         </li>
                     @endif
                     @if(\Session::get('sidemenu')[1] == 1)
@@ -172,7 +172,7 @@
             var datas = {
                     id: id
             };
-            $.get('user/change-year',datas ,function( data ) {
+            $.get('/user/change-year',datas ,function( data ) {
                 if(data.status =='success')
                 {
                     notyMessage(data.message);

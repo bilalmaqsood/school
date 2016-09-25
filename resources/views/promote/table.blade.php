@@ -22,9 +22,9 @@
                     <tr>
                         <td class="text-center table_td">{{ $row->class_name }}</td>
                         <td class="text-center">{{ $row->student_name }}</td>
-                        <td class="text-center">@if($marks[0]->semester_one != 0) {{ $marks[0]->semester_one }} @endif</td>
-                        <td class="text-center">@if($marks[0]->semester_two != 0) {{ $marks[0]->semester_two }} @endif</td>
-                        <td class="text-center">@if($marks[0]->final != 0) {{ $marks[0]->final }} @endif</td>
+                        <td class="text-center">@if($marks[0]->semester_one != 0) {{ round($marks[0]->semester_one) }} @endif</td>
+                        <td class="text-center">@if($marks[0]->semester_two != 0) {{ round($marks[0]->semester_two) }} @endif</td>
+                        <td class="text-center">@if($marks[0]->final != 0) {{ round($marks[0]->final) }} @endif</td>
                         <td data-values="action" data-key="{{ $row->id }}" class="text-center table_td">
                             @if(\Session::get('gid') == 1 && $row->status == 0)
                                 @if($marks[0]->semester_one != 0 && $marks[0]->final > 50 && $row->class_name == 20)
@@ -34,27 +34,27 @@
                                     Pass out
                                 </a>
                                 @elseif($marks[0]->semester_one != 0 && $marks[0]->final == 0 && $marks[0]->semester_one > 50)
-                                    <a class="btn btn-xs btn-success" href="{{ URL::to($pageModule.'/promote-student/') }}"
-                                       onclick="ajaxPromote(this.href, '#{{ $pageModule }}', '{{$row->id}}', '{{ $row->class_id }}', '1'); return false">
+                                    <a class="btn btn-xs btn-success" href="javascript://ajax"
+                                       onclick="ajaxPromote('{{ $pageUrl }}', '#{{ $pageModule }}', '{{$row->id}}', '{{ $row->class_id }}', '1'); return false">
                                         <i class="fa fa-refresh"></i>
                                         Promote grade & same year
                                     </a>
                                 @elseif($marks[0]->final != 0 && $marks[0]->final > 50)
-                                    <a class="btn btn-xs btn-info" href="{{ URL::to($pageModule.'/promote-student/') }}"
-                                       onclick="ajaxPromote(this.href, '#{{ $pageModule }}', '{{$row->id}}', '{{ $row->class_id }}', '2'); return false">
+                                    <a class="btn btn-xs btn-info" href="javascript://ajax"
+                                       onclick="ajaxPromote('{{ $pageUrl }}', '#{{ $pageModule }}', '{{$row->id}}', '{{ $row->class_id }}', '2'); return false">
                                         <i class="fa fa-refresh"></i>
                                         Promote next grade & year
                                     </a>
                                 @elseif($marks[0]->final != 0 && $marks[0]->final < 50)
-                                    <a class="btn btn-xs btn-warning" href="{{ URL::to($pageModule.'/promote-student/') }}"
-                                       onclick="ajaxPromote(this.href, '#{{ $pageModule }}', '{{$row->id}}', '{{ $row->class_id }}', '3'); return false">
+                                    <a class="btn btn-xs btn-warning" href="javascript://ajax"
+                                       onclick="ajaxPromote('{{ $pageUrl }}', '#{{ $pageModule }}', '{{$row->id}}', '{{ $row->class_id }}', '3'); return false">
                                         <i class="fa fa-refresh"></i>
                                         Promote next year
                                     </a>
                                 @endif
                             @endif
                             @if(\Session::get('gid') == 1 && $row->status == -1)
-                                    <a class="btn btn-xs btn-info" href="{{ URL::to($pageModule.'/create-grade-sheet/') }}"
+                                    <a class="btn btn-xs btn-info" href="javascript://ajax"
                                        onclick="ajaxGeneric('{{$row->id}}',this.href); return false">
                                         <i class="fa fa-refresh"></i>
                                         Download Transcript

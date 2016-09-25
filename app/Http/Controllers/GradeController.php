@@ -11,7 +11,7 @@ class GradeController extends Controller
 {
     protected $layout = "layouts.main";
     protected $data = array();
-    public $module = 'class';
+    public $module = 'gradebook';
     static $per_page	= '10';
 
     public function __construct()

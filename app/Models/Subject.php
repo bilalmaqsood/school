@@ -27,7 +27,7 @@ class Subject extends Schooledge {
 
     public static function queryJoin(){
 
-        return " JOIN tb_class ON tb_subject.class_id=tb_class.id JOIN tb_teachers on tb_subject.teacher_id = tb_teachers.id JOIN tb_users ON tb_teachers.user_id=tb_users.id";
+        return " Left JOIN tb_class ON tb_subject.class_id=tb_class.id Left JOIN tb_teachers on tb_subject.teacher_id = tb_teachers.id Left JOIN tb_users ON tb_teachers.user_id=tb_users.id";
     }
-    
+
 }

@@ -83,66 +83,53 @@ class MastergradebookController extends Controller
         return view('gradebook.transcript',$this->data);
     }
 
-    public function postTranscriptSheet(Request $request, $id = 1)
+    public function postTranscriptSheet(Request $request)
     {
         if($this->access['is_detail'] ==0)
             return Redirect::to('dashboard')
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
         $data = $request->all();
-        $student_subjects = \DB::table('tb_student_class')
-            ->join('tb_subject', 'tb_subject.class_id', '=', 'tb_student_class.class_id')
-            ->select('tb_subject.id', 'tb_subject.name')
-            ->where('tb_student_class.student_id', $data['student'])
-            ->orderBy('tb_subject.class_id', 'asc')
-            ->get();
-        $student_previous_classes = \DB::table('tb_student_class')->select('tb_student_class.*')->where('student_id', 1)->get();
-        $transcript_matrix_sheet = array();
-        $pivot = 0;
-        $col = 0;
-        $row = 0;
-        for($subject_index = 0; $subject_index < count($student_subjects); $subject_index++)
+        $previous_classes = \DB::table('tb_student_class')
+                            ->join('tb_school', 'tb_student_class.year_id', '=', 'tb_school.id' )
+                            ->join('tb_class', 'tb_student_class.class_id', '=', 'tb_class.id')
+                            ->join('tb_division', 'tb_class.division_id', '=', 'tb_division.id')
+                            ->where('tb_student_class.student_id', $data['student'])
+                            ->orderBy('tb_student_class.class_id', 'desc')
+                            ->select('tb_school.year', 'tb_student_class.*', 'tb_student_class.id as student_class_id', 'tb_class.name as class_name', 'tb_division.name as division_name')
+                            ->get();
+        foreach($previous_classes as $index => $previous_class)
         {
-
-            for($class_index = 0; $class_index < count($student_previous_classes); $class_index++)
-            {
-
-                $final = \DB::table('tb_grade')->join('tb_subject', 'tb_subject.id', '=', 'tb_grade.subject_id')
-                    ->select('tb_grade.final')->where('tb_grade.subject_id', $student_subjects[$subject_index]->id)->where('tb_subject.class_id', $student_previous_classes[$class_index]->class_id)->get();
-                if(count($final))
-                {
-                    $pivot++;
-                    $col++;
-                    $transcript_matrix_sheet[$row][$col] = $final[0]->final;
-                }
-                if($pivot == count($student_previous_classes))
-                {
-                    $pivot = 0;
-                    $row++;
-                    $col = 0;
-                }
-            }
-
+            $subjects = \DB::table('tb_subject')
+                        ->where('tb_subject.class_id', '=', $previous_class->class_id)
+                        ->where('tb_subject.year_id', '=', $previous_class->year_id)
+                        ->select('tb_subject.id as subject_id', 'tb_subject.*')
+                        ->get();
+            $previous_classes[$index]->subjects = $subjects;
         }
-        $student = \DB::table('tb_students')->select('tb_students.*')->where('id', $data['student'])->get();
-        $this->data['student'] = $student[0];
-        $this->data['class'] = $data['class'];
-        $this->data['transcript_matrix_sheet'] = $transcript_matrix_sheet;
-        $this->data['student_subjects'] = $student_subjects;
-        $this->data['student_previous_classes'] = $student_previous_classes;
+
+        $this->data['rows']		= $previous_classes;
+        $this->data['student']		= $data['student'];
         $this->data['access']		= $this->access;
         return view('gradebook.transcript-sheet',$this->data);
     }
 
-    public function postDetail(Request $request, $id = 1)
+    public function postDetail(Request $request)
     {
         if($this->access['is_detail'] ==0)
             return Redirect::to('dashboard')
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
         $data = $request->all();
-        $teacher = \DB::table('tb_subject')->select('teacher_id')->where('id', $data['subject'])->get();
-        $rows = \DB::table('tb_grade')->select('*')->where('subject_id', $id)->get();
+        $teacher = \DB::table('tb_subject')
+                ->where('tb_subject.id', '=', $data['subject'])
+                ->where('tb_subject.year_id', '=', \Session::get('selected_year'))
+                ->select('teacher_id')->get();
+        $rows = \DB::table('tb_grade')
+                ->where('tb_grade.subject_id', '=', $data['subject'])
+                ->where('tb_grade.year_id', '=', \Session::get('selected_year'))
+                ->select('tb_grade.*')
+                ->get();
         if(count($rows) > 0)
-            $this->data['teacher'] = $teacher[0]->teacher_id;
+            $this->data['teacher'] = isset($teacher ) ? $teacher[0]->teacher_id : '';
         $this->data['subject'] = $data['subject'];
         $this->data['class'] = $data['class'];
         $this->data['rows'] = $rows;
@@ -197,11 +184,15 @@ class MastergradebookController extends Controller
             return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
         $rData = $request->all();
         $column = $this->getColumn($rData['exam']);
-        $data = \DB::select("SELECT g.id, CONCAT(s.last_name, ' ' ,s.first_name) as name, g.$column as marks
-                FROM tb_grade g
-                JOIN tb_users s
-                on g.student_id = s.id
-                ");
+
+        $data = \DB::table('tb_grade')
+            ->join('tb_students', 'tb_grade.student_id', '=', 'tb_students.student_id')
+            ->join('tb_users', 'tb_students.user_id', '=', 'tb_users.id')
+            ->select('tb_grade.id',"tb_grade.$column as marks", \DB::raw('concat(tb_users.first_name, " ",tb_users.last_name) as name'))
+            ->where('tb_grade.subject_id', '=', $rData['subject'])
+            ->where('tb_grade.class_id', '=', $rData['class'])
+            ->where('tb_grade.year_id', '=', \Session::get('selected_year'))
+            ->get();
         $this->data['id'] = substr( md5(rand()), 0, 7);
         $this->data['access'] = $this->access;
         $this->data['exam'] = $rData['exam'];
@@ -236,7 +227,7 @@ class MastergradebookController extends Controller
         $rows = \DB::table('tb_grade')->select('id','first_term', 'second_term', 'third_term', 'first_exam')->where('subject_id', $subject_id)->get();
         foreach($rows as $row)
         {
-            $avg = round(($row->first_term + $row->second_term + $row->third_term + $row->first_exam)/4);
+            $avg = round((($row->first_term + $row->second_term + $row->third_term + $row->first_exam)/400) * 100);
             \DB::table('tb_grade')->where('id',$row->id)->update(array('first_avg'=>$avg));
         }
     }
@@ -246,7 +237,7 @@ class MastergradebookController extends Controller
         $rows = \DB::table('tb_grade')->select('id','first_avg', 'four_term', 'fifth_term', 'sixth_term', 'second_exam')->where('subject_id', $subject_id)->get();
         foreach($rows as $row)
         {
-            $sec_avg = round(($row->four_term + $row->fifth_term + $row->sixth_term + $row->second_exam)/4);
+            $sec_avg = round((($row->four_term + $row->fifth_term + $row->sixth_term + $row->second_exam)/400) * 100);
             $final = round(($sec_avg + $row->first_avg) / 2);
             \DB::table('tb_grade')->where('id',$row->id)->update(array('second_avg'=>$sec_avg, 'final' => $final));
         }
