@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ;
-
+use PDF;
 class MastergradebookController extends Controller
 {
     protected $layout = "layouts.main";
@@ -89,6 +89,10 @@ class MastergradebookController extends Controller
             return Redirect::to('dashboard')
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
         $data = $request->all();
+        $student_status = \DB::table('tb_students')
+                    ->where('student_id', $data['student'])
+                    ->select('class_id')
+                    ->first();
         $previous_classes = \DB::table('tb_student_class')
                             ->join('tb_school', 'tb_student_class.year_id', '=', 'tb_school.id' )
                             ->join('tb_class', 'tb_student_class.class_id', '=', 'tb_class.id')
@@ -107,9 +111,9 @@ class MastergradebookController extends Controller
                         ->get();
             $previous_classes[$index]->subjects = $subjects;
         }
-
         $this->data['rows']		= $previous_classes;
         $this->data['student']		= $data['student'];
+        $this->data['student_status']		= isset($student_status) ? $student_status->class_id: 0;
         $this->data['access']		= $this->access;
         return view('gradebook.transcript-sheet',$this->data);
     }
@@ -247,5 +251,59 @@ class MastergradebookController extends Controller
         }
     }
 
+    public function getDownloadTranscript( Request $request, $id = '')
+    {
+        try
+        {
+            $last_three_classes = \DB::table('tb_student_class')
+                ->join('tb_school', 'tb_student_class.year_id', '=', 'tb_school.id')
+                ->where('student_id', $id)
+                ->orderBy('tb_student_class.id', 'desc')
+                ->limit(3)
+                ->select("tb_student_class.*", "tb_school.year")
+                ->get();
+            $subjects_list = array();
+            foreach($last_three_classes as $class)
+            {
+                $subjects = \DB::table('tb_subject')
+                    ->where('tb_subject.class_id', $class->class_id)
+                    ->where('tb_subject.year_id', $class->year_id)
+                    ->select(\DB::raw('UPPER(tb_subject.name) as subject_name'))
+                    ->get();
+                $subjects_list = array_merge($subjects_list, $subjects);
+            }
+            $subjects_list = array_map('json_encode', $subjects_list);
+            $subjects_list = array_unique($subjects_list);
+            $subjects_list = array_map('json_decode', $subjects_list);
 
+            $student_name = \DB::table('tb_students')
+                ->join('tb_users', 'tb_students.user_id', '=', 'tb_users.id')
+                ->where('tb_students.student_id', $id)
+                ->select('first_name', 'last_name', 'middle_name', 'gender', 'class_id')
+                ->first();
+
+            $registrar_name = \DB::table('tb_users')
+                ->where('tb_users.group_id', 3)
+                ->select('first_name', 'last_name')
+                ->first();
+            $principal_name = \DB::table('tb_users')
+                ->where('tb_users.group_id', 2)
+                ->select('first_name', 'last_name')
+                ->first();
+            $row['registrar'] = isset($registrar_name->first_name) ? strtoupper($registrar_name->first_name.' '. $registrar_name->last_name) : 'JOHN DOE';
+            $row['principal'] = isset($principal_name->first_name) ? strtoupper($principal_name->first_name.' '. $principal_name->last_name) : 'MARRY DOE';
+            $row['student'] = isset($student_name) ? $student_name: array();
+            $row['subject_list'] = $subjects_list;
+            $row['last_three_classes'] = $last_three_classes;
+            $row['id'] = $id;
+            $pdf = PDF::loadView('gradebook.transcripts', $row);
+            return $pdf->download('transcript.pdf');
+        }
+        catch(\Exception $e)
+        {
+            return Redirect::to('dashboard');
+        }
+
+
+    }
 }

@@ -1796,4 +1796,18 @@ class SiteHelpers
             return $grade;
         return '';
     }
+
+    static public function getGradeForTranscript($class_id, $student_id, $subject_name, $year_id)
+    {
+        $grade = \DB::select("select `tb_grade`.`first_avg`, `tb_grade`.`final` from `tb_subject` inner join `tb_grade` on `tb_subject`.`id` = `tb_grade`.`subject_id` where `tb_grade`.`student_id` = $student_id and `tb_grade`.`class_id` = $class_id and `tb_grade`.`year_id` = $year_id and UPPER(tb_subject.name) = '$subject_name' limit 1");
+        if(count($grade) > 0)
+        {
+            if($grade[0]->final == 0)
+                return  $grade[0]->first_avg;
+            return $grade[0]->final;
+        }
+
+        return '--';
+    }
+
 }

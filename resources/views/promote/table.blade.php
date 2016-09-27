@@ -54,8 +54,7 @@
                                 @endif
                             @endif
                             @if(\Session::get('gid') == 1 && $row->status == -1)
-                                    <a class="btn btn-xs btn-info" href="javascript://ajax"
-                                       onclick="ajaxGeneric('{{$row->id}}',this.href); return false">
+                                    <a class="btn btn-xs btn-info" href="{{ URL::to('gradebook/download-transcript/'.$row->student_id) }}">
                                         <i class="fa fa-refresh"></i>
                                         Download Transcript
                                     </a>

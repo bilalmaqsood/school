@@ -226,22 +226,6 @@ class FinancialController extends Controller
         {
             return Redirect::to('receipt')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
         }
-        /*
-        if($this->access['is_detail'] ==0)
-            return Redirect::to('dashboard')
-                ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
-
-        $row = $this->model->getRow($id);
-        if($row)
-        {
-            $this->data['row'] =  $row;
-        } else {
-            $this->data['row'] = $this->model->getColumnTable('sb_invoiceproducts');
-        }
-
-        $this->data['id'] = $id;
-        $this->data['access']		= $this->access;
-        return view('financial.view',$this->data);*/
     }
 
     public function postChangeStatus(Request $request)

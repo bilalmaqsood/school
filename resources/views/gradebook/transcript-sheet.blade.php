@@ -6,7 +6,9 @@
                 <li>
                     <a href="javascript:void(0)" class="pull-right close-link"
                        onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
-                    <a style="margin-right: 15px;" href="javascript:void(0)" class="pull-right btn btn-success">Download Transcript</a>
+                    @if($student_status == -1)
+                        <a style="margin-right: 15px;" href="{{ URL::to($pageModule.'/download-transcript/'.$student) }}" class="pull-right btn btn-success">Download Transcript</a>
+                    @endif
                 </li>
 
                 <div class="clearfix"></div>
@@ -16,7 +18,7 @@
                     <center>
                         <p align="center">&nbsp;</p>
                         <p align="center"><strong>{{ CNF_APPNAME }}</strong><br>
-                            {!! nl2br(CNF_APPADDRESS) !!}
+                            {!! nl2br(CNF_APPADDRESS) !!}{{ $pageModule }}
                         </p>
                         <p align="center"><strong><u> MASTER TRANSCRIPT</u></strong></p>
                         @foreach($rows as $row)
@@ -32,7 +34,7 @@
                                         Current
                                     @elseif($row->status == 3)
                                         Fail
-                                    @elseif($row->status == 1 && $row->status == 2)
+                                    @elseif($row->status == 1 || $row->status == 2)
                                         Pass
                                     @endif
                                 </span>
