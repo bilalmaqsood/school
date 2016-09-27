@@ -26,7 +26,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#class").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_class:id:name') }}");
-        $("#student").jCombo("{{ URL::to('gradebook/comboselectstudent?filter=tb_students:student_id:name')}}&parent=class_id:",
+        $("#student").jCombo("{{ URL::to('gradebook/comboselectstudent?filter=tb_student_class:student_id:name')}}&parent=class_id:",
                 { parent: '#class'});
         $.listen('parsley:field:validate', function () {
             validateFront();

@@ -95,6 +95,7 @@ class MastergradebookController extends Controller
                             ->join('tb_division', 'tb_class.division_id', '=', 'tb_division.id')
                             ->where('tb_student_class.student_id', $data['student'])
                             ->orderBy('tb_student_class.class_id', 'desc')
+                            ->orderBy('tb_student_class.year_id', 'desc')
                             ->select('tb_school.year', 'tb_student_class.*', 'tb_student_class.id as student_class_id', 'tb_class.name as class_name', 'tb_division.name as division_name')
                             ->get();
         foreach($previous_classes as $index => $previous_class)
@@ -186,11 +187,14 @@ class MastergradebookController extends Controller
         $column = $this->getColumn($rData['exam']);
 
         $data = \DB::table('tb_grade')
-            ->join('tb_students', 'tb_grade.student_id', '=', 'tb_students.student_id')
+            ->join('tb_student_class', 'tb_grade.student_id', '=', 'tb_student_class.student_id')
+            ->join('tb_students', 'tb_student_class.student_id', '=', 'tb_students.student_id')
             ->join('tb_users', 'tb_students.user_id', '=', 'tb_users.id')
             ->select('tb_grade.id',"tb_grade.$column as marks", \DB::raw('concat(tb_users.first_name, " ",tb_users.last_name) as name'))
             ->where('tb_grade.subject_id', '=', $rData['subject'])
             ->where('tb_grade.class_id', '=', $rData['class'])
+            ->where('tb_student_class.class_id', '=', $rData['class'])
+            ->where('tb_student_class.status', '=', 0)
             ->where('tb_grade.year_id', '=', \Session::get('selected_year'))
             ->get();
         $this->data['id'] = substr( md5(rand()), 0, 7);

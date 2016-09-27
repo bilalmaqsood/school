@@ -83,9 +83,9 @@
         $(document).ready(function () {
             $("#class").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_class:id:name') }}",
                     {selected_value : '{{ $row["class_id"] }}'});
+            $("#student").jCombo("{{ URL::to('gradesheet/comboselectstudent?filter=tb_student_class:student_id:name')}}&parent=class_id:",
+                    { parent: '#class', selected_value : '{{ $row["student_id"] }}'});
 
-            $("#student").jCombo("{{ URL::to('finance/comboselectstudent?filter=tb_students:student_id:name')}}&parent=class_id:",
-                    { parent: '#class' ,selected_value : '{{ $row["student_id"] }}' });
             $.listen('parsley:field:validate', function () {
                 validateFront();
             });

@@ -30,9 +30,9 @@
                                         Pass out
                                     @elseif($row->status == 0)
                                         Current
-                                    @elseif($row->status == 2)
+                                    @elseif($row->status == 3)
                                         Fail
-                                    @elseif($row->status == 1)
+                                    @elseif($row->status == 1 && $row->status == 2)
                                         Pass
                                     @endif
                                 </span>

@@ -21,7 +21,7 @@
                     <center>
                         Subject {{ \SiteHelpers::getSubjectName($subject) }}
                         Grade:{{ \SiteHelpers::getClassName($class) }}
-                        Division:{{ \SiteHelpers::getDivisionName($class) }} Year
+                        Division:{{ \SiteHelpers::getDivisionName($class) }} Year: {{ \SiteHelpers::getYearName(\Session::get('selected_year')) }}
                     </center>
                     </p>
                     <table id="datatable-responsive" class="table table-bordered dt-responsive nowrap" cellspacing="0"

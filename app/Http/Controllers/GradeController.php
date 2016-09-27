@@ -45,15 +45,16 @@ class GradeController extends Controller
         return view('grade.mark-sheet', $this->data);
     }
 
-    public function postShow( $id = null)
+    public function postShow( Request $request)
     {
+
         if($this->access['is_detail'] ==0)
             return Redirect::to('dashboard')
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
 
-        $row = $this->model->gradeSheet($id);
+        $row = $this->model->gradeSheet($request->input('student'), $request->input('class'));
         $this->data['rowData'] =  $row;
-        $this->data['id'] = $id;
+        $this->data['id'] = $request->input('student');
         $this->data['access']		= $this->access;
         return view('grade.view',$this->data);
     }
