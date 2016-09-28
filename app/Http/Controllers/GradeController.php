@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ;
-
+use PDF;
 class GradeController extends Controller
 {
     protected $layout = "layouts.main";
@@ -55,7 +55,18 @@ class GradeController extends Controller
         $row = $this->model->gradeSheet($request->input('student'), $request->input('class'));
         $this->data['rowData'] =  $row;
         $this->data['id'] = $request->input('student');
+        $this->data['class'] = $request->input('class');
         $this->data['access']		= $this->access;
         return view('grade.view',$this->data);
+    }
+
+    public function getDownloadGradesheet( Request $request)
+    {
+        $row = $this->model->gradeSheet($request->input('student'), $request->input('class'));
+        $data['rowData'] =  $row;
+        $data['id'] = $request->input('student');
+        $data['class'] = $request->input('class');
+        $pdf = PDF::loadView('grade.gradesheet', $data);
+        return $pdf->download('gradesheet.pdf');
     }
 }

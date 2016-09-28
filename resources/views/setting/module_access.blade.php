@@ -119,6 +119,7 @@
         }
         function showResponse(data) {
             if (data.status == 'success') {
+                $('.ajaxLoading').hide();
                 notyMessage(data.message);
                 $('#sximo-modal').modal('hide');
             } else {

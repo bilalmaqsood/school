@@ -306,4 +306,25 @@ class MastergradebookController extends Controller
 
 
     }
+
+    public function getDownloadMasterGradebook( Request $request)
+    {
+        $data = $request->all();
+        $teacher = \DB::table('tb_subject')
+            ->where('tb_subject.id', '=', $data['subject'])
+            ->where('tb_subject.year_id', '=', \Session::get('selected_year'))
+            ->select('teacher_id')->get();
+        $rows = \DB::table('tb_grade')
+            ->where('tb_grade.subject_id', '=', $data['subject'])
+            ->where('tb_grade.year_id', '=', \Session::get('selected_year'))
+            ->select('tb_grade.*')
+            ->get();
+        if(count($rows) > 0)
+            $data['teacher'] = isset($teacher ) ? $teacher[0]->teacher_id : '';
+        $data['subject'] = $data['subject'];
+        $data['class'] = $data['class'];
+        $data['rows'] = $rows;
+        $pdf = PDF::loadView('gradebook.mastergradebook', $data);
+        return $pdf->download('mastergradebook.pdf');
+    }
 }

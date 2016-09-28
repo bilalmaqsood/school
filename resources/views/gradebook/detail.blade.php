@@ -5,6 +5,7 @@
             <h2>Master GradeBook</h2>
             <li><a href="javascript:void(0)" class="pull-right close-link"
                    onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
+                <a style="margin-right: 15px;" href="{{ URL::to($pageModule.'/download-master-gradebook?subject='.$subject.'&class='.$class) }}" class="pull-right btn btn-success">Download Gradebook</a>
             </li>
             <div class="clearfix"></div>
         </div>
@@ -16,7 +17,7 @@
                     <p align="center"><strong>{{ CNF_APPNAME }}</strong><br>
                         {!! nl2br(CNF_APPADDRESS) !!}
                         </p>
-                    <p align="center"><strong><u> MASTER GRADE SHEET</u></strong></p>
+                    <p align="center"><strong><u> MASTER GRADE BOOK</u></strong></p>
                     <p>&nbsp;
                     <center>
                         Subject {{ \SiteHelpers::getSubjectName($subject) }}
@@ -38,7 +39,7 @@
                                         </center>
                                     </strong></p>
                             </td>
-                            <td colspan="5" valign="top">
+                            <td colspan="6" valign="top">
                                 <p><strong>
                                         <center>
                                             SECOND SEMESTER

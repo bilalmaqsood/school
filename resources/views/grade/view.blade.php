@@ -4,8 +4,10 @@
         @if(count($rowData) > 0)
             <div class="x_title">
                 <h2>GradeSheet: {{ ucwords($rowData[0]->student_name) }}</h2>
-                <a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
-
+                <li>
+                    <a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
+                    <a style="margin-right: 15px;" href="{{ URL::to($pageModule.'/download-gradesheet?student='.$id.'&class='.$class) }}" class="pull-right btn btn-success">Download Grade Sheet</a>
+                </li>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -31,7 +33,7 @@
                                                 FIRST SEMESTER
                                             </center>
                                         </strong></p></td>
-                                <td colspan="5" valign="top"><p><strong>
+                                <td colspan="6" valign="top"><p><strong>
                                             <center>
                                                 SECOND SEMESTER
                                             </center>
@@ -56,7 +58,7 @@
                                 <td width="27" valign="top"><p align="center">{{ $row->first_term }}</p></td>
                                 <td width="31" valign="top"><p align="center">{{ $row->second_term }}</p></td>
                                 <td width="33" valign="top"><p align="center">{{ $row->third_term }}</p></td>
-                                <td width="35" valign="top"><p align="center">{{ $row->second_exam }}</p></td>
+                                <td width="35" valign="top"><p align="center">{{ $row->first_exam }}</p></td>
                                 <td width="39" valign="top"><p align="center">{{ $row->first_avg}}</p></td>
                                 <td width="27" valign="top"><p align="center">{{ $row->four_term }}</p></td>
                                 <td width="27" valign="top"><p align="center">{{ $row->fifth_term }}</p></td>
