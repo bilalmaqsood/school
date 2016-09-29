@@ -6,5 +6,5 @@ define('CNF_APPNO','SchoolEdge');
 define('CNF_FRONT','true');
 define('CNF_DATEFORMAT','M d,Y');
 define('CNF_TIMEFORMAT','H:i A');
-define('CNF_CURRENCY','$');
+define('CNF_CURRENCY','LRD');
 ?>

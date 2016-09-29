@@ -1613,7 +1613,7 @@ class SiteHelpers
     {
         $result = DB::select("Select first_name, last_name from tb_users where id = $id");
         if(count($result) > 0)
-            return $result[0]->last_name.' '.$result[0]->first_name;
+            return $result[0]->first_name.' '.$result[0]->last_name;
         return '';
     }
 

@@ -200,7 +200,7 @@ class FinancialController extends Controller
         $row = $this->model->getRow($id);
         if(count($row) > 0)
         {
-            $row->student_id = \SiteHelpers::getUserName($row->student_id);
+            $row->student_id = \SiteHelpers::getStudentName($row->student_id);
             $row->updated_by = \SiteHelpers::getUserName($row->updated_by);
             $pdf = PDF::loadView('financial.pdf', (array)$row);
             return $pdf->download('receipt.pdf');
@@ -217,7 +217,7 @@ class FinancialController extends Controller
         $row = $this->model->getRow($id);
         if(count($row) > 0)
         {
-            $row->student_id = \SiteHelpers::getUserName($row->student_id);
+            $row->student_id = \SiteHelpers::getStudentName($row->student_id);
             $row->updated_by = \SiteHelpers::getUserName($row->updated_by);
             $pdf = PDF::loadView('financial.pdf', (array)$row);
             return $pdf->stream('receipt.pdf');

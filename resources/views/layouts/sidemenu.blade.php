@@ -159,12 +159,6 @@
     </div>
 </div>
 <script>
-    $(document).ready(function() {
-        //$("#school_year").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_school:id:year')}}",
-          //      {selected_value: '{{ \Session::get('year') }}', initial_text: 'Select Year'});
-
-    });
-
     $("#school_year").on('change', function () {
         var id = $(this).val();
         if(id != '')
