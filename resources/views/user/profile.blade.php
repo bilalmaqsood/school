@@ -53,11 +53,11 @@
                                   </tr>
                                 <tr>
                                   <td><label>Mobile No</label></td>
-                                  <td>{!! Form::text('mobile_number',$row->phone_number,array('class'=>'form-control', 'placeholder'=>'Mobile ','required'=>'required' )) !!}</td>
+                                  <td>{!! Form::text('mobile_number',$row->phone_number,array('class'=>'form-control', 'placeholder'=>'0111-123456 ','required'=>true, 'data-parsley-pattern'=>'^(\d{4})[-]*(\d{6,7})$' )) !!}</td>
                                 </tr>
                                 <tr>
                                   <td><label>Phone No</label></td>
-                                  <td>{!! Form::text('phone_number', $row->phone_number,array('class'=>'form-control', 'placeholder'=>'Mobile ','required'=>'required' )) !!}</td>
+                                  <td>{!! Form::text('phone_number', $row->phone_number,array('class'=>'form-control', 'placeholder'=>'0111-123456', 'data-parsley-pattern'=>'^(\d{4})[-]*(\d{6,7})$' )) !!}</td>
                                 </tr>
                                 <tr>
                                   <td><label>Email</label></td>

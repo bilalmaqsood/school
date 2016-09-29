@@ -55,7 +55,7 @@
                             class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    {!! Form::text('amount', $row['amount'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Amount in Number', 'required' => true)) !!}
+                    {!! Form::text('amount', $row['amount'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Amount in Number', 'required' => true, 'data-parsley-pattern'=>'(\d+)' )) !!}
                 </div>
             </div>
             <div class="form-group">
