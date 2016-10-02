@@ -66,20 +66,34 @@
                     @endif
                     @if(\Session::get('sidemenu')[5] == 1)
                         <li>
-                            <a href="{{ URL::to('class') }}"><i class="fa fa-table"></i>Classes</a>
+                            @if(\Session::get('gid') == 6)
+                                <a href="{{ URL::to('class/student-classes') }}"><i class="fa fa-book"></i>Classes</a>
+                            @elseif(\Session::get('gid') == 5)
+                                <a href="{{ URL::to('class/teacher-classes') }}"><i class="fa fa-book"></i>Classes</a>
+                            @else
+                                <a href="{{ URL::to('class') }}"><i class="fa fa-table"></i>Classes</a>
+                            @endif
                         </li>
                     @endif
                     @if(\Session::get('sidemenu')[6] == 1)
                         <li>
-                            <a href="{{ URL::to('subject') }}"><i class="fa fa-book"></i>Subjects</a>
+                            @if(\Session::get('gid') == 6)
+                                <a href="{{ URL::to('subject/student-subject') }}"><i class="fa fa-book"></i>Subjects</a>
+                            @elseif(\Session::get('gid') == 5)
+                                <a href="{{ URL::to('subject/teacher-subject') }}"><i class="fa fa-book"></i>Subjects</a>
+                            @else
+                                <a href="{{ URL::to('subject') }}"><i class="fa fa-book"></i>Subjects</a>
+                            @endif
                         </li>
                     @endif
                     @if(\Session::get('sidemenu')[7] == 1)
                         <li>
                             <a><i class="fa fa-table"></i> Classes Schedule <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu" style="display: none">
-                                <li><a href="{{ URL::to('period') }}">Periods Management</a>
-                                </li>
+                                @if(\Session::get('gid') != 5 && \Session::get('gid') != 6)
+                                    <li><a href="{{ URL::to('period') }}">Periods Management</a>
+                                    </li>
+                                @endif
                                 <li><a href="{{ URL::to('schedule') }}">Classes Schedule</a>
                                 </li>
                             </ul>
@@ -104,18 +118,29 @@
                         <li>
                             <a><i class="fa fa-book"></i> Grading System <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu" style="display: none">
-                                <li><a href="{{ URL::to('generate') }}">Generate Grade Sheet</a>
-                                </li>
-                                <li><a href="{{ URL::to('promote') }}">Promote Students</a>
-                                </li>
-                                <li><a href="{{ URL::to('gradebook') }}">Manage Marks</a>
-                                </li>
-                                <li><a href="{{ URL::to('gradebook/show') }}">Master Grade Book</a>
-                                </li>
-                                <li><a href="{{ URL::to('gradesheet') }}">Grade Sheet</a>
-                                </li>
-                                <li><a href="{{ URL::to('gradebook/transcript') }}">Transcript</a>
-                                </li>
+                                @if(\Session::get('gid') == 6)
+                                    <li>
+                                        <a href="{{ URL::to('gradebook/student-grade-sheet') }}">My Grade Sheet</a>
+                                    </li>
+                                @elseif(\Session::get('gid') == 5)
+                                    <li><a href="{{ URL::to('gradebook') }}">Manage Marks</a>
+                                    </li>
+                                    <li><a href="{{ URL::to('gradebook/show') }}">Master Grade Book</a>
+                                    </li>
+                                @else
+                                    <li><a href="{{ URL::to('generate') }}">Generate Grade Sheet</a>
+                                    </li>
+                                    <li><a href="{{ URL::to('promote') }}">Promote Students</a>
+                                    </li>
+                                    <li><a href="{{ URL::to('gradebook') }}">Manage Marks</a>
+                                    </li>
+                                    <li><a href="{{ URL::to('gradebook/show') }}">Master Grade Book</a>
+                                    </li>
+                                    <li><a href="{{ URL::to('gradesheet') }}">Grade Sheet</a>
+                                    </li>
+                                    <li><a href="{{ URL::to('gradebook/transcript') }}">Transcript</a>
+                                    </li>
+                                @endif
                             </ul>
                         </li>
                     @endif
@@ -123,10 +148,16 @@
                         <li>
                             <a><i class="fa fa-university"></i> Finance <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu" style="display: none">
-                                <li><a href="{{ URL::to('finance') }}">Fees Payment</a>
-                                </li>
-                                <li><a href="{{ URL::to('receipt') }}">Receipt</a>
-                                </li>
+                                @if(\Session::get('gid') == 6)
+                                    <li><a href="{{ URL::to('receipt') }}">Receipt</a>
+                                    </li>
+                                @else
+                                    <li><a href="{{ URL::to('finance') }}">Fees Payment</a>
+                                    </li>
+                                    <li><a href="{{ URL::to('receipt') }}">Receipt</a>
+                                    </li>
+                                @endif
+
                             </ul>
                         </li>
                     @endif

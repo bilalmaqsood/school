@@ -36,7 +36,7 @@ class SubjectController extends Controller
     public function getIndex()
     {
         if($this->access['is_view'] ==0)
-            return Redirect::to('dashboard');
+            return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
 
         $this->data['access']   = $this->access;
         return view('subject.index',$this->data);
@@ -199,22 +199,23 @@ class SubjectController extends Controller
                         ->join('tb_division', 'tb_class.division_id', '=' ,'tb_division.id')
                         ->where('student_id', '=', $student->student_id)
                         ->where('year_id', '=', \Session::get('selected_year'))
+                        ->orderBy('tb_student_class.class_id', 'desc')
                         ->select('tb_student_class.*', 'tb_class.name as class_name', 'tb_division.name as division_name')
                         ->get();
             if(count($class) > 0)
             {
-                $rows = \DB::table('tb_subject')
-                        ->join('tb_teachers', 'tb_subject.teacher_id', '=', 'tb_teachers.id')
-                        ->join('tb_users', 'tb_teachers.user_id', '=', 'tb_users.id')
-                        ->where('tb_subject.class_id', '=', $class[0]->class_id)
+                foreach($class as $index => $c) {
+                    $subjects = \DB::table('tb_subject')
+                        ->leftJoin('tb_teachers', 'tb_subject.teacher_id', '=', 'tb_teachers.id')
+                        ->leftJoin('tb_users', 'tb_teachers.user_id', '=', 'tb_users.id')
+                        ->where('tb_subject.class_id', '=', $c->class_id)
                         ->where('year_id', '=', \Session::get('selected_year'))
                         ->select('tb_subject.name as subject_name', 'tb_users.first_name', 'tb_users.last_name')
                         ->get();
+                    $class[$index]->subjects = $subjects;
+                }
             }
-            $this->data['class'] = isset($class[0]) ? $class[0]->class_name : '';
-            $this->data['division'] = isset($class[0]) ? $class[0]->division_name : '';
-            $this->data['status'] = isset($class[0]) ? $class[0]->status : '';
-            $this->data['rows'] = isset($rows) ? $rows : array();
+            $this->data['rows'] = isset($class) ? $class : array();
             return view('student.mysubjects',$this->data);
         }
         return Redirect::to('dashboard');

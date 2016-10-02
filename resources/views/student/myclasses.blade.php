@@ -37,12 +37,14 @@
                                     <td class=" ">{{ $row->class_name }}</td>
                                     <td class=" ">{{ $row->division_name }}</td>
                                     <td class=" ">
-                                        @if($row->status == 0)
-                                            <span>Current</span>
-                                        @elseif($row->status == 1 || $row->status == 2)
-                                            <span>Pass</span>
+                                        @if($row->status == -1)
+                                            Pass out
+                                        @elseif($row->status == 0)
+                                            Current
                                         @elseif($row->status == 3)
-                                            <span>Fail</span>
+                                            Fail
+                                        @elseif($row->status == 1 || $row->status == 2)
+                                            Pass
                                         @endif
                                     </td>
                                 </tr>

@@ -56,7 +56,7 @@
         @include('layouts/sidemenu')
         @include('layouts/headmenu')
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" style="min-height: 917px;">
             @yield('content')
         </div>
         <!-- end content -->
@@ -124,7 +124,7 @@
 <link href="{{ asset('js/ajax/ajaxSximo.css')}}" rel="stylesheet">
 <script type="text/javascript" src="{{ asset('js/ajax/ajaxSximo.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/toastr/toastr.js') }}"></script>
-
+{{ \Sitehelpers::showNotification() }}
 @yield('js_section');
 
 </body>

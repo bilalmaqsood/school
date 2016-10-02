@@ -63,7 +63,7 @@
                             class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    {!! Form::text('due', $row['due'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Due Amount')) !!}
+                    {!! Form::text('due', $row['due'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Due Amount', 'data-parsley-pattern'=>'(\d+)' )) !!}
                 </div>
             </div>
             <div class="clearfix"></div>

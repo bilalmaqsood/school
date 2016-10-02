@@ -36,7 +36,7 @@ class StudentController extends Controller
     public function getIndex()
     {
         if($this->access['is_view'] ==0)
-            return Redirect::to('dashboard');
+            return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
 
         $this->data['access']		= $this->access;
         return view('student.index',$this->data);

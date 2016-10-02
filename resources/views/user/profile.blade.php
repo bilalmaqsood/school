@@ -35,7 +35,7 @@
 
                         <div class="x_content">
                             <table class="personal_details" >
-                        
+                                {!! Form::hidden('password', '', array('id'=>'form-password')) !!}
                                 <tr>
                                   <td><label>Last Name</label></td>
                                   <td>{!! Form::text('last_name', $row->last_name , array('class'=>'form-control', 'placeholder'=>'Last Name','required'=>'required' )) !!}</td>
@@ -155,14 +155,14 @@
                                         <label class="form-group ">Password *:</label>
                                     </div>
                                     <div class="item col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                        <input type="password" name="password" placeholder="password" class="form-control">
+                                        <input id="popup-pass" type="password" name="popup-password" placeholder="password" class="form-control" value="">
                                     </div>
                                     <div class="clearfix"></div>
 
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default btn-cancel m-t-5" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-success btn-save" data-dismiss="modal">Save</button>
+                                    <button type="button" class="btn btn-success btn-save" data-dismiss="modal" id="pop-password">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -199,12 +199,16 @@
                 }
             };
 
-$(".btn-cancel").on("click",function(){
+        $(".btn-cancel").on("click",function(){
+            $("#popup-pass").val('');
+            $('#form-password').val('');
+        });
 
-$("input[type='password']").val("");
-
-});
-
+     $("#pop-password").on("click",function(){
+         var pass= $("#popup-pass").val();
+         if(pass != '')
+            $('#form-password').val(pass);
+     });
 
         });
 
@@ -214,7 +218,8 @@ $("input[type='password']").val("");
             $('.ajaxLoading').show();
         }
         function showResponse(data)  {
-
+            $("#popup-pass").val('');
+            $('#form-password').val('');
             if(data.status == 'success')
             {
             $('.ajaxLoading').hide();

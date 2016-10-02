@@ -246,7 +246,12 @@ class MastergradebookController extends Controller
         foreach($rows as $row)
         {
             $sec_avg = round((($row->four_term + $row->fifth_term + $row->sixth_term + $row->second_exam)/400) * 100);
-            $final = round(($sec_avg + $row->first_avg) / 2);
+            if($sec_avg == 0)
+                $final = $row->first_avg;
+            elseif($row->first_avg == 0)
+                $final = $sec_avg;
+            else
+                $final = round(($sec_avg + $row->first_avg) / 2);
             \DB::table('tb_grade')->where('id',$row->id)->update(array('second_avg'=>$sec_avg, 'final' => $final));
         }
     }
@@ -326,5 +331,44 @@ class MastergradebookController extends Controller
         $data['rows'] = $rows;
         $pdf = PDF::loadView('gradebook.mastergradebook', $data);
         return $pdf->download('mastergradebook.pdf');
+    }
+
+    public function getStudentGradeSheet(Request $request)
+    {
+        $this->data['pageTitle'] = 'Transcript Sheet';
+        $this->data['pageNote'] = '';
+        if(\Session::get('gid') == 6) {
+            $student = \DB::table('tb_students')
+                    ->where('tb_students.user_id', '=', \Session::get('uid'))
+                    -> first();
+            $student_status = \DB::table('tb_students')
+                ->where('student_id', $student->student_id)
+                ->select('class_id')
+                ->first();
+            $previous_classes = \DB::table('tb_student_class')
+                ->join('tb_school', 'tb_student_class.year_id', '=', 'tb_school.id' )
+                ->join('tb_class', 'tb_student_class.class_id', '=', 'tb_class.id')
+                ->join('tb_division', 'tb_class.division_id', '=', 'tb_division.id')
+                ->where('tb_student_class.student_id', $student->student_id)
+                ->orderBy('tb_student_class.class_id', 'desc')
+                ->orderBy('tb_student_class.year_id', 'desc')
+                ->select('tb_school.year', 'tb_student_class.*', 'tb_student_class.id as student_class_id', 'tb_class.name as class_name', 'tb_division.name as division_name')
+                ->get();
+            foreach($previous_classes as $index => $previous_class)
+            {
+                $subjects = \DB::table('tb_subject')
+                    ->where('tb_subject.class_id', '=', $previous_class->class_id)
+                    ->where('tb_subject.year_id', '=', $previous_class->year_id)
+                    ->select('tb_subject.id as subject_id', 'tb_subject.*')
+                    ->get();
+                $previous_classes[$index]->subjects = $subjects;
+            }
+            $this->data['rows']		= $previous_classes;
+            $this->data['student']		= $student->student_id;
+            $this->data['student_status']		= isset($student_status) ? $student_status->class_id: 0;
+            $this->data['access']		= $this->access;
+            return view('gradebook.student-transcript-sheet',$this->data);
+        }
+        return Redirect::to('dashboard');
     }
 }

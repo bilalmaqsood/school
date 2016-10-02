@@ -30,7 +30,7 @@ class GeneralsettingController extends Controller
     public function getIndex()
     {
         if(\Session::get('gid') != 1)
-            return Redirect::to('dashboard');
+            return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
 
         return view('setting.index',$this->data);
     }
