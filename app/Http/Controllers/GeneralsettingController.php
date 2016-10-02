@@ -30,7 +30,7 @@ class GeneralsettingController extends Controller
     public function getIndex()
     {
         if(\Session::get('gid') != 1)
-            return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
+            return Redirect::to('dashboard');
 
         return view('setting.index',$this->data);
     }
@@ -243,7 +243,9 @@ class GeneralsettingController extends Controller
 
     public function getModuleaccess()
     {
-        $groups = \DB::table('tb_group')->get();
+        $groups = \DB::table('tb_group')
+            ->limit(6)
+            ->get();
 
         $modules = array(
             0 => 'Dashboard',
