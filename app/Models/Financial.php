@@ -22,7 +22,7 @@ class Financial extends Schooledge {
             $student = \DB::table('tb_students')
                 ->where('tb_students.user_id', '=', \Session::get('uid'))
                 ->first();
-            $student_id = " AND tb_payment.student_id = '$student->student_id' ";
+            $student_id = " AND tb_payment.student_id = '$student->student_id ";
 
         }
         $year_id = \Session::get('selected_year');

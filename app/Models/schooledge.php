@@ -285,15 +285,18 @@ class Schooledge extends Model {
 		$rows = array();
 		$result = \DB::select(self::querySelect(). self::queryJoin() . self::queryWhere(). "
 				{$params} ". self::queryGroup() ." {$orderConditional}  {$limitConditional} ");
-		//var_dump($result);
-		//exit;
 
 		if($key =='' ) { $key ='*'; } else { $key = $table.".".$key ; }
 		$total = count($result);
-
-
 		return $results = array('rows'=> $result , 'total' => $total);
+	}
 
-
+	public function isStudent(){
+		$stdGroupId = \DB::table('tb_group')->select('id')->where('name','Student')->first();
+		$group_id = \Session::get('gid');
+		if($stdGroupId == $group_id){
+			return true;
+		}
+		return false;
 	}
 }
