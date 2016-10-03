@@ -33,9 +33,9 @@
                     <tr>
                         <td class="text-center ">{{ $row->no }}</td>
                         <td class="text-center ">{{ $row->purpose }}</td>
-                        <td class="text-center ">{{ CNF_CURRENCY.' '.$row->amount }}</td>
-                        <td class="text-center ">@if($row->status == 1){{ CNF_CURRENCY.' '.($row->amount - $row->due) }}@endif</td>
-                        <td class="text-center ">@if($row->due != 0){{ CNF_CURRENCY.' '.$row->due }} @endif</td>
+                        <td class="text-center ">{{ '$'.$row->amount.' '.CNF_CURRENCY }}</td>
+                        <td class="text-center ">@if($row->status == 1){{ '$'.($row->amount - $row->due).' '.CNF_CURRENCY }}@endif</td>
+                        <td class="text-center ">@if($row->due != 0){{ '$'.$row->due.' '.CNF_CURRENCY }} @endif</td>
                         <td class="text-center ">
                             @if($row->status == 0)
                                 {{ 'Pending' }}

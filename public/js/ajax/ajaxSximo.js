@@ -208,7 +208,7 @@ function ajaxPromote(url, id, rowId, classID,status)
 {
 	var datas = {'id':rowId, 'status': status , 'class_id': classID};
 	$('.ajaxLoading').show();
-	$.post(url, datas,function( data ) {
+	$.post(url+'/promote-student', datas,function( data ) {
 		if(data.status == 'success' )
 		{
 			$('.ajaxLoading').hide();
@@ -219,7 +219,6 @@ function ajaxPromote(url, id, rowId, classID,status)
 			notyMessageError(data.message);
 		}
 	});
-
 }
 
 function ajaxViewClose( id )

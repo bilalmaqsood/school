@@ -34,7 +34,7 @@ class FinancialController extends Controller
     public function getIndex()
     {
         if($this->access['is_view'] ==0)
-            return Redirect::to('dashboard');
+            return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
 
         $this->data['access']		= $this->access;
         return view('financial.index',$this->data);
@@ -200,7 +200,7 @@ class FinancialController extends Controller
         $row = $this->model->getRow($id);
         if(count($row) > 0)
         {
-            $row->student_id = \SiteHelpers::getUserName($row->student_id);
+            $row->student_id = \SiteHelpers::getStudentName($row->student_id);
             $row->updated_by = \SiteHelpers::getUserName($row->updated_by);
             $pdf = PDF::loadView('financial.pdf', (array)$row);
             return $pdf->download('receipt.pdf');
@@ -217,7 +217,7 @@ class FinancialController extends Controller
         $row = $this->model->getRow($id);
         if(count($row) > 0)
         {
-            $row->student_id = \SiteHelpers::getUserName($row->student_id);
+            $row->student_id = \SiteHelpers::getStudentName($row->student_id);
             $row->updated_by = \SiteHelpers::getUserName($row->updated_by);
             $pdf = PDF::loadView('financial.pdf', (array)$row);
             return $pdf->stream('receipt.pdf');
@@ -226,22 +226,6 @@ class FinancialController extends Controller
         {
             return Redirect::to('receipt')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
         }
-        /*
-        if($this->access['is_detail'] ==0)
-            return Redirect::to('dashboard')
-                ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
-
-        $row = $this->model->getRow($id);
-        if($row)
-        {
-            $this->data['row'] =  $row;
-        } else {
-            $this->data['row'] = $this->model->getColumnTable('sb_invoiceproducts');
-        }
-
-        $this->data['id'] = $id;
-        $this->data['access']		= $this->access;
-        return view('financial.view',$this->data);*/
     }
 
     public function postChangeStatus(Request $request)

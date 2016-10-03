@@ -3,22 +3,23 @@
     <div class="x_panel">
         @if(count($rowData) > 0)
             <div class="x_title">
-                <h2>{{ ucwords($rowData[0]->student_name) }} GradeSheet</h2>
-                <a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
-
+                <h2>GradeSheet: {{ ucwords($rowData[0]->student_name) }}</h2>
+                <li>
+                    <a href="javascript:void(0)" class="pull-right close-link" onclick="ajaxViewClose('#{{ $pageModule }}')"><i class="fa fa-close"></i></a>
+                    <a style="margin-right: 15px;" href="{{ URL::to($pageModule.'/download-gradesheet?student='.$id.'&class='.$class) }}" class="pull-right btn btn-success">Download Grade Sheet</a>
+                </li>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <div id="apDiv1">
                     <center>
                         <p align="center">&nbsp;</p>
-                        <p align="center"><strong>ST. MARY CATHOLIC SCHOOL</strong><br>
-                            DUALA, BUSHROD ISLAND<br>
-                            MONROVIA, LIBERIA</p>
+                        <p align="center"><strong>{{ CNF_APPNAME }}</strong><br>
+                            {!! nl2br(CNF_APPADDRESS) !!}</p>
                         <p align="center"><strong><u> MASTER GRADE SHEET</u></strong></p>
                         <p>&nbsp;
                         <center>
-                            Name: {{ ucwords($rowData[0]->student_name) }} Grade: {{ $rowData[0]->class_name }} Year:
+                            Name: {{ ucwords($rowData[0]->student_name) }} Grade: {{ $rowData[0]->class_name }} Year: {{ \SiteHelpers::getYearName() }}
                         </center>
                         </p>
                         <table id="datatable-responsive" class="table table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -32,7 +33,7 @@
                                                 FIRST SEMESTER
                                             </center>
                                         </strong></p></td>
-                                <td colspan="5" valign="top"><p><strong>
+                                <td colspan="6" valign="top"><p><strong>
                                             <center>
                                                 SECOND SEMESTER
                                             </center>
@@ -57,7 +58,7 @@
                                 <td width="27" valign="top"><p align="center">{{ $row->first_term }}</p></td>
                                 <td width="31" valign="top"><p align="center">{{ $row->second_term }}</p></td>
                                 <td width="33" valign="top"><p align="center">{{ $row->third_term }}</p></td>
-                                <td width="35" valign="top"><p align="center">{{ $row->second_exam }}</p></td>
+                                <td width="35" valign="top"><p align="center">{{ $row->first_exam }}</p></td>
                                 <td width="39" valign="top"><p align="center">{{ $row->first_avg}}</p></td>
                                 <td width="27" valign="top"><p align="center">{{ $row->four_term }}</p></td>
                                 <td width="27" valign="top"><p align="center">{{ $row->fifth_term }}</p></td>

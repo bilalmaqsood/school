@@ -138,15 +138,49 @@ class Schooledge extends Model {
             $table = $params[0]; 
             if(count($parent)>=2 )
             {
-				if($table!='tb_class')
-            		$row =  \DB::table($table)->where($parent[0],$parent[1])->where('year_id', '=', \Session::get('selected_year'))->get();
-				else
+				if($table!='tb_class') {
+					if(\Session::get('gid') == 5)
+					{
+						$teacher = \DB::table('tb_teachers')
+							->where('tb_teachers.user_id', '=', \Session::get('uid'))
+							->first();
+						$row = \DB::table('tb_subject')
+							->join('tb_class', 'tb_subject.class_id', '=' ,'tb_class.id')
+							->where('tb_subject.teacher_id', '=', $teacher->id)
+							->where('tb_subject.class_id', '=', $parent[1])
+							->where('tb_subject.year_id', '=', \Session::get('selected_year'))
+							->select('tb_subject.name', 'tb_subject.id')
+							->get();
+					}
+					else
+					{
+						$row = \DB::table($table)->where($parent[0], $parent[1])->where('year_id', '=', \Session::get('selected_year'))->get();
+					}
+				}else
 					$row =  \DB::table($table)->where($parent[0],$parent[1])->get();
             } else  {
 				if($table!='tb_class')
 	            	$row =  \DB::table($table)->where('year_id', '=', \Session::get('selected_year'))->get();
-				else
-	            	$row =  \DB::table($table)->get();
+				else{
+					if(\Session::get('gid') == 5)
+					{
+						$teacher = \DB::table('tb_teachers')
+							->where('tb_teachers.user_id', '=', \Session::get('uid'))
+							->first();
+						$row = \DB::table('tb_subject')
+							->join('tb_class', 'tb_subject.class_id', '=' ,'tb_class.id')
+							->where('tb_subject.teacher_id', '=', $teacher->id)
+							->where('tb_subject.year_id', '=', \Session::get('selected_year'))
+							->groupBy('tb_subject.class_id')
+							->select('tb_class.id', 'tb_class.name')
+							->get();
+					}
+					else{
+						$row =  \DB::table($table)->get();
+					}
+
+				}
+
             }
         }
 

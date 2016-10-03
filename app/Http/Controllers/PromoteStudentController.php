@@ -31,7 +31,7 @@ class PromoteStudentController extends Controller
     public function getIndex()
     {
         if(\Session::get('gid') != 1)
-            return Redirect::to('dashboard');
+            return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
         return view('promote.index',$this->data);
     }
 
@@ -94,10 +94,11 @@ class PromoteStudentController extends Controller
     public function postPromoteStudent(Request $request)
     {
         if($request->input('id') != '') {
+
             $selected_year = \Session::get('selected_year');
             $data = $request->all();
             $student_class = \DB::table('tb_student_class')->where('id', $data['id'])->first();
-            if($data['class_id'] == 20)
+            if($data['status'] == -1)
             {
                 $id = \DB::table('tb_students')->where('student_id', $student_class->student_id)->update(array('class_id'=> -1));
                 $id =  \DB::table('tb_student_class')->where('id', $student_class->id)->update(array('status' => -1));
@@ -106,9 +107,9 @@ class PromoteStudentController extends Controller
                     'message' => 'Congrats, That student will be pass out'
                 ));
             }
-            elseif($data['class_id'] < 20 && $data['status'] == 1)
+            elseif($data['status'] == 1)
             {
-                $new_class = $student_class->class_id + 1;
+                $new_class = $data['promote_class'];
                 $id = \DB::table('tb_students')->where('student_id', $student_class->student_id)->update(array('class_id'=>$new_class));
                 $id =  \DB::table('tb_student_class')->where('id', $student_class->id)->update(array('status' => 1));
                 $id =  \DB::table('tb_student_class')->insert(array('student_id'=>$student_class->student_id, 'class_id'=> $new_class,'year_id'=>$selected_year, 'status'=> 0));
@@ -124,7 +125,7 @@ class PromoteStudentController extends Controller
                 {
                     if($data['status'] == 2)
                     {
-                        $new_class = $student_class->class_id + 1;
+                        $new_class = $data['promote_class'];
                         $id = \DB::table('tb_students')->where('student_id', $student_class->student_id)->update(array('class_id'=>$new_class));
                         $id =  \DB::table('tb_student_class')->where('id', $student_class->id)->update(array('status' => 1));
                         $id =  \DB::table('tb_student_class')->insert(array('student_id'=>$student_class->student_id, 'class_id'=> $new_class,'year_id'=>$next_year->id, 'status'=> 0));

@@ -55,7 +55,7 @@
                             class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    {!! Form::text('amount', $row['amount'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Amount in Number', 'required' => true)) !!}
+                    {!! Form::text('amount', $row['amount'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Amount in Number', 'required' => true, 'data-parsley-pattern'=>'(\d+)' )) !!}
                 </div>
             </div>
             <div class="form-group">
@@ -63,7 +63,7 @@
                             class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    {!! Form::text('due', $row['due'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Due Amount')) !!}
+                    {!! Form::text('due', $row['due'],array('class'=>'form-control col-md-7 col-xs-12', 'placeholder'=>'Due Amount', 'data-parsley-pattern'=>'(\d+)' )) !!}
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -83,9 +83,9 @@
         $(document).ready(function () {
             $("#class").jCombo("{{ URL::to('gradebook/comboselect?filter=tb_class:id:name') }}",
                     {selected_value : '{{ $row["class_id"] }}'});
+            $("#student").jCombo("{{ URL::to('gradesheet/comboselectstudent?filter=tb_student_class:student_id:name')}}&parent=class_id:",
+                    { parent: '#class', selected_value : '{{ $row["student_id"] }}'});
 
-            $("#student").jCombo("{{ URL::to('finance/comboselectstudent?filter=tb_students:student_id:name')}}&parent=class_id:",
-                    { parent: '#class' ,selected_value : '{{ $row["student_id"] }}' });
             $.listen('parsley:field:validate', function () {
                 validateFront();
             });

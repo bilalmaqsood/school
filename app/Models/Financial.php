@@ -17,6 +17,14 @@ class Financial extends Schooledge {
     }
 
     public static function queryWhere(  ){
+        $student_id = '';
+        if(\Session::get('gid') == 6) {
+            $student = \DB::table('tb_students')
+                ->where('tb_students.user_id', '=', \Session::get('uid'))
+                ->first();
+            $student_id = " AND tb_payment.student_id = '$student->student_id' ";
+
+        }
         $year_id = \Session::get('selected_year');
         return " WHERE tb_payment.id IS NOT NULL AND tb_payment.year_id = '$year_id'";
     }

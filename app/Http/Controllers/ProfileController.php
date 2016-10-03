@@ -56,7 +56,7 @@ class ProfileController extends Controller
         $data = [
             'password' => bcrypt($password),
         ];
-    $responce = \DB::table('tb_users')->where("id","=",$id)->update($data);
+            $result = \DB::table('tb_users')->where("id","=",$id)->update($data);
         }
         $data = [
             'first_name' => $first_name,
@@ -66,7 +66,8 @@ class ProfileController extends Controller
             'phone_number' => $phone_number,
             'avatar' => $avatar
         ];
-    $responce = \DB::table('tb_users')->where("id","=",$id)->update($data);
+        $result = \DB::table('tb_users')->where("id","=",$id)->update($data);
+        \Session::put('fid', $first_name.' '. $last_name);
      return response()->json(array(
                 'status' => 'success',
                 'message' => \Lang::get('core.note_success')

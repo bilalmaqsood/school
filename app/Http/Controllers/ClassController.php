@@ -33,7 +33,7 @@ class ClassController extends Controller
     public function getIndex()
     {
         if($this->access['is_view'] ==0)
-            return Redirect::to('dashboard');
+            return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
 
         $this->data['access']   = $this->access;
         return view('class.index',$this->data);
@@ -143,24 +143,45 @@ class ClassController extends Controller
 
     }
 
-    public function getShow( $id = null)
+    public function getStudentClasses( $id = null)
     {
-
-        if($this->access['is_detail'] ==0)
-            return Redirect::to('dashboard')
-                ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
-
-        $row = $this->model->getRow($id);
-        if($row)
+        if(\Session::get('gid') == 6)
         {
-            $this->data['row'] =  $row;
-        } else {
-            $this->data['row'] = $this->model->getColumnTable('sb_invoiceproducts');
+            $student = \DB::table('tb_students')
+                ->where('tb_students.user_id', '=', \Session::get('uid'))
+                ->first();
+            $rows = \DB::table('tb_student_class')
+                ->join('tb_class', 'tb_student_class.class_id', '=' ,'tb_class.id')
+                ->join('tb_division', 'tb_class.division_id', '=' ,'tb_division.id')
+                ->where('tb_student_class.student_id', '=', $student->student_id)
+                ->orderBy('tb_student_class.class_id', 'desc')
+                ->select('tb_student_class.*', 'tb_class.name as class_name', 'tb_division.name as division_name')
+                ->get();
+            $this->data['rows'] = $rows;
+            return view('student.myclasses',$this->data);
         }
+        return Redirect::to('dashboard');
+    }
 
-        $this->data['id'] = $id;
-        $this->data['access']		= $this->access;
-        return view('class.view',$this->data);
+    public function getTeacherClasses( $id = null)
+    {
+        if(\Session::get('gid') == 5)
+        {
+            $teacher = \DB::table('tb_teachers')
+                ->where('tb_teachers.user_id', '=', \Session::get('uid'))
+                ->first();
+            $rows = \DB::table('tb_subject')
+                ->join('tb_class', 'tb_subject.class_id', '=' ,'tb_class.id')
+                ->join('tb_division', 'tb_class.division_id', '=' ,'tb_division.id')
+                ->where('tb_subject.teacher_id', '=', $teacher->id)
+                ->where('tb_subject.year_id', '=', \Session::get('selected_year'))
+                ->groupBy('tb_subject.class_id')
+                ->select('tb_class.id', 'tb_class.name as class_name', 'tb_division.name as division_name')
+                ->get();
+            $this->data['rows'] = $rows;
+            return view('teacher.myclasses',$this->data);
+        }
+        return Redirect::to('dashboard');
     }
 
 }

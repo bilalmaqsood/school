@@ -16,7 +16,7 @@
             position: absolute;
             top: 174px;
             width: 732px;
-            height: 339px;
+            height: 360px;
             border: 10px solid black;
             background-color:#DADBD7;
             text-decoration:none;
@@ -42,12 +42,13 @@
         <p class="MsoNoSpacing" style="line-height:150%;"><span style="font-family:'Times New Roman','serif'; font-size:12.0pt; ">Received from:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             <?php echo ucwords($student_id); ?></p>
         <p class="MsoNoSpacing" style="line-height:150%;"><span style="font-family:'Times New Roman','serif'; font-size:12.0pt; "> The sum of&nbsp;<?php echo strtolower($amount_in_words); ?>&nbsp;dollars</span></p>
         <p class="MsoNoSpacing" style="line-height:150%;"><span style="font-family:'Times New Roman','serif'; font-size:12.0pt; "> For&nbsp;<?php echo strtolower($purpose);?><br>
-    Amount  Paid <?php echo CNF_CURRENCY.' '.$amount.' '; ?>   
-        <?php if($due = 0) { ?>
-            <p class="MsoNoSpacing" style="line-height:150%;"><span style="font-family:'Times New Roman','serif'; font-size:12.0pt; "> Balance  Due <?php echo CNF_CURRENCY.' _______'.$due.'_______'; ?>                                       </span></p>
+    Amount  Paid <?php echo '$'.($amount-$due).' '.CNF_CURRENCY; ?>   
+        <?php if($due != 0) { ?>
+            <p class="MsoNoSpacing" style="line-height:150%;"><span style="font-family:'Times New Roman','serif'; font-size:12.0pt; "> Balance  Due <?php echo '$'.$due.' '.CNF_CURRENCY; ?>                                          </span></p>
         <?php } ?>
         <p class="MsoNoSpacing" align="center" style="text-align:center;"><?php echo ucwords($updated_by); ?></p>
         <p class="MsoNoSpacing" align="center" style="text-align:center;"> Authorized  Signature</p>
+        <br>
     </blockquote>
 </div>
 </body>

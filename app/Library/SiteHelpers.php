@@ -1613,7 +1613,7 @@ class SiteHelpers
     {
         $result = DB::select("Select first_name, last_name from tb_users where id = $id");
         if(count($result) > 0)
-            return $result[0]->last_name.' '.$result[0]->first_name;
+            return $result[0]->first_name.' '.$result[0]->last_name;
         return '';
     }
 
@@ -1644,8 +1644,10 @@ class SiteHelpers
 
     static function getTeacherName($id)
     {
-
-        $result = DB::select("SELECT concat(tb_users.last_name, ' ', tb_users.first_name) as teacher_name from tb_teachers JOIN tb_users on tb_teachers.user_id = tb_users.id where tb_teachers.id = $id");
+        $result = DB::select("SELECT concat(tb_users.first_name, ' ', tb_users.last_name) as teacher_name
+                  from tb_teachers
+                  JOIN tb_users on tb_teachers.user_id = tb_users.id
+                  where tb_teachers.id = $id");
         if(count($result) > 0)
             return ucwords($result[0]->teacher_name);
         return '';
@@ -1653,7 +1655,7 @@ class SiteHelpers
 
     static function getTeacherNameWithRespectToSubject($id)
     {
-        $result = DB::select("SELECT concat(tb_users.last_name, ' ', tb_users.first_name) as teacher_name from tb_subject JOIN tb_teachers on tb_subject.teacher_id = tb_teachers.id JOIN tb_users on tb_teachers.user_id = tb_users.id where tb_subject.id = $id");
+        $result = DB::select("SELECT concat(tb_users.first_name, ' ', tb_users.last_name) as teacher_name from tb_subject JOIN tb_teachers on tb_subject.teacher_id = tb_teachers.id JOIN tb_users on tb_teachers.user_id = tb_users.id where tb_subject.id = $id");
         if(count($result) > 0)
             return ucwords($result[0]->teacher_name);
         return '';
@@ -1746,6 +1748,23 @@ class SiteHelpers
 
     }
 
+    static public function getStudentName($id)
+    {
+        $result = DB::select("SELECT concat(tb_users.first_name, ' ', tb_users.last_name) as student_name
+                  from tb_students
+                  JOIN tb_users on tb_students.user_id = tb_users.id
+                  where tb_students.student_id = $id");
+        if(count($result) > 0)
+            return ucwords($result[0]->student_name);
+        return '';
+    }
+
+    static public function total_students($class_id){
+        $year_id = \Session::get('selected_year');
+        $count =  \DB::select("Select count(tb_student_class.student_id) as total_students from tb_student_class where tb_student_class.class_id = $class_id AND tb_student_class.year_id = $year_id");
+        return $count[0]->total_students;
+
+    }
 
     static public function getGrades($student_id, $class_id)
     {
@@ -1753,4 +1772,42 @@ class SiteHelpers
         $result =  \DB::select("SELECT CAST(AVG(first_avg) as UNSIGNED) as semester_one, AVG(second_avg) as semester_two, AVG(final) as final from tb_grade WHERE tb_grade.student_id = $student_id AND tb_grade.class_id = $class_id AND tb_grade.year_id = $year_id");
         return $result;
     }
+
+    static public function getYearName()
+    {
+        $school_year = \DB::table('tb_school')
+            ->where('tb_school.id', '=', \Session::get('selected_year'))
+            ->select('year')
+            ->first();
+        if(count($school_year) > 0)
+            return $school_year->year;
+        return '';
+    }
+
+    static public function getGradesRow($student_id, $class_id, $subject_id, $year_id)
+    {
+        $grade = \DB::table('tb_grade')
+                ->where('student_id', '=', $student_id)
+                ->where('class_id', '=', $class_id)
+                ->where('subject_id', '=', $subject_id)
+                ->where('year_id', '=', $year_id)
+                ->first();
+        if(count($grade) > 0)
+            return $grade;
+        return '';
+    }
+
+    static public function getGradeForTranscript($class_id, $student_id, $subject_name, $year_id)
+    {
+        $grade = \DB::select("select `tb_grade`.`first_avg`, `tb_grade`.`final` from `tb_subject` inner join `tb_grade` on `tb_subject`.`id` = `tb_grade`.`subject_id` where `tb_grade`.`student_id` = $student_id and `tb_grade`.`class_id` = $class_id and `tb_grade`.`year_id` = $year_id and UPPER(tb_subject.name) = '$subject_name' limit 1");
+        if(count($grade) > 0)
+        {
+            if($grade[0]->final == 0)
+                return  $grade[0]->first_avg;
+            return $grade[0]->final;
+        }
+
+        return '--';
+    }
+
 }

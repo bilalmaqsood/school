@@ -81,8 +81,8 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="school_currency_format"class="form-control">
-                                    <option value="$" @if(CNF_CURRENCY=='$') {{ 'selected' }} @endif>USD</option>
-                                    <option value="L$" @if(CNF_CURRENCY=='L$') {{ 'selected' }} @endif>LRD</option>
+                                    <option value="USD" @if(CNF_CURRENCY=='USD') {{ 'selected' }} @endif>USD</option>
+                                    <option value="LRD" @if(CNF_CURRENCY=='LRD') {{ 'selected' }} @endif>LRD</option>
                                 </select>
                             </div>
                         </div>

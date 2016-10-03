@@ -243,7 +243,9 @@ class GeneralsettingController extends Controller
 
     public function getModuleaccess()
     {
-        $groups = \DB::table('tb_group')->get();
+        $groups = \DB::table('tb_group')
+            ->limit(6)
+            ->get();
 
         $modules = array(
             0 => 'Dashboard',

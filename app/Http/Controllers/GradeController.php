@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ;
-
+use PDF;
 class GradeController extends Controller
 {
     protected $layout = "layouts.main";
     protected $data = array();
-    public $module = 'class';
+    public $module = 'gradebook';
     static $per_page	= '10';
 
     public function __construct()
@@ -33,7 +33,7 @@ class GradeController extends Controller
     public function getIndex()
     {
         if($this->access['is_view'] ==0)
-            return Redirect::to('dashboard');
+            return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
 
         $this->data['access']   = $this->access;
         return view('grade.index',$this->data);
@@ -45,16 +45,28 @@ class GradeController extends Controller
         return view('grade.mark-sheet', $this->data);
     }
 
-    public function postShow( $id = null)
+    public function postShow( Request $request)
     {
+
         if($this->access['is_detail'] ==0)
             return Redirect::to('dashboard')
                 ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
 
-        $row = $this->model->gradeSheet($id);
+        $row = $this->model->gradeSheet($request->input('student'), $request->input('class'));
         $this->data['rowData'] =  $row;
-        $this->data['id'] = $id;
+        $this->data['id'] = $request->input('student');
+        $this->data['class'] = $request->input('class');
         $this->data['access']		= $this->access;
         return view('grade.view',$this->data);
+    }
+
+    public function getDownloadGradesheet( Request $request)
+    {
+        $row = $this->model->gradeSheet($request->input('student'), $request->input('class'));
+        $data['rowData'] =  $row;
+        $data['id'] = $request->input('student');
+        $data['class'] = $request->input('class');
+        $pdf = PDF::loadView('grade.gradesheet', $data);
+        return $pdf->download('gradesheet.pdf');
     }
 }
