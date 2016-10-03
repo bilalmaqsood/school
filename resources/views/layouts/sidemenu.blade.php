@@ -175,6 +175,10 @@
                                 </li>
                                 <li><a href="{{ URL::to('setting/sidemenu') }}">Module Permission Setting</a>
                                 </li>
+                                <li><a href="{{ URL::to('setting/backup') }}">Backup</a>
+                                </li>
+                                <li><a href="{{ URL::to('setting/restore') }}">Restore</a>
+                                </li>
                             </ul>
                         </li>
                     @endif

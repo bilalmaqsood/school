@@ -5,7 +5,7 @@ use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ;
-
+use Backup;
 class GeneralsettingController extends Controller
 {
     protected $layout = "layouts.main";
@@ -347,6 +347,14 @@ class GeneralsettingController extends Controller
             'status'=>'success',
             'message'=> \Lang::get('core.note_success')
         ));
+    }
+
+
+    public function getBackup(Request $request)
+    {
+        Backup::export();
+        Backup::export('db_schooledge');
+        return view('setting.backup');
     }
 
 }
