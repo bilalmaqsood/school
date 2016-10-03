@@ -12,6 +12,7 @@ class GeneralsettingController extends Controller
     protected $data = array();
     public $module = 'setting';
     static $per_page	= '10';
+    protected $modules;
 
     public function __construct()
     {
@@ -23,6 +24,23 @@ class GeneralsettingController extends Controller
             'pageModule'		=> 'setting',
             'pageUrl'			=>  url('setting'),
             'return' 			=> 	self::returnUrl()
+        );
+        $this->modules = array(
+            0 => 'Dashboard',
+            1 => 'Students',
+            2 => 'Teachers',
+            3 => 'Parents',
+            4 => 'Divisions',
+            5 => 'Classes',
+            6 => 'Subjects',
+            7 => 'Classes Schedule',
+            8 => 'School Calender',
+            9 => 'News',
+            10 => 'Events',
+            11 => 'Grading System',
+            12 => 'Finance',
+            13 => 'Administrator Task',
+            14 => 'Media Center',
         );
 
     }
@@ -246,27 +264,9 @@ class GeneralsettingController extends Controller
         $groups = \DB::table('tb_group')
             ->limit(6)
             ->get();
-
-        $modules = array(
-            0 => 'Dashboard',
-            1 => 'Students',
-            2 => 'Teachers',
-            3 => 'Parents',
-            4 => 'Divisions',
-            5 => 'Classes',
-            6 => 'Subjects',
-            7 => 'Classes Schedule',
-            8 => 'School Calender',
-            9 => 'News',
-            10 => 'Events',
-            11 => 'Grading System',
-            12 => 'Finance',
-            13 => 'Administrator Task',
-            14 => 'Media Center',
-        );
         $dataAccess = array();
         foreach($groups as $group){
-            foreach($modules as $moduleKey => $moduleName){
+            foreach($this->modules as $moduleKey => $moduleName){
                 $modulePermission = \DB::table('tb_group_access')->where('group_id',$group->id)->where('module_id',$moduleKey)->get();
                 if(!empty($modulePermission)){
                     $dataAccess[$group->id][$moduleKey] = json_decode($modulePermission[0]->data_access,true);
@@ -277,7 +277,7 @@ class GeneralsettingController extends Controller
             }
         }
 
-        $this->data['modules'] = $modules;
+        $this->data['modules'] = $this->modules;
         $this->data['groups'] = $groups;
         $this->data['access'] = $dataAccess;
 
@@ -332,7 +332,9 @@ class GeneralsettingController extends Controller
         $data = $request->all();
         $noPermission = array('is_global'=>0,'is_view'=>0,'is_detail'=>0,'is_edit'=>0,'is_remove'=>0,'is_add'=>0);
         foreach($data['permission'] as $groupId=>$moduleAccess){
+            $modules = array(0 => 'Dashboard');
             foreach($moduleAccess as $moduleId=>$data) {
+                $modules[] = $this->modules[$moduleId];
                 $entry = \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->count();
                 $permission = array_replace($noPermission, $data);
 
@@ -342,11 +344,14 @@ class GeneralsettingController extends Controller
                     \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->update(array('data_access'=>json_encode($permission)));
                 }
             }
+            $modulesNoPermission = array_diff($this->modules,$modules);
+            foreach($modulesNoPermission as $moduleId => $value){
+                \DB::table('tb_group_access')->where('group_id',$groupId)->where('module_id',$moduleId)->update(array('data_access'=>json_encode($noPermission)));
+            }
         }
         return response()->json(array(
             'status'=>'success',
             'message'=> \Lang::get('core.note_success')
         ));
     }
-
 }
